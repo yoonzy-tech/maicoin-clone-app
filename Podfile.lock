@@ -1,0 +1,37 @@
+PODS:
+  - Alamofire (5.7.1)
+  - IQKeyboardManagerSwift (6.5.11)
+  - Kingfisher (7.8.0)
+  - MJRefresh (3.7.5)
+  - ProgressHUD (13.6.2)
+  - SwiftLint (0.52.3)
+
+DEPENDENCIES:
+  - Alamofire
+  - IQKeyboardManagerSwift
+  - Kingfisher
+  - MJRefresh
+  - ProgressHUD
+  - SwiftLint
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - IQKeyboardManagerSwift
+    - Kingfisher
+    - MJRefresh
+    - ProgressHUD
+  trunk:
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
+  Kingfisher: 0656e1b064bfc1ca1cd04e033f617a86559696e9
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  ProgressHUD: 355915c8f033e626788fa9b0d99d06e8691595ab
+  SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
+
+PODFILE CHECKSUM: efc80185eb705e3fe3ffa365e34e8af0099d7b7f
+
+COCOAPODS: 1.12.0
