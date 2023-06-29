@@ -12,17 +12,61 @@ enum CurrencyName: String {
 }
 
 class HomeViewController: UIViewController {
-
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     var USDCurrencyPairs: [CurrencyPair] = []
     
     var USDProductList: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "BannerBalanceTableViewCell",
+                                 bundle: nil),
+                           forCellReuseIdentifier: "BannerBalanceTableViewCell")
+        tableView.register(UINib(nibName: "ProductListTableViewCell",
+                                 bundle: nil),
+                           forCellReuseIdentifier: "ProductListTableViewCell")
         getUSDProductList()
         getAllProductStats()
     }
 }
+
+// MARK: TableView Delegate
+
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1 // BannerBalanceCell
+        default:
+            return USDCurrencyPairs.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        switch indexPath.section {
+        
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "BannerBalanceTableViewCell", for: indexPath) as? BannerBalanceTableViewCell
+            else { fatalError("Unable to generate Table View Cell") }
+            return cell
+        
+        default:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "ProductListTableViewCell", for: indexPath) as? ProductListTableViewCell
+            else { fatalError("Unable to generate Table View Cell") }
+            return cell
+        }
+    }
+}
+
+// MARK: API Data Handling
 
 extension HomeViewController {
     func getUSDProductList() {

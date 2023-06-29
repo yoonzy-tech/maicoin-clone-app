@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.7.1)
+  - iCarousel (1.8.3)
   - IQKeyboardManagerSwift (6.5.11)
   - Kingfisher (7.8.0)
   - MJRefresh (3.7.5)
@@ -8,6 +9,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - iCarousel
   - IQKeyboardManagerSwift
   - Kingfisher
   - MJRefresh
@@ -17,6 +19,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - iCarousel
     - IQKeyboardManagerSwift
     - Kingfisher
     - MJRefresh
@@ -26,12 +29,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   Kingfisher: 0656e1b064bfc1ca1cd04e033f617a86559696e9
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   ProgressHUD: 355915c8f033e626788fa9b0d99d06e8691595ab
   SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
 
-PODFILE CHECKSUM: efc80185eb705e3fe3ffa365e34e8af0099d7b7f
+PODFILE CHECKSUM: a0ee231d0501b1682c2a5c38aff95fd393edd006
 
 COCOAPODS: 1.12.0

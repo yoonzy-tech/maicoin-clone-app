@@ -12,5 +12,6 @@ target 'CryptoApp' do
   pod 'MJRefresh'
   pod 'Alamofire' 
   pod 'ProgressHUD'
+  pod 'iCarousel'
 
 end

@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="41z-bJ-4OZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zB5-uA-fqa">
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -25,17 +25,20 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="41z-bJ-4OZ" secondAttribute="trailing" id="C7p-63-1Xa"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="41z-bJ-4OZ" secondAttribute="bottom" id="Jak-Te-QV4"/>
-                            <constraint firstItem="41z-bJ-4OZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="eKr-Hy-89P"/>
-                            <constraint firstItem="41z-bJ-4OZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="seg-Yi-xre"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zB5-uA-fqa" secondAttribute="bottom" id="639-jF-0Di"/>
+                            <constraint firstItem="zB5-uA-fqa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="EjU-fp-AdO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zB5-uA-fqa" secondAttribute="trailing" id="XZa-V2-2QP"/>
+                            <constraint firstItem="zB5-uA-fqa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eKA-UO-7D4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7Df-I8-na4"/>
+                    <connections>
+                        <outlet property="tableView" destination="zB5-uA-fqa" id="R5d-er-GF6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1947.3282442748091" y="-28.169014084507044"/>
+            <point key="canvasLocation" x="1943" y="-28"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="t12-lq-3bY">
@@ -64,9 +67,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gUQ-ZT-MNo">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <navigationBarAppearance key="scrollEdgeAppearance">
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
