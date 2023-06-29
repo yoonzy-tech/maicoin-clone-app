@@ -20,6 +20,11 @@
 		049AA10B2A4C472B0065CAA9 /* CurrencyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA10A2A4C472B0065CAA9 /* CurrencyPair.swift */; };
 		049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA10C2A4C5F390065CAA9 /* Profile.swift */; };
 		04A90F642A4C685D00D59211 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F632A4C685D00D59211 /* Account.swift */; };
+		04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F652A4D227700D59211 /* CurrencyInfo.swift */; };
+		04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F672A4D314B00D59211 /* ProductStats.swift */; };
+		04A90F6C2A4D446B00D59211 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F6B2A4D446B00D59211 /* String+Extensions.swift */; };
+		04A90F6F2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F6D2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift */; };
+		04A90F702A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A90F6E2A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib */; };
 		E61F031A5BD0486547C5B974 /* Pods_CryptoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +44,11 @@
 		049AA10A2A4C472B0065CAA9 /* CurrencyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPair.swift; sourceTree = "<group>"; };
 		049AA10C2A4C5F390065CAA9 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		04A90F632A4C685D00D59211 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		04A90F652A4D227700D59211 /* CurrencyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
+		04A90F672A4D314B00D59211 /* ProductStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStats.swift; sourceTree = "<group>"; };
+		04A90F6B2A4D446B00D59211 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		04A90F6D2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerBalanceTableViewCell.swift; sourceTree = "<group>"; };
+		04A90F6E2A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerBalanceTableViewCell.xib; sourceTree = "<group>"; };
 		08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4717991FC7B8EE28F7B209C4 /* Pods-CryptoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.release.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.release.xcconfig"; sourceTree = "<group>"; };
 		63B17860CB531B1A37CB9DE2 /* Pods-CryptoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.debug.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +87,7 @@
 		049AA0E92A4C1D980065CAA9 /* CryptoApp */ = {
 			isa = PBXGroup;
 			children = (
+				04A90F6A2A4D442900D59211 /* Extensions */,
 				049AA1092A4C47160065CAA9 /* Models */,
 				049AA1042A4C3DCA0065CAA9 /* HomeView */,
 				049AA1012A4C2E730065CAA9 /* Utilities */,
@@ -105,6 +116,8 @@
 				049AA0EE2A4C1D980065CAA9 /* HomeViewController.swift */,
 				049AA1052A4C3E130065CAA9 /* ProductListTableViewCell.swift */,
 				049AA1062A4C3E130065CAA9 /* ProductListTableViewCell.xib */,
+				04A90F6D2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift */,
+				04A90F6E2A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -115,8 +128,18 @@
 				049AA10A2A4C472B0065CAA9 /* CurrencyPair.swift */,
 				049AA10C2A4C5F390065CAA9 /* Profile.swift */,
 				04A90F632A4C685D00D59211 /* Account.swift */,
+				04A90F652A4D227700D59211 /* CurrencyInfo.swift */,
+				04A90F672A4D314B00D59211 /* ProductStats.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		04A90F6A2A4D442900D59211 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				04A90F6B2A4D446B00D59211 /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		AC5FABC58F13425E54116B62 /* Frameworks */ = {
@@ -197,6 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A90F702A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib in Resources */,
 				049AA0F72A4C1D9A0065CAA9 /* LaunchScreen.storyboard in Resources */,
 				049AA1082A4C3E130065CAA9 /* ProductListTableViewCell.xib in Resources */,
 				049AA0F42A4C1D9A0065CAA9 /* Assets.xcassets in Resources */,
@@ -274,11 +298,15 @@
 				049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */,
 				049AA1032A4C2FD80065CAA9 /* CoinbaseService.swift in Sources */,
 				049AA10B2A4C472B0065CAA9 /* CurrencyPair.swift in Sources */,
+				04A90F6C2A4D446B00D59211 /* String+Extensions.swift in Sources */,
 				049AA0FF2A4C1EEE0065CAA9 /* ApiKeys.swift in Sources */,
 				04A90F642A4C685D00D59211 /* Account.swift in Sources */,
+				04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */,
+				04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */,
 				049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */,
 				049AA0ED2A4C1D980065CAA9 /* SceneDelegate.swift in Sources */,
 				049AA1072A4C3E130065CAA9 /* ProductListTableViewCell.swift in Sources */,
+				04A90F6F2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

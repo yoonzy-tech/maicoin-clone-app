@@ -13,6 +13,7 @@ enum CoinbaseApi: String {
     case products = "https://api-public.sandbox.pro.coinbase.com/products"
     case accounts  = "https://api-public.sandbox.pro.coinbase.com/accounts"
     case profile  = "https://api-public.sandbox.pro.coinbase.com/profiles?active"
+    case currencies = "https://api-public.sandbox.pro.coinbase.com/currencies"
 }
 
 enum RequestPath: String {
@@ -60,15 +61,16 @@ final class CoinbaseService {
         return (cbAccessTimestamp, cbAccessSign)
     }
     
-    func getApiResponse<T: Codable>(api: CoinbaseApi,
-                                    authRequired: Bool,
-                                    requestPath: RequestPath = .none,
-                                    httpMethod: HttpMethod = .get,
-                                    body: String = "",
-                                    completion: (([T]) -> Void)? = nil) {
+    func getApiResponseArray<T: Codable>(api: CoinbaseApi,
+                                         param: String = "",
+                                         authRequired: Bool,
+                                         requestPath: RequestPath = .none,
+                                         httpMethod: HttpMethod = .get,
+                                         body: String = "",
+                                         completion: (([T]) -> Void)? = nil) {
         
         let semaphore = DispatchSemaphore(value: 0)
-        guard let url = URL(string: api.rawValue) else {
+        guard let url = URL(string: api.rawValue + param) else {
             print("Invalid URL")
             return
         }
@@ -98,6 +100,60 @@ final class CoinbaseService {
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode([T].self, from: data)
+                // print("Response: \(response)")
+                completion?(response)
+            } catch {
+                print("Error decoding data: \(error)")
+            }
+            
+            // print(String(data: data, encoding: .utf8)!)
+            semaphore.signal()
+        }
+        
+        task.resume()
+        semaphore.wait()
+    }
+    
+    func getApiSingleResponse<T: Codable>(api: CoinbaseApi,
+                                          param: String = "",
+                                          authRequired: Bool,
+                                          requestPath: RequestPath = .none,
+                                          httpMethod: HttpMethod = .get,
+                                          body: String = "",
+                                          completion: ((T) -> Void)? = nil) {
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        guard let url = URL(string: api.rawValue + param) else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if authRequired {
+            let timestampSignature = getTimestampSignature(requestPath: requestPath.rawValue,
+                                                           method: httpMethod.rawValue,
+                                                           body: body)
+            
+            request.addValue(apiKey, forHTTPHeaderField: "cb-access-key")
+            request.addValue(passPhrase, forHTTPHeaderField: "cb-access-passphrase")
+            request.addValue(timestampSignature.0, forHTTPHeaderField: "cb-access-timestamp")
+            request.addValue(timestampSignature.1, forHTTPHeaderField: "cb-access-sign")
+        }
+        
+        request.httpMethod = httpMethod.rawValue
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print(String(describing: error))
+                semaphore.signal()
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(T.self, from: data)
                 // print("Response: \(response)")
                 completion?(response)
             } catch {
