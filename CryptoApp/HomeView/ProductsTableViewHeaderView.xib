@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProductsTableViewHeaderView" customModule="CryptoApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="108"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="市場" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubw-GN-rcS">
+                    <rect key="frame" x="15.999999999999996" y="8" width="34.666666666666657" height="42"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yth-5O-Dd8">
+                    <rect key="frame" x="16" y="58" width="361" height="1"/>
+                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="U9G-D5-43t"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="幣別" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBX-3r-ZNP">
+                    <rect key="frame" x="20" y="74" width="30.666666666666671" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRk-ki-RKd">
+                    <rect key="frame" x="209" y="74" width="23" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NT$ / 24H" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTo-Xv-i4S">
+                    <rect key="frame" x="302" y="74" width="71" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URc-pl-r2p">
+                    <rect key="frame" x="16" y="107" width="361" height="1"/>
+                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="4a6-SR-RdY"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="ubw-GN-rcS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="9yL-rK-pSO"/>
+                <constraint firstAttribute="bottom" secondItem="URc-pl-r2p" secondAttribute="bottom" id="E8A-dl-IOB"/>
+                <constraint firstItem="eBX-3r-ZNP" firstAttribute="top" secondItem="yth-5O-Dd8" secondAttribute="top" constant="16" id="EHu-ki-VZW"/>
+                <constraint firstItem="URc-pl-r2p" firstAttribute="bottom" secondItem="eBX-3r-ZNP" secondAttribute="bottom" constant="16" id="Ebw-9h-SdY"/>
+                <constraint firstItem="eBX-3r-ZNP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Qox-vU-zgf"/>
+                <constraint firstItem="URc-pl-r2p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="R8F-UU-JVD"/>
+                <constraint firstItem="yth-5O-Dd8" firstAttribute="top" secondItem="ubw-GN-rcS" secondAttribute="bottom" constant="8" id="bRt-sH-TUV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kTo-Xv-i4S" secondAttribute="trailing" constant="20" id="f7Q-gG-qu5"/>
+                <constraint firstItem="ubw-GN-rcS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="fIB-TT-udl"/>
+                <constraint firstAttribute="trailing" secondItem="URc-pl-r2p" secondAttribute="trailing" constant="16" id="iNN-C7-ooW"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="yth-5O-Dd8" secondAttribute="trailing" constant="16" id="lOZ-Zr-MJC"/>
+                <constraint firstItem="kTo-Xv-i4S" firstAttribute="leading" secondItem="VRk-ki-RKd" secondAttribute="trailing" constant="70" id="sk8-VD-jCE"/>
+                <constraint firstItem="kTo-Xv-i4S" firstAttribute="centerY" secondItem="eBX-3r-ZNP" secondAttribute="centerY" id="ydk-IU-MdG"/>
+                <constraint firstItem="yth-5O-Dd8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="yie-tY-s4c"/>
+                <constraint firstItem="VRk-ki-RKd" firstAttribute="centerY" secondItem="eBX-3r-ZNP" secondAttribute="centerY" id="z5D-3G-DB7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="113.74045801526717" y="-252.81690140845072"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

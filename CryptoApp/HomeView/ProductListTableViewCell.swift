@@ -9,6 +9,11 @@ import UIKit
 
 class ProductListTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var coinNameLabel: UILabel!
+    @IBOutlet weak var coinFullNameLabel: UILabel!
+    @IBOutlet weak var coinPriceLabel: UILabel!
+    @IBOutlet weak var fluctRateLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +24,4 @@ class ProductListTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }

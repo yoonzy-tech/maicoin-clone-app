@@ -15,7 +15,25 @@ struct Banner {
 
 class BannerBalanceTableViewCell: UITableViewCell {
     
-    var timer: Timer?
+    var hideBalance: Bool = false
+    
+    var accountTotalBalance: Double = 0 {
+        didSet {
+            accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  String(accountTotalBalance))"
+        }
+    }
+    
+    @IBOutlet weak var accountBalanceView: UIView!
+    @IBOutlet weak var carousel: iCarousel!
+    @IBOutlet weak var accountBalanceLabel: UILabel!
+    @IBOutlet weak var accountBalanceButton: UIButton!
+    
+    @IBAction func hideAccountBalance(_ sender: Any) {
+        hideBalance = !hideBalance
+        accountBalanceButton.setImage(hideBalance ? UIImage(named: "eye-close") :
+                                        UIImage(named: "eye-open"), for: .normal)
+        accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  String(accountTotalBalance))"
+    }
     
     private var banners: [Banner] = [
         Banner(name: "banner1",
@@ -28,6 +46,8 @@ class BannerBalanceTableViewCell: UITableViewCell {
                urlString: "https://ethereum.org/zh-tw/")
     ]
     
+    var timer: Timer?
+    
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.currentPage = 0
@@ -35,17 +55,17 @@ class BannerBalanceTableViewCell: UITableViewCell {
         return pageControl
     }()
     
-    @IBOutlet weak var accountBalanceView: UIView!
-    @IBOutlet weak var carousel: iCarousel!
-    @IBOutlet weak var hideBalanceButton: UIButton!
-    @IBOutlet weak var accountBalanceLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCarouselView()
         setupAccountBalanceView()
         layoutPageControl()
         startBannerAutoplay()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stopBannerAutoplay()
     }
     
     private func setupCarouselView() {
@@ -112,11 +132,19 @@ extension BannerBalanceTableViewCell: iCarouselDelegate, iCarouselDataSource {
     }
     
     private func startBannerAutoplay() {
-        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(autoplayTimerFired), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 3.0,
+                                     target: self,
+                                     selector: #selector(autoplayTimerFired),
+                                     userInfo: nil,
+                                     repeats: true)
     }
     
     @objc func autoplayTimerFired() {
         carousel.scrollToItem(at: carousel.currentItemIndex + 1, animated: true)
     }
+    
+    func stopBannerAutoplay() {
+        timer?.invalidate()
+        timer = nil
+    }
 }
-

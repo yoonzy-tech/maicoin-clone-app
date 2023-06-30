@@ -6,10 +6,14 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 import CryptoKit
 import Alamofire
 
-enum CoinbaseApi: String {
+enum CoinbaseApiUrl: String {
     case products = "https://api-public.sandbox.pro.coinbase.com/products"
     case accounts  = "https://api-public.sandbox.pro.coinbase.com/accounts"
     case profile  = "https://api-public.sandbox.pro.coinbase.com/profiles?active"
@@ -55,19 +59,16 @@ final class CoinbaseService {
             let data = Data(macBytes)
             return data.base64EncodedString()
         }
-        // print(cbAccessTimestamp)
-        // print(cbAccessSign)
-        
         return (cbAccessTimestamp, cbAccessSign)
     }
     
-    func getApiResponseArray<T: Codable>(api: CoinbaseApi,
+    func getApiResponseArray<T: Codable>(api: CoinbaseApiUrl,
                                          param: String = "",
                                          authRequired: Bool,
                                          requestPath: RequestPath = .none,
                                          httpMethod: HttpMethod = .get,
                                          body: String = "",
-                                         completion: (([T]) -> Void)? = nil) {
+                                         completion: @escaping ([T]) -> Void) {
         
         let semaphore = DispatchSemaphore(value: 0)
         guard let url = URL(string: api.rawValue + param) else {
@@ -87,7 +88,6 @@ final class CoinbaseService {
             request.addValue(timestampSignature.0, forHTTPHeaderField: "cb-access-timestamp")
             request.addValue(timestampSignature.1, forHTTPHeaderField: "cb-access-sign")
         }
-        
         request.httpMethod = httpMethod.rawValue
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -101,12 +101,10 @@ final class CoinbaseService {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode([T].self, from: data)
                 // print("Response: \(response)")
-                completion?(response)
+                completion(response)
             } catch {
                 print("Error decoding data: \(error)")
             }
-            
-            // print(String(data: data, encoding: .utf8)!)
             semaphore.signal()
         }
         
@@ -114,7 +112,7 @@ final class CoinbaseService {
         semaphore.wait()
     }
     
-    func getApiSingleResponse<T: Codable>(api: CoinbaseApi,
+    func getApiSingleResponse<T: Codable>(api: CoinbaseApiUrl,
                                           param: String = "",
                                           authRequired: Bool,
                                           requestPath: RequestPath = .none,
@@ -159,8 +157,6 @@ final class CoinbaseService {
             } catch {
                 print("Error decoding data: \(error)")
             }
-            
-            // print(String(data: data, encoding: .utf8)!)
             semaphore.signal()
         }
         
