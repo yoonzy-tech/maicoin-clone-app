@@ -19,7 +19,7 @@ class BannerBalanceTableViewCell: UITableViewCell {
     
     var accountTotalBalance: Double = 0 {
         didSet {
-            accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  String(accountTotalBalance))"
+            accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  accountTotalBalance.formatMarketData())"
         }
     }
     

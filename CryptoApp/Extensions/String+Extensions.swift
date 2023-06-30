@@ -20,4 +20,3 @@ extension String {
         return formattedString
     }
 }
-

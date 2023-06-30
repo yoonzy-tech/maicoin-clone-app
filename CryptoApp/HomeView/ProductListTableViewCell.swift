@@ -9,6 +9,7 @@ import UIKit
 
 class ProductListTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var coinIconImageView: UIImageView!
     @IBOutlet weak var coinNameLabel: UILabel!
     @IBOutlet weak var coinFullNameLabel: UILabel!
     @IBOutlet weak var coinPriceLabel: UILabel!

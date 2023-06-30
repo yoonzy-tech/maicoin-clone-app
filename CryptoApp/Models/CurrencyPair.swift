@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CurrencyPair: Codable {
+struct TradingPair: Codable {
     
     let id, baseCurrency, quoteCurrency, quoteIncrement: String
     let baseIncrement, displayName, minMarketFunds: String

@@ -80,6 +80,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="coinFullNameLabel" destination="SOo-vl-xbd" id="G2R-DD-ISM"/>
+                <outlet property="coinIconImageView" destination="9PM-U0-hVN" id="Z8a-y1-k1U"/>
                 <outlet property="coinNameLabel" destination="cg3-XQ-pqD" id="ehx-kL-335"/>
                 <outlet property="coinPriceLabel" destination="tt4-Fw-KCL" id="eFq-1f-jdv"/>
                 <outlet property="fluctRateLabel" destination="43h-Ro-7pt" id="fhn-Hw-sIA"/>

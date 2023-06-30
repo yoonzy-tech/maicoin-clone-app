@@ -35,11 +35,44 @@
                     <navigationItem key="navigationItem" id="7Df-I8-na4"/>
                     <connections>
                         <outlet property="tableView" destination="zB5-uA-fqa" id="R5d-er-GF6"/>
+                        <segue destination="CT4-KW-sPj" kind="show" identifier="openCoinMarketChart" id="CbG-N1-g4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1943" y="-28"/>
+            <point key="canvasLocation" x="-602" y="1515"/>
+        </scene>
+        <!--Coin Market Chart View Controller-->
+        <scene sceneID="z0j-xK-SyN">
+            <objects>
+                <viewController id="CT4-KW-sPj" customClass="CoinMarketChartViewController" customModule="CryptoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Obo-I8-aBY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fxy-bY-wWr"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Bsj-On-wft"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9lW-xv-lJh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-602" y="2218"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="msd-4T-vAk">
+            <objects>
+                <viewController id="sfL-kx-tiz" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="d6f-f8-Gt8">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="XKt-6d-CPv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="IwU-bX-gWQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lfH-4n-hY6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1309" y="1515"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="t12-lq-3bY">
@@ -53,17 +86,19 @@
                     </tabBar>
                     <connections>
                         <segue destination="JqO-0N-jiI" kind="relationship" relationship="viewControllers" id="r3e-xe-hXH"/>
+                        <segue destination="QdX-3R-Sar" kind="relationship" relationship="viewControllers" id="Vfw-cB-2HQ"/>
+                        <segue destination="y03-67-aHc" kind="relationship" relationship="viewControllers" id="umt-YE-CIS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XJB-bN-txQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="93.89312977099236" y="-28.169014084507044"/>
+            <point key="canvasLocation" x="311" y="-64"/>
         </scene>
-        <!--Item-->
+        <!--市場-->
         <scene sceneID="7sy-52-8bO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JqO-0N-jiI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="fT5-wM-uGl"/>
+                    <tabBarItem key="tabBarItem" title="市場" image="chart.bar" catalog="system" selectedImage="chart.bar.fill" id="fT5-wM-uGl"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gUQ-ZT-MNo">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -78,10 +113,70 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aiq-9u-Ohj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1020.6106870229007" y="-28.169014084507044"/>
+            <point key="canvasLocation" x="-601" y="761"/>
+        </scene>
+        <!--個人-->
+        <scene sceneID="nhK-vg-Ca7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y03-67-aHc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="個人" image="person.circle" catalog="system" selectedImage="person.circle.fill" id="LcS-EN-CHh"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e6P-d8-0Wx">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="sfL-kx-tiz" kind="relationship" relationship="rootViewController" id="KsV-IV-NDt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AVd-GL-Uvv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1309" y="768"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="b8C-e3-URi">
+            <objects>
+                <viewController id="MCa-0f-bcL" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N7r-AE-6M7">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="t6E-4N-2L0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7Uz-3Y-0mm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tyF-AL-wwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="311" y="1515"/>
+        </scene>
+        <!--錢包-->
+        <scene sceneID="cG4-aQ-Qox">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QdX-3R-Sar" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="錢包" image="wallet.pass" catalog="system" selectedImage="wallet.pass.fill" id="4A2-d1-tcg"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nUe-zu-uZp">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="MCa-0f-bcL" kind="relationship" relationship="rootViewController" id="coF-dj-QiO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tXn-Qw-BlI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="311" y="768"/>
         </scene>
     </scenes>
     <resources>
+        <image name="chart.bar" catalog="system" width="128" height="89"/>
+        <image name="chart.bar.fill" catalog="system" width="128" height="90"/>
+        <image name="person.circle" catalog="system" width="128" height="123"/>
+        <image name="person.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="wallet.pass" catalog="system" width="115" height="128"/>
+        <image name="wallet.pass.fill" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
