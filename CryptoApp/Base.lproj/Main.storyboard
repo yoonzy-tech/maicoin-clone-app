@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gwh-FB-2U1">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -48,8 +49,59 @@
                     <view key="view" contentMode="scaleToFill" id="Obo-I8-aBY">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Wa-Lf-aoB">
+                                <rect key="frame" x="0.0" y="689" width="393" height="80"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="h0z-i1-hP4">
+                                        <rect key="frame" x="16" y="16" width="361" height="48"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ek-1F-Qw5">
+                                                <rect key="frame" x="0.0" y="0.0" width="172.66666666666666" height="48"/>
+                                                <color key="backgroundColor" red="0.93333333330000001" green="0.3294117647" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="1cH-2a-qrT"/>
+                                                </constraints>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="買入">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qar-F6-zS1">
+                                                <rect key="frame" x="188.66666666666663" y="0.0" width="172.33333333333337" height="48"/>
+                                                <color key="backgroundColor" red="0.93333333330000001" green="0.3294117647" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="賣出">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="h0z-i1-hP4" secondAttribute="bottom" constant="16" id="HbU-9T-RzD"/>
+                                    <constraint firstItem="h0z-i1-hP4" firstAttribute="top" secondItem="4Wa-Lf-aoB" secondAttribute="top" constant="16" id="bEQ-Z4-Bjw"/>
+                                    <constraint firstAttribute="trailing" secondItem="h0z-i1-hP4" secondAttribute="trailing" constant="16" id="gak-g2-4TT"/>
+                                    <constraint firstItem="h0z-i1-hP4" firstAttribute="leading" secondItem="4Wa-Lf-aoB" secondAttribute="leading" constant="16" id="mfc-ic-GjO"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mKu-wG-acg">
+                                <rect key="frame" x="0.0" y="103" width="393" height="586"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="fxy-bY-wWr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fxy-bY-wWr" firstAttribute="bottom" secondItem="4Wa-Lf-aoB" secondAttribute="bottom" id="1s3-gi-wE4"/>
+                            <constraint firstItem="fxy-bY-wWr" firstAttribute="trailing" secondItem="mKu-wG-acg" secondAttribute="trailing" id="2W0-Q7-HOX"/>
+                            <constraint firstItem="4Wa-Lf-aoB" firstAttribute="leading" secondItem="fxy-bY-wWr" secondAttribute="leading" id="Kwy-an-pXW"/>
+                            <constraint firstItem="4Wa-Lf-aoB" firstAttribute="top" secondItem="mKu-wG-acg" secondAttribute="bottom" id="OSd-yv-7Zx"/>
+                            <constraint firstItem="mKu-wG-acg" firstAttribute="top" secondItem="fxy-bY-wWr" secondAttribute="top" id="VhM-rZ-edI"/>
+                            <constraint firstItem="mKu-wG-acg" firstAttribute="leading" secondItem="fxy-bY-wWr" secondAttribute="leading" id="jYv-OG-zb4"/>
+                            <constraint firstItem="4Wa-Lf-aoB" firstAttribute="trailing" secondItem="fxy-bY-wWr" secondAttribute="trailing" id="uAV-k4-QXA"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Bsj-On-wft"/>
                 </viewController>

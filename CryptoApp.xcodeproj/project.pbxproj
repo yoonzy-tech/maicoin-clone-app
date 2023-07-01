@@ -12,6 +12,12 @@
 		048D831B2A501B6000226EC5 /* MarketChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */; };
 		048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831C2A50241D00226EC5 /* TickerMessage.swift */; };
 		048D831F2A50442F00226EC5 /* ExchangeRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831E2A50442F00226EC5 /* ExchangeRates.swift */; };
+		048D83242A505CFC00226EC5 /* ChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83222A505CFC00226EC5 /* ChartTableViewCell.swift */; };
+		048D83252A505CFC00226EC5 /* ChartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048D83232A505CFC00226EC5 /* ChartTableViewCell.xib */; };
+		048D83292A505D7D00226EC5 /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83282A505D7D00226EC5 /* HistoryHeaderView.swift */; };
+		048D832B2A505D8500226EC5 /* HistoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048D832A2A505D8500226EC5 /* HistoryHeaderView.xib */; };
+		048D832E2A505DA000226EC5 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D832C2A505DA000226EC5 /* HistoryTableViewCell.swift */; };
+		048D832F2A505DA000226EC5 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048D832D2A505DA000226EC5 /* HistoryTableViewCell.xib */; };
 		049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */; };
 		049AA0ED2A4C1D980065CAA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */; };
 		049AA0EF2A4C1D980065CAA9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA0EE2A4C1D980065CAA9 /* HomeViewController.swift */; };
@@ -48,6 +54,12 @@
 		048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewModel.swift; sourceTree = "<group>"; };
 		048D831C2A50241D00226EC5 /* TickerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerMessage.swift; sourceTree = "<group>"; };
 		048D831E2A50442F00226EC5 /* ExchangeRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRates.swift; sourceTree = "<group>"; };
+		048D83222A505CFC00226EC5 /* ChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTableViewCell.swift; sourceTree = "<group>"; };
+		048D83232A505CFC00226EC5 /* ChartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartTableViewCell.xib; sourceTree = "<group>"; };
+		048D83282A505D7D00226EC5 /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
+		048D832A2A505D8500226EC5 /* HistoryHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryHeaderView.xib; sourceTree = "<group>"; };
+		048D832C2A505DA000226EC5 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		048D832D2A505DA000226EC5 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		049AA0E72A4C1D980065CAA9 /* CryptoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,8 +109,14 @@
 		048D83192A501AEB00226EC5 /* MarketChartView */ = {
 			isa = PBXGroup;
 			children = (
-				04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */,
 				048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */,
+				04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */,
+				048D83222A505CFC00226EC5 /* ChartTableViewCell.swift */,
+				048D83232A505CFC00226EC5 /* ChartTableViewCell.xib */,
+				048D83282A505D7D00226EC5 /* HistoryHeaderView.swift */,
+				048D832A2A505D8500226EC5 /* HistoryHeaderView.xib */,
+				048D832C2A505DA000226EC5 /* HistoryTableViewCell.swift */,
+				048D832D2A505DA000226EC5 /* HistoryTableViewCell.xib */,
 			);
 			path = MarketChartView;
 			sourceTree = "<group>";
@@ -274,7 +292,10 @@
 				049AA0F72A4C1D9A0065CAA9 /* LaunchScreen.storyboard in Resources */,
 				049AA1082A4C3E130065CAA9 /* ProductListTableViewCell.xib in Resources */,
 				04A90F742A4D9D6800D59211 /* ProductsTableViewHeaderView.xib in Resources */,
+				048D832B2A505D8500226EC5 /* HistoryHeaderView.xib in Resources */,
+				048D83252A505CFC00226EC5 /* ChartTableViewCell.xib in Resources */,
 				049AA0F42A4C1D9A0065CAA9 /* Assets.xcassets in Resources */,
+				048D832F2A505DA000226EC5 /* HistoryTableViewCell.xib in Resources */,
 				049AA0F22A4C1D980065CAA9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,12 +366,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048D83292A505D7D00226EC5 /* HistoryHeaderView.swift in Sources */,
 				04A90F842A4F073C00D59211 /* UIColor+Extensions.swift in Sources */,
 				048D83162A4FF8B700226EC5 /* WebsocketService.swift in Sources */,
 				049AA0EF2A4C1D980065CAA9 /* HomeViewController.swift in Sources */,
 				04A90F7E2A4EEAAF00D59211 /* Constants.swift in Sources */,
 				04A90F722A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift in Sources */,
 				049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */,
+				048D832E2A505DA000226EC5 /* HistoryTableViewCell.swift in Sources */,
 				048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */,
 				04A90F782A4DC1CA00D59211 /* HomeViewModel.swift in Sources */,
 				048D83182A500A4300226EC5 /* Orders.swift in Sources */,
@@ -363,6 +386,7 @@
 				049AA0FF2A4C1EEE0065CAA9 /* ApiKeys.swift in Sources */,
 				04A90F642A4C685D00D59211 /* Account.swift in Sources */,
 				04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */,
+				048D83242A505CFC00226EC5 /* ChartTableViewCell.swift in Sources */,
 				04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */,
 				049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */,
 				049AA0ED2A4C1D980065CAA9 /* SceneDelegate.swift in Sources */,
