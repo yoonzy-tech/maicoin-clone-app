@@ -19,7 +19,7 @@ class BannerBalanceTableViewCell: UITableViewCell {
     
     var accountTotalBalance: Double = 0 {
         didSet {
-            accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  accountTotalBalance.formatMarketData())"
+            accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  accountTotalBalance.formatMarketDataString())"
         }
     }
     
@@ -32,7 +32,7 @@ class BannerBalanceTableViewCell: UITableViewCell {
         hideBalance = !hideBalance
         accountBalanceButton.setImage(hideBalance ? UIImage(named: "eye-close") :
                                         UIImage(named: "eye-open"), for: .normal)
-        accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  String(accountTotalBalance))"
+        accountBalanceLabel.text = "US$ \(hideBalance ? "******" :  String(accountTotalBalance.formatMarketDataString()))"
     }
     
     private var banners: [Banner] = [

@@ -9,15 +9,6 @@ import Foundation
 
 // State Management
 
-/* States
- [x] Account Balance Total: Sum up all the balance in Accounts under this User
- [x] Coin Code: Products API, id ending up with USD
- [x] Coin Full Name (ZH-TW or ENG): Currencies API, name
- [x] Coin Icons
- [x] Coin Fluct Rate
- [x] Coin Past 24H Avg Price (where to get)
- */
-
 class HomeViewModel {
     
     var accountTotalBalance: ObservableObject<Double> = ObservableObject(0)
@@ -55,29 +46,20 @@ extension HomeViewModel {
 
     func getAccountsTotalBalance() {
         CoinbaseService.shared.fetchAccounts { [weak self] accounts in
-             print("Account: \(accounts)")
-            self?.accountTotalBalance.value = Double(accounts.first(where: { $0.currency == "USD" })?.balance ?? "") ?? 0
-//            self?.accountTotalBalance.value = accounts.reduce(0) { partialResult, account in
-//                if let balance = Double(account.balance) {
-//                    return partialResult + balance
-//                } else {
-//                    print("Invalid balance")
-//                    return 0
-//                }
-//            }
-            
+             // print("Account: \(accounts)")
+            self?.accountTotalBalance.value = Double(accounts.first { $0.currency == "USD" }?.balance ?? "") ?? 0
             guard let accountTotalBalance = self?.accountTotalBalance else { return }
-            print("Total Account Balance: \(accountTotalBalance.value)")
+            // print("Total Account Balance: \(accountTotalBalance.value)")
         }
     }
 
     func getUSDPairsProductFluctRateAvgPrice() {
-         // print("USD Pair List: \(usdTradingPairs.value)")
-        
+        // print("USD Pair List: \(usdTradingPairs.value)")
+        fluctuateRateAvgPrice.value = []
         usdTradingPairs.value.forEach { productID in
+            
             CoinbaseService.shared.fetchProductStats(productID: productID.1) { [weak self] productStats in
-                // print("\(productID.0): \(productStats)")
-
+                // print("\(productID.0): \(productStats)"
                 let lastPrice = productStats.last
                 let openPrice = productStats.open
                 let flucRate = ((Double(lastPrice) ?? 0) - (Double(openPrice) ?? 0)) / (Double(lastPrice) ?? 0) * 100
@@ -86,20 +68,20 @@ extension HomeViewModel {
                 let lowPrice = productStats.low
                 let avgPrice = ((Double(highPrice) ?? 0) + (Double(lowPrice) ?? 0)) / 2
                 
-                self?.fluctuateRateAvgPrice.value.append(
-                    (flucRate, avgPrice)
-                )
-                // print("\(productID): \(flucRate.roundToDecimal(2)), \(avgPrice.roundToDecimal(4))")
+                self?.fluctuateRateAvgPrice.value.append((flucRate, avgPrice))
             }
         }
+        // print(fluctuateRateAvgPrice.value)
     }
     
     func getCurrencyNames() {
+        currencyNames.value = []
         usdTradingPairs.value.forEach { currency in
+            
             CoinbaseService.shared.fetchCurrencyDetail(currencyID: currency.0) { [weak self] currencyInfo in
                 self?.currencyNames.value.append((currencyInfo.id, currencyInfo.name))
             }
         }
-        // print(currencyNames.value)
+         // print(currencyNames.value)
     }
 }

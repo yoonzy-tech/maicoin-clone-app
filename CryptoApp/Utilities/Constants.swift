@@ -9,6 +9,7 @@ import Foundation
 
 enum AppColor: String {
     case red = "#EE5455"
+    case green = "#0FBA85"
 }
 
 let coinCodeToZHTWName: [String: String] = [

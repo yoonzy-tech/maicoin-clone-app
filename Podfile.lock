@@ -1,41 +1,55 @@
 PODS:
   - Alamofire (5.7.1)
+  - DGCharts (5.0.0):
+    - DGCharts/Core (= 5.0.0)
+  - DGCharts/Core (5.0.0)
   - iCarousel (1.8.3)
   - IQKeyboardManagerSwift (6.5.11)
   - Kingfisher (7.8.0)
   - MJRefresh (3.7.5)
   - ProgressHUD (13.6.2)
+  - Starscream (4.0.4)
   - SwiftLint (0.52.3)
+  - TinyConstraints (4.0.2)
 
 DEPENDENCIES:
   - Alamofire
+  - DGCharts
   - iCarousel
   - IQKeyboardManagerSwift
   - Kingfisher
   - MJRefresh
   - ProgressHUD
+  - Starscream
   - SwiftLint
+  - TinyConstraints
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - DGCharts
     - iCarousel
     - IQKeyboardManagerSwift
     - Kingfisher
     - MJRefresh
     - ProgressHUD
+    - Starscream
+    - TinyConstraints
   trunk:
     - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  DGCharts: 6e0cf2644e8f81ad13f04caa8bc18502870a1c54
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   Kingfisher: 0656e1b064bfc1ca1cd04e033f617a86559696e9
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   ProgressHUD: 355915c8f033e626788fa9b0d99d06e8691595ab
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
+  TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
 
-PODFILE CHECKSUM: a0ee231d0501b1682c2a5c38aff95fd393edd006
+PODFILE CHECKSUM: f2bc2264446c49c22480d61e360af7578a89a5ac
 
 COCOAPODS: 1.12.0

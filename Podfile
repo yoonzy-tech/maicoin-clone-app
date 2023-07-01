@@ -13,5 +13,8 @@ target 'CryptoApp' do
   pod 'Alamofire' 
   pod 'ProgressHUD'
   pod 'iCarousel'
+  pod 'DGCharts'
+  pod 'TinyConstraints'
+  pod 'Starscream'  
 
 end

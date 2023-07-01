@@ -22,7 +22,6 @@
 		04A90F642A4C685D00D59211 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F632A4C685D00D59211 /* Account.swift */; };
 		04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F652A4D227700D59211 /* CurrencyInfo.swift */; };
 		04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F672A4D314B00D59211 /* ProductStats.swift */; };
-		04A90F6C2A4D446B00D59211 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F6B2A4D446B00D59211 /* String+Extensions.swift */; };
 		04A90F6F2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F6D2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift */; };
 		04A90F702A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A90F6E2A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib */; };
 		04A90F722A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F712A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift */; };
@@ -56,7 +55,6 @@
 		04A90F632A4C685D00D59211 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		04A90F652A4D227700D59211 /* CurrencyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
 		04A90F672A4D314B00D59211 /* ProductStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStats.swift; sourceTree = "<group>"; };
-		04A90F6B2A4D446B00D59211 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		04A90F6D2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		04A90F6E2A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerBalanceTableViewCell.xib; sourceTree = "<group>"; };
 		04A90F712A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsTableViewHeaderView.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 		04A90F6A2A4D442900D59211 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				04A90F6B2A4D446B00D59211 /* String+Extensions.swift */,
 				04A90F792A4DC94200D59211 /* Double+Extensions.swift */,
 				04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */,
 			);
@@ -337,7 +334,6 @@
 				04A90F822A4F06ED00D59211 /* TabBarViewController.swift in Sources */,
 				04A90F7C2A4DF12900D59211 /* CoinbaseService+Helpers.swift in Sources */,
 				04A90F762A4DC03400D59211 /* ObservableObject.swift in Sources */,
-				04A90F6C2A4D446B00D59211 /* String+Extensions.swift in Sources */,
 				049AA0FF2A4C1EEE0065CAA9 /* ApiKeys.swift in Sources */,
 				04A90F642A4C685D00D59211 /* Account.swift in Sources */,
 				04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */,

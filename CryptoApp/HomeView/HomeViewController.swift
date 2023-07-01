@@ -21,6 +21,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // UI Setup
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white
+        ]
         setupTableView()
         setupBinders()
         tableView.mj_header = MJRefreshNormalHeader()
@@ -36,6 +39,10 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         // Data Fetching
         requestAPIAgain()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     func requestAPIAgain() {
@@ -65,13 +72,28 @@ class HomeViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             }
-
         }
 
         viewModel.usdTradingPairs.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             }
+        }
+    }
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Check if the scroll offset has reached the scroll edge threshold
+        let scrollOffset = scrollView.contentOffset.y
+        let scrollEdgeThreshold: CGFloat = 50 // Adjust this threshold value as per your requirement
+        
+        if scrollOffset >= scrollEdgeThreshold {
+            // Set the title for the navigation bar when the scroll offset reaches the scroll edge threshold
+            navigationItem.title = "市場"
+        } else {
+            // Remove the title otherwise
+            navigationItem.title = nil
         }
     }
 }
@@ -122,7 +144,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "BannerBalanceTableViewCell", for: indexPath) as? BannerBalanceTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            cell.accountTotalBalance = viewModel.accountTotalBalance.value
+            cell.accountTotalBalance = viewModel.accountTotalBalance.value.formatMarketDataDouble()
             
             return cell
         
@@ -131,14 +153,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "ProductListTableViewCell", for: indexPath) as? ProductListTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            let coinCode = viewModel.usdTradingPairs.value[indexPath.row].0
-            cell.coinIconImageView.image = UIImage(named: coinCode)
-            cell.coinNameLabel.text = coinCode
-            cell.coinFullNameLabel.text = coinCodeToZHTWName[coinCode]
-            let price = viewModel.fluctuateRateAvgPrice.value[indexPath.row].1
-            cell.coinPriceLabel.text = price.formatMarketData()
-            let rate = viewModel.fluctuateRateAvgPrice.value[indexPath.row].0
-            cell.fluctRateLabel.text = "\(rate > 0 ? "+" : "")\(rate.formatMarketData())%"
+            cell.coinCode = viewModel.usdTradingPairs.value[indexPath.row].0
+            cell.price = viewModel.fluctuateRateAvgPrice.value[indexPath.row].1
+            cell.rate = viewModel.fluctuateRateAvgPrice.value[indexPath.row].0
             
             return cell
         }
@@ -155,10 +172,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openCoinMarketChart" {
+        if segue.identifier == "openCoinMarketChart",
             let destinationVC = segue.destination as? CoinMarketChartViewController {
-                
-            }
+            destinationVC.title = ""
         }
     }
 }
