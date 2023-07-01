@@ -18,7 +18,7 @@ final class CoinbaseService {
 extension CoinbaseService {
     func fetchAccounts(completion: @escaping ([Account]) -> Void) {
         getApiResponse(api: .accounts,
-                       authRequired: true, requestPath: .accounts, httpMethod: .GET) { (accounts: [Account]) in
+                       authRequired: true, requestPath: "/accounts", httpMethod: .GET) { (accounts: [Account]) in
             completion(accounts)
         }
     }
@@ -32,7 +32,7 @@ extension CoinbaseService {
     
     func fetchUserProfile(completion: @escaping (Profile) -> Void) {
         getApiResponse(api: .profile,
-                       authRequired: true, requestPath: .profile, httpMethod: .GET) { (profiles: [Profile]) in
+                       authRequired: true, requestPath: "/profiles?active", httpMethod: .GET) { (profiles: [Profile]) in
             guard let profile = profiles.first else { return }
             completion(profile)
         }
@@ -50,6 +50,20 @@ extension CoinbaseService {
         getApiResponse(api: .currencyDetail(currencyID: currencyID),
                        authRequired: false) { (currencyInfo: CurrencyInfo) in
             completion(currencyInfo)
+        }
+    }
+    
+    func fetchProductCandles(productID: String, completion: @escaping ([[Double]]) -> Void) {
+        getApiResponse(api: .allCandles(productID: productID), authRequired: false) { (candles: [[Double]]) in
+            completion(candles)
+        }
+    }
+    
+    func fetchProductOrders(productID: String, status: String = "done", limit: Int = 5, completion: @escaping ([Order]) -> Void) {
+        // Only showing top 5-6 history, newest on top
+        getApiResponse(api: .allOrders(limit: limit, status: status, productID: productID),
+                       authRequired: true, requestPath: "/orders?limit=5&status=done&product_id=\(productID)", httpMethod: .GET) { (orders: [Order]) in
+            completion(orders)
         }
     }
 }

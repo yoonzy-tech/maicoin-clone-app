@@ -38,15 +38,14 @@ extension CoinbaseService {
     }
     
     func getApiResponse<T: Codable>(api: CoinbaseApi,
-                                    param: String = "",
                                     authRequired: Bool,
-                                    requestPath: CoinbaseRequestPath = .none,
+                                    requestPath: String = "",
                                     httpMethod: HttpMethod = .GET,
                                     body: String = "",
                                     completion: @escaping (T) -> Void) {
         
         let semaphore = DispatchSemaphore(value: 0)
-        guard let url = URL(string: api.path + param) else {
+        guard let url = URL(string: api.path) else {
             print("Invalid URL")
             return
         }
@@ -55,7 +54,7 @@ extension CoinbaseService {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         if authRequired {
-            let timestampSignature = getTimestampSignature(requestPath: requestPath.rawValue,
+            let timestampSignature = getTimestampSignature(requestPath: requestPath,
                                                            method: httpMethod.rawValue,
                                                            body: body)
             

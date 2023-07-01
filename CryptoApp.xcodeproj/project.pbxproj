@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048D83162A4FF8B700226EC5 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83152A4FF8B700226EC5 /* WebsocketService.swift */; };
+		048D83182A500A4300226EC5 /* Orders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83172A500A4300226EC5 /* Orders.swift */; };
+		048D831B2A501B6000226EC5 /* MarketChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */; };
+		048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831C2A50241D00226EC5 /* TickerMessage.swift */; };
 		049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */; };
 		049AA0ED2A4C1D980065CAA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */; };
 		049AA0EF2A4C1D980065CAA9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA0EE2A4C1D980065CAA9 /* HomeViewController.swift */; };
@@ -33,11 +37,15 @@
 		04A90F7E2A4EEAAF00D59211 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F7D2A4EEAAF00D59211 /* Constants.swift */; };
 		04A90F822A4F06ED00D59211 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F812A4F06ED00D59211 /* TabBarViewController.swift */; };
 		04A90F842A4F073C00D59211 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */; };
-		04A90F862A4F0C1B00D59211 /* CoinMarketChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F852A4F0C1B00D59211 /* CoinMarketChartViewController.swift */; };
+		04A90F862A4F0C1B00D59211 /* MarketChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */; };
 		E61F031A5BD0486547C5B974 /* Pods_CryptoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		048D83152A4FF8B700226EC5 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
+		048D83172A500A4300226EC5 /* Orders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orders.swift; sourceTree = "<group>"; };
+		048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewModel.swift; sourceTree = "<group>"; };
+		048D831C2A50241D00226EC5 /* TickerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerMessage.swift; sourceTree = "<group>"; };
 		049AA0E72A4C1D980065CAA9 /* CryptoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +74,7 @@
 		04A90F7D2A4EEAAF00D59211 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		04A90F812A4F06ED00D59211 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = /Users/rubychew/Desktop/CryptoApp/CryptoApp/TabBarViewController.swift; sourceTree = "<absolute>"; };
 		04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		04A90F852A4F0C1B00D59211 /* CoinMarketChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketChartViewController.swift; sourceTree = "<group>"; };
+		04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewController.swift; sourceTree = "<group>"; };
 		08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4717991FC7B8EE28F7B209C4 /* Pods-CryptoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.release.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.release.xcconfig"; sourceTree = "<group>"; };
 		63B17860CB531B1A37CB9DE2 /* Pods-CryptoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.debug.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		048D83192A501AEB00226EC5 /* MarketChartView */ = {
+			isa = PBXGroup;
+			children = (
+				04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */,
+				048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */,
+			);
+			path = MarketChartView;
+			sourceTree = "<group>";
+		};
 		049AA0DE2A4C1D980065CAA9 = {
 			isa = PBXGroup;
 			children = (
@@ -105,10 +122,11 @@
 		049AA0E92A4C1D980065CAA9 /* CryptoApp */ = {
 			isa = PBXGroup;
 			children = (
+				049AA1012A4C2E730065CAA9 /* Utilities */,
 				04A90F6A2A4D442900D59211 /* Extensions */,
 				049AA1092A4C47160065CAA9 /* Models */,
 				049AA1042A4C3DCA0065CAA9 /* HomeView */,
-				049AA1012A4C2E730065CAA9 /* Utilities */,
+				048D83192A501AEB00226EC5 /* MarketChartView */,
 				04A90F812A4F06ED00D59211 /* TabBarViewController.swift */,
 				049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */,
 				049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */,
@@ -116,7 +134,6 @@
 				049AA0F52A4C1D9A0065CAA9 /* LaunchScreen.storyboard */,
 				049AA0F32A4C1D9A0065CAA9 /* Assets.xcassets */,
 				049AA0F82A4C1D9A0065CAA9 /* Info.plist */,
-				04A90F852A4F0C1B00D59211 /* CoinMarketChartViewController.swift */,
 			);
 			path = CryptoApp;
 			sourceTree = "<group>";
@@ -129,6 +146,7 @@
 				049AA1022A4C2FD80065CAA9 /* CoinbaseService.swift */,
 				04A90F7B2A4DF12900D59211 /* CoinbaseService+Helpers.swift */,
 				04A90F752A4DC03400D59211 /* ObservableObject.swift */,
+				048D83152A4FF8B700226EC5 /* WebsocketService.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -156,6 +174,8 @@
 				04A90F632A4C685D00D59211 /* Account.swift */,
 				04A90F652A4D227700D59211 /* CurrencyInfo.swift */,
 				04A90F672A4D314B00D59211 /* ProductStats.swift */,
+				048D83172A500A4300226EC5 /* Orders.swift */,
+				048D831C2A50241D00226EC5 /* TickerMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -323,11 +343,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A90F842A4F073C00D59211 /* UIColor+Extensions.swift in Sources */,
+				048D83162A4FF8B700226EC5 /* WebsocketService.swift in Sources */,
 				049AA0EF2A4C1D980065CAA9 /* HomeViewController.swift in Sources */,
 				04A90F7E2A4EEAAF00D59211 /* Constants.swift in Sources */,
 				04A90F722A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift in Sources */,
 				049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */,
+				048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */,
 				04A90F782A4DC1CA00D59211 /* HomeViewModel.swift in Sources */,
+				048D83182A500A4300226EC5 /* Orders.swift in Sources */,
 				049AA1032A4C2FD80065CAA9 /* CoinbaseService.swift in Sources */,
 				04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */,
 				049AA10B2A4C472B0065CAA9 /* CurrencyPair.swift in Sources */,
@@ -341,8 +364,9 @@
 				049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */,
 				049AA0ED2A4C1D980065CAA9 /* SceneDelegate.swift in Sources */,
 				049AA1072A4C3E130065CAA9 /* ProductListTableViewCell.swift in Sources */,
-				04A90F862A4F0C1B00D59211 /* CoinMarketChartViewController.swift in Sources */,
+				04A90F862A4F0C1B00D59211 /* MarketChartViewController.swift in Sources */,
 				04A90F6F2A4D4CAC00D59211 /* BannerBalanceTableViewCell.swift in Sources */,
+				048D831B2A501B6000226EC5 /* MarketChartViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

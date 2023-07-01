@@ -23,12 +23,6 @@ enum HttpMethod: String {
     case POST
 }
 
-enum CoinbaseRequestPath: String {
-    case none
-    case accounts = "/accounts"
-    case profile = "/profiles?active"
-}
-
 enum CoinbaseApi {
     case accounts
     case allTradingPairs
@@ -36,6 +30,8 @@ enum CoinbaseApi {
     case allCurrenciesDetail
     case currencyDetail(currencyID: String)
     case productStats(productID: String)
+    case allOrders(limit: Int, status: String, productID: String)
+    case allCandles(productID: String)
     
     private var baseURL: String {
         return "https://api-public.sandbox.pro.coinbase.com"
@@ -55,6 +51,10 @@ enum CoinbaseApi {
             return "\(baseURL)/currencies"
         case .currencyDetail(currencyID: let currencyID):
             return "\(baseURL)/currencies/\(currencyID)"
+        case .allOrders(limit: let limit, status: let status, productID: let productID):
+            return "\(baseURL)/orders?limit=\(limit)&status=\(status)&product_id=\(productID)"
+        case .allCandles(productID: let productID):
+            return "\(baseURL)/products/\(productID)/candles"
         }
     }
 }

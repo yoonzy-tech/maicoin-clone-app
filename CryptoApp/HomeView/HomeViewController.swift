@@ -7,6 +7,7 @@
 
 import UIKit
 import MJRefresh
+import Starscream
 
 enum CurrencyName: String {
     case USD
@@ -18,9 +19,12 @@ class HomeViewController: UIViewController {
     
     let viewModel = HomeViewModel()
     
+    var socket: WebSocket!
+    
+    var isConnected: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // UI Setup
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
@@ -28,6 +32,9 @@ class HomeViewController: UIViewController {
         setupBinders()
         tableView.mj_header = MJRefreshNormalHeader()
         tableView.mj_header?.setRefreshingTarget(self, refreshingAction: #selector(refreshPage))
+        CoinbaseService.shared.fetchUserProfile { profile in
+            print("Profile: \(profile)")
+        }
     }
     
     @objc func refreshPage() {
@@ -173,7 +180,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openCoinMarketChart",
-            let destinationVC = segue.destination as? CoinMarketChartViewController {
+            let destinationVC = segue.destination as? MarketChartViewController {
             destinationVC.title = ""
         }
     }
