@@ -32,9 +32,9 @@ class HomeViewController: UIViewController {
         setupBinders()
         tableView.mj_header = MJRefreshNormalHeader()
         tableView.mj_header?.setRefreshingTarget(self, refreshingAction: #selector(refreshPage))
-        CoinbaseService.shared.fetchUserProfile { profile in
-            print("Profile: \(profile)")
-        }
+//        CoinbaseService.shared.fetchUserProfile { profile in
+//            print("Profile: \(profile)")
+//        }
     }
     
     @objc func refreshPage() {
@@ -151,7 +151,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "BannerBalanceTableViewCell", for: indexPath) as? BannerBalanceTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            cell.accountTotalBalance = viewModel.accountTotalBalance.value.formatMarketDataDouble()
+            cell.accountTotalBalance = viewModel.accountTotalBalance.value.convertToTWD().rounded()
             
             return cell
         
@@ -160,8 +160,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "ProductListTableViewCell", for: indexPath) as? ProductListTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            cell.coinCode = viewModel.usdTradingPairs.value[indexPath.row].0
-            cell.price = viewModel.fluctuateRateAvgPrice.value[indexPath.row].1
+            let coinCode = viewModel.usdTradingPairs.value[indexPath.row].0
+            cell.coinCode = coinCode
+            cell.price = viewModel.fluctuateRateAvgPrice.value[indexPath.row].1.convertToTWD().rounded()
             cell.rate = viewModel.fluctuateRateAvgPrice.value[indexPath.row].0
             
             return cell

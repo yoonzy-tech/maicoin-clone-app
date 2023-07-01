@@ -58,4 +58,18 @@ extension Double {
         
         return formattedNumber.doubleValue
     }
+    
+    func convertToTWD() -> Double {
+        var convertedAmount: Double = 0
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        CoinbaseService.shared.fetchCurrencyRate { fetchedRate in
+            convertedAmount = self * fetchedRate
+            semaphore.signal()
+        }
+        semaphore.wait()
+        
+        return convertedAmount
+    }
 }

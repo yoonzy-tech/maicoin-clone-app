@@ -16,6 +16,7 @@ final class CoinbaseService {
 }
 
 extension CoinbaseService {
+    
     func fetchAccounts(completion: @escaping ([Account]) -> Void) {
         getApiResponse(api: .accounts,
                        authRequired: true, requestPath: "/accounts", httpMethod: .GET) { (accounts: [Account]) in
@@ -64,6 +65,13 @@ extension CoinbaseService {
         getApiResponse(api: .allOrders(limit: limit, status: status, productID: productID),
                        authRequired: true, requestPath: "/orders?limit=5&status=done&product_id=\(productID)", httpMethod: .GET) { (orders: [Order]) in
             completion(orders)
+        }
+    }
+    
+    func fetchCurrencyRate(completion: @escaping (Double) -> Void) {
+        getApiResponse(api: .exchangeRate, authRequired: false) { (allRates: ExchangeRates) in
+            let rate = Double(allRates.data.rates["TWD"] ?? "0") ?? 0
+            completion(rate)
         }
     }
 }

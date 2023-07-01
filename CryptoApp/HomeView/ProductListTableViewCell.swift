@@ -57,6 +57,7 @@ class ProductListTableViewCell: UITableViewCell, ChartViewDelegate {
         lineChartView.xAxis.enabled = false
         lineChartView.leftAxis.enabled = false
         lineChartView.rightAxis.enabled = false
+        lineChartView.doubleTapToZoomEnabled = false
         
         var values: [Double] = []
         var valueArray: [Double] = []

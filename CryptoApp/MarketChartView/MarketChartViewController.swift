@@ -15,6 +15,7 @@ class MarketChartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         WebsocketService.shared.connect()
+         
     }
     
     override func viewDidDisappear(_ animated: Bool) {

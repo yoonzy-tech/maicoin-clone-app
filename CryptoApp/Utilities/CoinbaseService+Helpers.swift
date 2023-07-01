@@ -42,6 +42,7 @@ extension CoinbaseService {
                                     requestPath: String = "",
                                     httpMethod: HttpMethod = .GET,
                                     body: String = "",
+                                    parameters: String? = nil,
                                     completion: @escaping (T) -> Void) {
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -65,6 +66,11 @@ extension CoinbaseService {
         }
         request.httpMethod = httpMethod.rawValue
         
+        if let parameters = parameters, httpMethod == .POST {
+            let postData = parameters.data(using: .utf8)
+            request.httpBody = postData
+        }
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 print(String(describing: error))
@@ -85,5 +91,5 @@ extension CoinbaseService {
         
         task.resume()
         semaphore.wait()
-    }
+    }        
 }

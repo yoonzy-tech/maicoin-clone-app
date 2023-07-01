@@ -32,6 +32,7 @@ enum CoinbaseApi {
     case productStats(productID: String)
     case allOrders(limit: Int, status: String, productID: String)
     case allCandles(productID: String)
+    case exchangeRate
     
     private var baseURL: String {
         return "https://api-public.sandbox.pro.coinbase.com"
@@ -55,6 +56,8 @@ enum CoinbaseApi {
             return "\(baseURL)/orders?limit=\(limit)&status=\(status)&product_id=\(productID)"
         case .allCandles(productID: let productID):
             return "\(baseURL)/products/\(productID)/candles"
+        case .exchangeRate:
+            return "https://api.coinbase.com/v2/exchange-rates"
         }
     }
 }
