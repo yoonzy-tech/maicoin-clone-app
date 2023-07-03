@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        customNavigationBarStyle()
         return true
     }
 
@@ -27,6 +28,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    func customNavigationBarStyle() {
+        let newNavBarAppearance = UINavigationBarAppearance()
+        newNavBarAppearance.backgroundColor = UIColor(hexString: .red)
+        newNavBarAppearance.shadowColor = .clear
+        newNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        newNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        newNavBarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.lightText]
+        barButtonItemAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.label]
+        barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.white]
+        newNavBarAppearance.buttonAppearance = barButtonItemAppearance
+        newNavBarAppearance.backButtonAppearance = barButtonItemAppearance
+        newNavBarAppearance.doneButtonAppearance = barButtonItemAppearance
+        
+        let appearance = UINavigationBar.appearance()
+        appearance.tintColor = UIColor.white
+        appearance.scrollEdgeAppearance = newNavBarAppearance
+        appearance.compactAppearance = newNavBarAppearance
+        appearance.standardAppearance = newNavBarAppearance
     }
 
 }

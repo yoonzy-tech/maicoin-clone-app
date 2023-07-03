@@ -54,16 +54,34 @@ extension CoinbaseService {
         }
     }
     
-    func fetchProductCandles(productID: String, completion: @escaping ([[Double]]) -> Void) {
-        getApiResponse(api: .allCandles(productID: productID), authRequired: false) { (candles: [[Double]]) in
+    func fetchProductCandles(productID: String,
+                             granularity: Int? = nil,
+                             startTime: Double? = nil,
+                             endTime: Double? = nil,
+                             completion: @escaping ([[Double]]) -> Void) {
+        getApiResponse(api: .allCandles(productID: productID,
+                                        granularity: granularity),
+                       authRequired: false) { (candles: [[Double]]) in
             completion(candles)
         }
     }
     
+    func fetchProductCandlesTest(productID: String,
+                             granularity: Int? = nil,
+                             startTime: Double? = nil,
+                             endTime: Double? = nil) -> [[Double]] {
+        let candles: [[Double]] = getApiResponseNoCompletion(api: .allCandles(productID: productID, granularity: granularity, startTime: startTime, endTime: endTime), authRequired: false) ?? []
+        return candles
+    }
+    
     func fetchProductOrders(productID: String, status: String = "done", limit: Int = 5, completion: @escaping ([Order]) -> Void) {
         // Only showing top 5-6 history, newest on top
-        getApiResponse(api: .allOrders(limit: limit, status: status, productID: productID),
-                       authRequired: true, requestPath: "/orders?limit=5&status=done&product_id=\(productID)", httpMethod: .GET) { (orders: [Order]) in
+        getApiResponse(api: .allOrders(limit: limit,
+                                       status: status,
+                                       productID: productID),
+                       authRequired: true,
+                       requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",
+                       httpMethod: .GET) { (orders: [Order]) in
             completion(orders)
         }
     }

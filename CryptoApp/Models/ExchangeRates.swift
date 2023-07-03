@@ -7,8 +7,6 @@
 
 import Foundation
 
-// MARK: - Welcome
-// MARK: - Welcome
 struct ExchangeRates: Codable {
     let data: DataClass
 }

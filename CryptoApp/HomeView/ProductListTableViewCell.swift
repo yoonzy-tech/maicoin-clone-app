@@ -61,7 +61,7 @@ class ProductListTableViewCell: UITableViewCell, ChartViewDelegate {
         
         var values: [Double] = []
         var valueArray: [Double] = []
-        for _ in 1...30 {
+        for _ in 1...25 {
             let randomValue = Double.random(in: 23...25)
             valueArray.append(randomValue)
         }

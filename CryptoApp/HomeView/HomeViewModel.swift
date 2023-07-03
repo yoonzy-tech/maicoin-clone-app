@@ -37,9 +37,8 @@ extension HomeViewModel {
             let newUSDPairs = USDPairs.compactMap { product in
                 return (product.baseCurrency, product.id)
             }
-            
             // print("USD Curreny Pairs (Array): \(USDPairs)")
-            self?.usdTradingPairs.value = newUSDPairs
+            self?.usdTradingPairs.value = newUSDPairs.sorted(by: { $0 < $1 })
         }
         
     }
@@ -48,7 +47,7 @@ extension HomeViewModel {
         CoinbaseService.shared.fetchAccounts { [weak self] accounts in
              // print("Account: \(accounts)")
             self?.accountTotalBalance.value = Double(accounts.first { $0.currency == "USD" }?.balance ?? "") ?? 0
-            guard let accountTotalBalance = self?.accountTotalBalance else { return }
+            // guard let accountTotalBalance = self?.accountTotalBalance else { return }
             // print("Total Account Balance: \(accountTotalBalance.value)")
         }
     }

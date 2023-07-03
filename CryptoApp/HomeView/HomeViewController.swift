@@ -23,18 +23,18 @@ class HomeViewController: UIViewController {
     
     var isConnected: Bool = false
     
+    var passedCoinCode: String = ""
+    
+    var passedCoinName: String = ""
+    
+    var passCoinCodeProductID: (String, String) = ("", "")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white
-        ]
         setupTableView()
         setupBinders()
         tableView.mj_header = MJRefreshNormalHeader()
         tableView.mj_header?.setRefreshingTarget(self, refreshingAction: #selector(refreshPage))
-//        CoinbaseService.shared.fetchUserProfile { profile in
-//            print("Profile: \(profile)")
-//        }
     }
     
     @objc func refreshPage() {
@@ -44,12 +44,14 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         // Data Fetching
         requestAPIAgain()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     func requestAPIAgain() {
@@ -98,9 +100,11 @@ extension HomeViewController: UIScrollViewDelegate {
         if scrollOffset >= scrollEdgeThreshold {
             // Set the title for the navigation bar when the scroll offset reaches the scroll edge threshold
             navigationItem.title = "市場"
+            navigationController?.setNavigationBarHidden(false, animated: false)
         } else {
             // Remove the title otherwise
             navigationItem.title = nil
+            navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
 }
@@ -123,15 +127,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProductsTableViewHeaderView")
-                as? ProductsTableViewHeaderView
-        else { fatalError("Unable to generate Table View Section Header") }
-        
         switch section {
-        case 0:
-            return nil
-        default:
+        case 1:
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProductsTableViewHeaderView")
+                    as? ProductsTableViewHeaderView
+            else { fatalError("Unable to generate Table View Section Header") }
             return headerView
+        default:
+            return nil
         }
     }
     
@@ -173,6 +176,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
             
         case 1:
+            self.passedCoinCode = viewModel.usdTradingPairs.value[indexPath.row].0
+            self.passedCoinName = coinCodeToZHTWName[self.passedCoinCode] ?? self.passedCoinCode
+            self.passCoinCodeProductID = viewModel.usdTradingPairs.value[indexPath.row]
             performSegue(withIdentifier: "openCoinMarketChart", sender: nil)
         default:
             return
@@ -182,7 +188,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openCoinMarketChart",
             let destinationVC = segue.destination as? MarketChartViewController {
-            destinationVC.title = ""
+            destinationVC.title = "\(self.passedCoinName) (\(self.passedCoinCode))"
+            destinationVC.coinCodeProductID = passCoinCodeProductID
         }
     }
 }

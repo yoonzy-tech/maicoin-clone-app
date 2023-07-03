@@ -92,7 +92,8 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fxy-bY-wWr"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.32941176470588235" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fxy-bY-wWr" firstAttribute="bottom" secondItem="4Wa-Lf-aoB" secondAttribute="bottom" id="1s3-gi-wE4"/>
                             <constraint firstItem="fxy-bY-wWr" firstAttribute="trailing" secondItem="mKu-wG-acg" secondAttribute="trailing" id="2W0-Q7-HOX"/>
@@ -104,6 +105,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Bsj-On-wft"/>
+                    <connections>
+                        <outlet property="buyButton" destination="2ek-1F-Qw5" id="c9o-G4-8f7"/>
+                        <outlet property="sellButton" destination="Qar-F6-zS1" id="PhA-vf-lnL"/>
+                        <outlet property="tableView" destination="mKu-wG-acg" id="dMQ-dl-Tes"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9lW-xv-lJh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -133,7 +139,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LSD-eh-1AD">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" red="0.93333333330000001" green="0.3294117647" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
@@ -155,8 +161,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gUQ-ZT-MNo">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.93333333333333335" green="0.32941176470588235" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" red="0.93333333330000001" green="0.3294117647" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

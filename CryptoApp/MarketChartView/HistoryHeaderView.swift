@@ -9,6 +9,9 @@ import UIKit
 
 class HistoryHeaderView: UITableViewHeaderFooterView {
 
+    @IBAction func viewAllButton(_ sender: Any) {
+        // perform segue to all history view controller
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

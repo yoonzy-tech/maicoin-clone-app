@@ -9,22 +9,22 @@ import Foundation
 
 struct TickerMessage: Codable {
     let type: String
-    let sequence: Int
-    let productId: String
-    let price: String
-    let open24h: String
-    let volume24h: String
-    let low24h: String
-    let high24h: String
-    let volume30d: String
-    let bestBid: String
-    let bestBidSize: String
-    let bestAsk: String
-    let bestAskSize: String
-    let side: String
-    let time: String
-    let tradeId: Int
-    let lastSize: String
+    let sequence: Int?
+    let productId: String?
+    let price: String?
+    let open24h: String?
+    let volume24h: String?
+    let low24h: String?
+    let high24h: String?
+    let volume30d: String?
+    let bestBid: String?
+    let bestBidSize: String?
+    let bestAsk: String?
+    let bestAskSize: String?
+    let side: String?
+    let time: String?
+    let tradeId: Int?
+    let lastSize: String?
     
     enum CodingKeys: String, CodingKey {
         case type

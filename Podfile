@@ -16,5 +16,6 @@ target 'CryptoApp' do
   pod 'DGCharts'
   pod 'TinyConstraints'
   pod 'Starscream'  
+  pod 'AAInfographics' 
 
 end

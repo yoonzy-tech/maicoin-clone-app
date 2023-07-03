@@ -45,6 +45,9 @@
 		04A90F822A4F06ED00D59211 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F812A4F06ED00D59211 /* TabBarViewController.swift */; };
 		04A90F842A4F073C00D59211 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */; };
 		04A90F862A4F0C1B00D59211 /* MarketChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */; };
+		04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94DF82A51944700EB95CC /* String+Extensions.swift */; };
+		04A94DFE2A51AB3900EB95CC /* NoDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */; };
+		04A94DFF2A51AB3900EB95CC /* NoDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */; };
 		E61F031A5BD0486547C5B974 /* Pods_CryptoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +92,9 @@
 		04A90F812A4F06ED00D59211 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = /Users/rubychew/Desktop/CryptoApp/CryptoApp/TabBarViewController.swift; sourceTree = "<absolute>"; };
 		04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewController.swift; sourceTree = "<group>"; };
+		04A94DF82A51944700EB95CC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataTableViewCell.swift; sourceTree = "<group>"; };
+		04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoDataTableViewCell.xib; sourceTree = "<group>"; };
 		08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4717991FC7B8EE28F7B209C4 /* Pods-CryptoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.release.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.release.xcconfig"; sourceTree = "<group>"; };
 		63B17860CB531B1A37CB9DE2 /* Pods-CryptoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.debug.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +151,8 @@
 				049AA1012A4C2E730065CAA9 /* Utilities */,
 				04A90F6A2A4D442900D59211 /* Extensions */,
 				049AA1092A4C47160065CAA9 /* Models */,
+				04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */,
+				04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */,
 				049AA1042A4C3DCA0065CAA9 /* HomeView */,
 				048D83192A501AEB00226EC5 /* MarketChartView */,
 				04A90F812A4F06ED00D59211 /* TabBarViewController.swift */,
@@ -206,6 +214,7 @@
 			children = (
 				04A90F792A4DC94200D59211 /* Double+Extensions.swift */,
 				04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */,
+				04A94DF82A51944700EB95CC /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -294,6 +303,7 @@
 				04A90F742A4D9D6800D59211 /* ProductsTableViewHeaderView.xib in Resources */,
 				048D832B2A505D8500226EC5 /* HistoryHeaderView.xib in Resources */,
 				048D83252A505CFC00226EC5 /* ChartTableViewCell.xib in Resources */,
+				04A94DFF2A51AB3900EB95CC /* NoDataTableViewCell.xib in Resources */,
 				049AA0F42A4C1D9A0065CAA9 /* Assets.xcassets in Resources */,
 				048D832F2A505DA000226EC5 /* HistoryTableViewCell.xib in Resources */,
 				049AA0F22A4C1D980065CAA9 /* Main.storyboard in Resources */,
@@ -376,6 +386,8 @@
 				048D832E2A505DA000226EC5 /* HistoryTableViewCell.swift in Sources */,
 				048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */,
 				04A90F782A4DC1CA00D59211 /* HomeViewModel.swift in Sources */,
+				04A94DFE2A51AB3900EB95CC /* NoDataTableViewCell.swift in Sources */,
+				04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */,
 				048D83182A500A4300226EC5 /* Orders.swift in Sources */,
 				049AA1032A4C2FD80065CAA9 /* CoinbaseService.swift in Sources */,
 				04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */,
