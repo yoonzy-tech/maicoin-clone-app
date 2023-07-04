@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		048D83162A4FF8B700226EC5 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83152A4FF8B700226EC5 /* WebsocketService.swift */; };
-		048D83182A500A4300226EC5 /* Orders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83172A500A4300226EC5 /* Orders.swift */; };
+		048D83182A500A4300226EC5 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83172A500A4300226EC5 /* Order.swift */; };
 		048D831B2A501B6000226EC5 /* MarketChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */; };
 		048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831C2A50241D00226EC5 /* TickerMessage.swift */; };
 		048D831F2A50442F00226EC5 /* ExchangeRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831E2A50442F00226EC5 /* ExchangeRates.swift */; };
@@ -48,12 +48,14 @@
 		04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94DF82A51944700EB95CC /* String+Extensions.swift */; };
 		04A94DFE2A51AB3900EB95CC /* NoDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */; };
 		04A94DFF2A51AB3900EB95CC /* NoDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */; };
+		04A94E012A54135900EB95CC /* OrderResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94E002A54135900EB95CC /* OrderResultViewController.swift */; };
+		04A94E032A5413AE00EB95CC /* BuySellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94E022A5413AE00EB95CC /* BuySellViewController.swift */; };
 		E61F031A5BD0486547C5B974 /* Pods_CryptoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		048D83152A4FF8B700226EC5 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
-		048D83172A500A4300226EC5 /* Orders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orders.swift; sourceTree = "<group>"; };
+		048D83172A500A4300226EC5 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewModel.swift; sourceTree = "<group>"; };
 		048D831C2A50241D00226EC5 /* TickerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerMessage.swift; sourceTree = "<group>"; };
 		048D831E2A50442F00226EC5 /* ExchangeRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRates.swift; sourceTree = "<group>"; };
@@ -95,6 +97,8 @@
 		04A94DF82A51944700EB95CC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataTableViewCell.swift; sourceTree = "<group>"; };
 		04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoDataTableViewCell.xib; sourceTree = "<group>"; };
+		04A94E002A54135900EB95CC /* OrderResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResultViewController.swift; sourceTree = "<group>"; };
+		04A94E022A5413AE00EB95CC /* BuySellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuySellViewController.swift; sourceTree = "<group>"; };
 		08EE2254A97D6A77638D81FB /* Pods_CryptoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4717991FC7B8EE28F7B209C4 /* Pods-CryptoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.release.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.release.xcconfig"; sourceTree = "<group>"; };
 		63B17860CB531B1A37CB9DE2 /* Pods-CryptoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoApp.debug.xcconfig"; path = "Target Support Files/Pods-CryptoApp/Pods-CryptoApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 				049AA0F52A4C1D9A0065CAA9 /* LaunchScreen.storyboard */,
 				049AA0F32A4C1D9A0065CAA9 /* Assets.xcassets */,
 				049AA0F82A4C1D9A0065CAA9 /* Info.plist */,
+				04A94E002A54135900EB95CC /* OrderResultViewController.swift */,
+				04A94E022A5413AE00EB95CC /* BuySellViewController.swift */,
 			);
 			path = CryptoApp;
 			sourceTree = "<group>";
@@ -202,7 +208,7 @@
 				04A90F632A4C685D00D59211 /* Account.swift */,
 				04A90F652A4D227700D59211 /* CurrencyInfo.swift */,
 				04A90F672A4D314B00D59211 /* ProductStats.swift */,
-				048D83172A500A4300226EC5 /* Orders.swift */,
+				048D83172A500A4300226EC5 /* Order.swift */,
 				048D831C2A50241D00226EC5 /* TickerMessage.swift */,
 				048D831E2A50442F00226EC5 /* ExchangeRates.swift */,
 			);
@@ -388,7 +394,7 @@
 				04A90F782A4DC1CA00D59211 /* HomeViewModel.swift in Sources */,
 				04A94DFE2A51AB3900EB95CC /* NoDataTableViewCell.swift in Sources */,
 				04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */,
-				048D83182A500A4300226EC5 /* Orders.swift in Sources */,
+				048D83182A500A4300226EC5 /* Order.swift in Sources */,
 				049AA1032A4C2FD80065CAA9 /* CoinbaseService.swift in Sources */,
 				04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */,
 				049AA10B2A4C472B0065CAA9 /* TradingPair.swift in Sources */,
@@ -396,10 +402,12 @@
 				04A90F7C2A4DF12900D59211 /* CoinbaseService+Helpers.swift in Sources */,
 				04A90F762A4DC03400D59211 /* ObservableObject.swift in Sources */,
 				049AA0FF2A4C1EEE0065CAA9 /* ApiKeys.swift in Sources */,
+				04A94E012A54135900EB95CC /* OrderResultViewController.swift in Sources */,
 				04A90F642A4C685D00D59211 /* Account.swift in Sources */,
 				04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */,
 				048D83242A505CFC00226EC5 /* ChartTableViewCell.swift in Sources */,
 				04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */,
+				04A94E032A5413AE00EB95CC /* BuySellViewController.swift in Sources */,
 				049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */,
 				049AA0ED2A4C1D980065CAA9 /* SceneDelegate.swift in Sources */,
 				048D831F2A50442F00226EC5 /* ExchangeRates.swift in Sources */,

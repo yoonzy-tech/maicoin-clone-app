@@ -39,11 +39,28 @@ class MarketChartViewController: UIViewController {
     @IBOutlet weak var buyButton: UIButton!
     @IBOutlet weak var sellButton: UIButton!
     
+    @IBAction func goBuyCoin(_ sender: Any) {
+        performSegue(withIdentifier: "openBuySellPage", sender: sender)
+    }
+    
+    @IBAction func goSellCoin(_ sender: Any) {
+        performSegue(withIdentifier: "openBuySellPage", sender: sender)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupBinders()
         callApis()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openBuySellPage",
+           let button = sender as? UIButton,
+           let destinationVC = segue.destination as? BuySellViewController {
+            destinationVC.actionType = button.tag == 0 ? .buy : .sell
+            destinationVC.title = button.tag == 0 ? "買入\(coinCodeProductID.0)" : "賣出\(coinCodeProductID.0)"
+        }
     }
     
     func callApis() {
