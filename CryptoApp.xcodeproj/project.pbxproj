@@ -151,8 +151,6 @@
 				049AA1012A4C2E730065CAA9 /* Utilities */,
 				04A90F6A2A4D442900D59211 /* Extensions */,
 				049AA1092A4C47160065CAA9 /* Models */,
-				04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */,
-				04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */,
 				049AA1042A4C3DCA0065CAA9 /* HomeView */,
 				048D83192A501AEB00226EC5 /* MarketChartView */,
 				04A90F812A4F06ED00D59211 /* TabBarViewController.swift */,
@@ -190,6 +188,8 @@
 				04A90F732A4D9D6800D59211 /* ProductsTableViewHeaderView.xib */,
 				049AA1052A4C3E130065CAA9 /* ProductListTableViewCell.swift */,
 				049AA1062A4C3E130065CAA9 /* ProductListTableViewCell.xib */,
+				04A94DFC2A51AB3900EB95CC /* NoDataTableViewCell.swift */,
+				04A94DFD2A51AB3900EB95CC /* NoDataTableViewCell.xib */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";

@@ -5,13 +5,11 @@
 //  Created by Ruby Chew on 2023/7/1.
 //
 
-enum Time {
-    case day
-    case week
-    case month
-    case threeMonth
-    case year
-    case all
+enum Time: Int {
+    case day, week = 3600
+        // 24, 24 * 7
+    case month, threeMonth, year, all = 86400
+        // 30, 30 * 3, 30 * 12, N
 }
 
 import Foundation
@@ -36,108 +34,138 @@ class MarketChartViewModel {
         }
     }
     
-    func getProductCandles(time: Time,
-                           startTime: Double? = nil,
-                           endTime: Double? = nil) -> [Double] {
+    func getProductCandles(productID: String, time: Time, completion: @escaping ([Double]) -> Void) {
         
-        var endAvgPriceArr: [Double] = []
+        var granularity: String
         
-        var granularity: Int
-        
-        // know which granularity to use
         switch time {
-        case .day, .week:
-            granularity = CBGranularity.hour.rawValue
-        default:
-            granularity = CBGranularity.twentyFourHours.rawValue
+        case .day:
+            granularity = "3600"
+        case .week:
+            granularity = "21600"
+        case .month:
+            granularity = "86400"
+        case .threeMonth:
+            granularity = "86400"
+        case .year:
+            granularity = "86400"
+        case .all:
+            granularity = "86400"
         }
         
-        // call api
-        var candles = CoinbaseService.shared.fetchProductCandlesTest(productID: productID.value,
-                                                   granularity: granularity,
-                                                   startTime: startTime,
-                                                   endTime: endTime)
-        if candles.count != 0 {
+        CoinbaseService.shared.fetchProductCandles(productID: productID,
+                                                   granularity: granularity) { candles in
             
-            // get the most recent candles timestamp
-            var startTime: Double? = candles.first?.first
-            var endTime: Double? = candles.last?.first
-            var avgPriceArr: [Double] = []
+            var takeCount: Int
             
-            candles.forEach { candle in
-                var low = candle[1]
-                var high = candle[2]
-                var avgPrice = Double((low + high) / 2)
-                avgPriceArr.insert(avgPrice, at: 0)
+            switch time {
+            case .day:
+                takeCount = 24
+            case .week:
+                takeCount = 4 * 7
+            case .month:
+                takeCount = 30
+            case .threeMonth:
+                takeCount = 30 * 3
+            default:
+                takeCount = 0
             }
             
-            endAvgPriceArr = avgPriceArr + endAvgPriceArr
-            
-            
-            let newStartTime = minus300Days(timestamp: startTime ?? 0)
-            let newEndTime = minus300Days(timestamp: endTime ?? 0)
-            
-            return getProductCandles(time: .all, startTime: newStartTime, endTime: newEndTime)
-            
-        } else {
-            return endAvgPriceArr
+            if takeCount != 0 {
+                var avgPriceArray: [Double] = []
+                let filteredResponse = candles[0..<takeCount]
+                filteredResponse.forEach { candle in
+                    let low = candle[1]
+                    let high = candle[2]
+                    var avgPrice = (low + high) / 2
+                    avgPrice = avgPrice.formatMarketDataDouble()
+                    avgPriceArray.insert(avgPrice, at: 0)
+                }
+                completion(avgPriceArray)
+            } else {
+                // handle year, all
+                
+            }
         }
     }
     
-}
-
-extension MarketChartViewModel {
-    func minus300Days(timestamp: Double) -> Double {
-        let timestamp = timestamp // The original timestamp
-        let daysToSubtract = 300
-
-        // Convert the timestamp to a Date object
-        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-
-        // Create a Calendar instance
+    func getAllCandles(productID: String, completion: @escaping ([Double]) -> Void) {
+        
+        // get the date today
+        let calendar = Calendar.current // use the current calander
+        var endTime = Date() // get current date
+        
+        var avgPriceArray = [Double]()
+        var candleResponse = [[Double]]()
+        var index: Int = 0
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        repeat {
+            // get a 300 days ago timestamp to fetch history: start, end
+            let threeHundredDaysAgo = calendar.date(byAdding: .day, value: -300, to: endTime) ??  Date()
+            
+            CoinbaseService.shared.fetchProductCandles(productID: productID,
+                                                       granularity: "86400",
+                                                       startTime: "\(Int(threeHundredDaysAgo.timeIntervalSince1970))",
+                                                       endTime: "\(Int(endTime.timeIntervalSince1970))") { candles in
+    
+                candles.forEach { candle in
+                    let low = candle[1]
+                    let high = candle[2]
+                    var avgPrice = (low + high) / 2
+                    avgPrice = avgPrice.formatMarketDataDouble()
+                    avgPriceArray.insert(avgPrice, at: 0)
+                }
+                
+                candleResponse = candles
+                endTime = threeHundredDaysAgo
+                index += 1
+                semaphore.signal()
+            }
+            
+            semaphore.wait()
+            
+        } while(candleResponse.count != 0) // condition to continue the loop
+        
+        completion(avgPriceArray)
+    }
+    
+    func getYearCandles(productID: String, completion: @escaping ([Double]) -> Void) {
         let calendar = Calendar.current
-
-        // Subtract the desired number of days from the date
-        if let modifiedDate = calendar.date(byAdding: .day, value: -daysToSubtract, to: date) {
-            // Convert the modified date back to a timestamp
-            let modifiedTimestamp = Int(modifiedDate.timeIntervalSince1970)
+        let todayDate = Date()
+        let threeHundredDaysAgo = calendar.date(byAdding: .day, value: -300, to: todayDate) ??  Date()
+        let yearAgo = calendar.date(byAdding: .year, value: -1, to: todayDate) ?? Date()
+        var avgPriceArray: [Double] = []
+        
+        CoinbaseService.shared.fetchProductCandles(productID: productID,
+                                                   granularity: "86400",
+                                                   startTime: "\(Int(threeHundredDaysAgo.timeIntervalSince1970))",
+                                                   endTime: "\(Int(todayDate.timeIntervalSince1970))") { candles in
             
-            print("Original Timestamp: \(timestamp)")
-            print("Modified Timestamp: \(modifiedTimestamp)")
-            
-            return Double(modifiedTimestamp)
-        } else {
-            print("Invalid Date")
-            return Double()
+            candles.forEach { candle in
+                let low = candle[1]
+                let high = candle[2]
+                var avgPrice = (low + high) / 2
+                avgPrice = avgPrice.formatMarketDataDouble()
+                avgPriceArray.insert(avgPrice, at: 0)
+            }
         }
+        
+        CoinbaseService.shared.fetchProductCandles(productID: productID,
+                                                   granularity: "86400",
+                                                   startTime: "\(Int(yearAgo.timeIntervalSince1970))",
+                                                   endTime: "\(Int(threeHundredDaysAgo.timeIntervalSince1970))") { candles in
+            
+            candles.forEach { candle in
+                let low = candle[1]
+                let high = candle[2]
+                var avgPrice = (low + high) / 2
+                avgPrice = avgPrice.formatMarketDataDouble()
+                avgPriceArray.insert(avgPrice, at: 0)
+            }
+        }
+        
+        completion(avgPriceArray)
     }
 }
-
-/*
- 
- // [ timestamp,
- // price low,
- // price high,
- // price open,
- // price close ]
- 
- 
- // get how many counts to get from the api response
- var numberOfDataToGet: Int?
- switch time {
- case .day:
-     numberOfDataToGet = 24
- case .week:
-     numberOfDataToGet = 24 * 7
- case .month:
-     numberOfDataToGet = 30
- case .threeMonth:
-     numberOfDataToGet = 30 * 3
- default:
-     numberOfDataToGet = nil
- }
- 
- 
- 
- 
- */

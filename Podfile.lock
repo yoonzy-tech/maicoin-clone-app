@@ -1,5 +1,4 @@
 PODS:
-  - AAInfographics (7.3.0)
   - Alamofire (5.7.1)
   - DGCharts (5.0.0):
     - DGCharts/Core (= 5.0.0)
@@ -14,7 +13,6 @@ PODS:
   - TinyConstraints (4.0.2)
 
 DEPENDENCIES:
-  - AAInfographics
   - Alamofire
   - DGCharts
   - iCarousel
@@ -28,7 +26,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - AAInfographics
     - Alamofire
     - DGCharts
     - iCarousel
@@ -42,7 +39,6 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  AAInfographics: ee2a7959acdd0a00243b7f5a3f03a1fa2bdf0781
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   DGCharts: 6e0cf2644e8f81ad13f04caa8bc18502870a1c54
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
@@ -54,6 +50,6 @@ SPEC CHECKSUMS:
   SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
   TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
 
-PODFILE CHECKSUM: 90462741fd4653395d434ac63bf28f02665cd99c
+PODFILE CHECKSUM: f2bc2264446c49c22480d61e360af7578a89a5ac
 
 COCOAPODS: 1.12.0

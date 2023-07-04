@@ -50,7 +50,9 @@ extension CoinbaseService {
             print("Invalid URL")
             return
         }
-        // print("URL: \(url)")
+        
+        print("URL: \(url)")
+        
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         

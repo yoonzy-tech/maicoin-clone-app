@@ -15,13 +15,25 @@ enum CBGranularity: Int {
 }
 
 class MarketChartViewController: UIViewController {
+
+    var dayArr: [Double] = []
+    
+    var weekArr: [Double] = []
+    
+    var monthArr: [Double] = []
+    
+    var threeMonthArr: [Double] = []
+    
+    var yearArr: [Double] = []
+    
+    var allArr: [Double] = []
     
     let viewModel = MarketChartViewModel()
     
-    // ("BTC", "BTC-USD") = (coinCode, productID)
+    // ("BTC", "BTC-USD") = (0: coinCode, 1: productID)
     var coinCodeProductID: (String, String) = ("", "")
     
-    var websocket = WebsocketService.shared
+    private var websocket = WebsocketService.shared
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buyButton: UIButton!
@@ -29,43 +41,48 @@ class MarketChartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.productID.value = coinCodeProductID.1
         setupUI()
         setupBinders()
-        // print("Product ID: \(coinCodeProductID.1)")
+        callApis()
     }
     
-    func setupUI() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.sectionHeaderTopPadding = 0
-        tableView.register(UINib(nibName: "ChartTableViewCell",
-                                 bundle: nil),
-                           forCellReuseIdentifier: "ChartTableViewCell")
-        tableView.register(UINib(nibName: "HistoryTableViewCell",
-                                 bundle: nil),
-                           forCellReuseIdentifier: "HistoryTableViewCell")
-        tableView.register(UINib(nibName: "NoDataTableViewCell",
-                                 bundle: nil),
-                           forCellReuseIdentifier: "NoDataTableViewCell")
-        tableView.register(UINib(nibName: "HistoryHeaderView", bundle: nil),
-                           forHeaderFooterViewReuseIdentifier: "HistoryHeaderView")
-        buyButton.layer.cornerRadius = 5
-        sellButton.layer.cornerRadius = 5
+    func callApis() {
+        let productID = coinCodeProductID.1
+        
+        viewModel.getProductCandles(productID: productID, time: .day) { [weak self] candles in
+            self?.dayArr = candles
+        }
+        
+        viewModel.getProductCandles(productID: productID, time: .week) { [weak self] candles in
+            self?.weekArr = candles
+        }
+        
+        viewModel.getProductCandles(productID: productID, time: .month) { [weak self] candles in
+            self?.monthArr = candles
+        }
+        
+        viewModel.getProductCandles(productID: productID, time: .threeMonth) { [weak self] candles in
+            self?.threeMonthArr = candles
+        }
+        viewModel.getYearCandles(productID: productID) { [weak self] candles in
+            self?.yearArr = candles
+        }
+        viewModel.getAllCandles(productID: productID) { [weak self] candles in
+            self?.allArr = candles
+        }
+        
+        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         websocket.connect()
         websocket.socket.delegate = self
         viewModel.getProductOrderHistory()
-        // viewModel.getProductCandles(time: .day)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         WebsocketService.shared.unsubscribe(productID: coinCodeProductID.1)
-//        WebsocketService.shared.disconnect()
     }
     
     private func setupBinders() {
@@ -85,6 +102,26 @@ class MarketChartViewController: UIViewController {
                 self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             }
         }
+    }
+    
+    private func setupUI() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.sectionHeaderTopPadding = 0
+        tableView.register(UINib(nibName: "ChartTableViewCell",
+                                 bundle: nil),
+                           forCellReuseIdentifier: "ChartTableViewCell")
+        tableView.register(UINib(nibName: "HistoryTableViewCell",
+                                 bundle: nil),
+                           forCellReuseIdentifier: "HistoryTableViewCell")
+        tableView.register(UINib(nibName: "NoDataTableViewCell",
+                                 bundle: nil),
+                           forCellReuseIdentifier: "NoDataTableViewCell")
+        tableView.register(UINib(nibName: "HistoryHeaderView", bundle: nil),
+                           forHeaderFooterViewReuseIdentifier: "HistoryHeaderView")
+        buyButton.layer.cornerRadius = 5
+        sellButton.layer.cornerRadius = 5
     }
 }
 
@@ -138,7 +175,13 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
                 withIdentifier: "ChartTableViewCell", for: indexPath) as? ChartTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            cell.allArray = viewModel.getProductCandles(time: .all)
+            cell.dayArray = dayArr
+            cell.weekArray = weekArr
+            cell.monthArray = monthArr
+            cell.threeMonthArray = threeMonthArr
+            cell.yearArray = yearArr
+            cell.allArray = allArr
+            cell.setChartView(dataArray: cell.dayArray)
             
             return cell
         default:

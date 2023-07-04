@@ -189,6 +189,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if segue.identifier == "openCoinMarketChart",
             let destinationVC = segue.destination as? MarketChartViewController {
             destinationVC.title = "\(self.passedCoinName) (\(self.passedCoinCode))"
+            print("PassCoinCodeProductID: \(passCoinCodeProductID)")
             destinationVC.coinCodeProductID = passCoinCodeProductID
         }
     }

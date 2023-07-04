@@ -54,26 +54,6 @@ extension CoinbaseService {
         }
     }
     
-    func fetchProductCandles(productID: String,
-                             granularity: Int? = nil,
-                             startTime: Double? = nil,
-                             endTime: Double? = nil,
-                             completion: @escaping ([[Double]]) -> Void) {
-        getApiResponse(api: .allCandles(productID: productID,
-                                        granularity: granularity),
-                       authRequired: false) { (candles: [[Double]]) in
-            completion(candles)
-        }
-    }
-    
-    func fetchProductCandlesTest(productID: String,
-                             granularity: Int? = nil,
-                             startTime: Double? = nil,
-                             endTime: Double? = nil) -> [[Double]] {
-        let candles: [[Double]] = getApiResponseNoCompletion(api: .allCandles(productID: productID, granularity: granularity, startTime: startTime, endTime: endTime), authRequired: false) ?? []
-        return candles
-    }
-    
     func fetchProductOrders(productID: String, status: String = "done", limit: Int = 5, completion: @escaping ([Order]) -> Void) {
         // Only showing top 5-6 history, newest on top
         getApiResponse(api: .allOrders(limit: limit,
@@ -90,6 +70,23 @@ extension CoinbaseService {
         getApiResponse(api: .exchangeRate, authRequired: false) { (allRates: ExchangeRates) in
             let rate = Double(allRates.data.rates["TWD"] ?? "0") ?? 0
             completion(rate)
+        }
+    }
+    
+    func fetchProductCandles(productID: String,
+                             granularity: String = "",
+                             startTime: String = "",
+                             endTime: String = "",
+                             completion: @escaping ([[Double]]) -> Void) {
+        
+        
+        
+        getApiResponse(api: .allCandles(productID: productID,
+                                        granularity: granularity,
+                                        start: startTime,
+                                        end: endTime),
+                       authRequired: false) { (candles: [[Double]]) in
+            completion(candles)
         }
     }
 }

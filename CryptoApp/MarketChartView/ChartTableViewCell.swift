@@ -10,6 +10,8 @@ import DGCharts
 
 class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     
+    let viewModel = MarketChartViewModel()
+
     var minXIndex: Double!
     var maxXIndex: Double!
     
@@ -17,12 +19,18 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     var dataSet: LineChartDataSet!
     var dataEntries: [ChartDataEntry] = []
     
-    var dayArray: [Double] = [24.453, 24.5434, 24.865, 25.3, 23.2344, 24.2353, 24.822, 24.1422, 23.2123, 25.2, 24.23435, 22.8, 24.122, 24.33, 23.23, 24.235, 24.8, 25.122, 25.423]
+    var dayArray: [Double] = []
+//    var dayArray: [Double] = [24.453, 24.5434, 24.865, 25.3, 23.2344, 24.2353, 24.822, 24.1422, 23.2123, 25.2, 24.23435, 22.8, 24.122, 24.33, 23.23, 24.235, 24.8, 25.122, 25.423]
     var weekArray: [Double] = [24.45, 24.1434, 24.865, 25.3, 24.2344, 24.2353, 24.822, 24.1422, 24.2123, 25.5, 24.24435, 23.8, 24.122, 25, 23.23, 23.235, 23.8, 24.122, 25.123]
     var monthArray: [Double] = [25.45, 26.1434, 25.865, 25.3, 25.2344, 25.2353, 24.822, 24.1422, 24.2123, 25.5, 25.24435, 25.8, 26.122, 25, 25.23, 23.235, 24.8, 28.122, 25.123]
     var threeMonthArray: [Double] = [25.453, 23.5434, 24.865, 25.3, 25.2344, 24.2353, 24.822, 24.1422, 23.2123, 25.2, 24.23435, 22.8, 24.122, 24.33, 23.23, 24.235, 24.8, 25.122, 25.423]
-    var yearArray: [Double] = [23.45, 24.1434, 24.865, 25.3, 24.2344, 26.2353, 24.822, 24.1422, 24.2123, 25.5, 25.24435, 26.8, 24.122, 24, 23.23, 23.235, 23.8, 29.122, 25.123]
-    var allArray: [Double] = [25.45, 23.1434, 24.865, 25.3, 25.2344, 25.2353, 24.822, 24.1422, 24.2123, 25.5, 25.24435, 25.8, 28.122, 25, 25.23, 23.235, 24.8, 24.122, 25.123]
+    var yearArray: [Double] = [23.45, 24.1434, 24.865, 25.3, 24.2344,
+                               26.2353, 24.822, 24.1422, 24.2123, 25.5,
+                               25.24435, 26.8, 24.122, 24, 23.23, 23.235,
+                               23.8, 29.122, 25.123]
+  
+    var allArray: [Double] = []
+
     
     @IBOutlet weak var realtimeSellPriceLabel: UILabel!
     @IBOutlet weak var realtimeBuyPriceLabel: UILabel!
@@ -45,35 +53,58 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         historyAveragePriceView.isHidden = true
-        setChartView(dataArray: dayArray)
         setButton(exceptButton: dayButton, exceptView: dayView)
         lineChartView.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 20)
     }
     
     @IBAction func didDayButtonTapped(_ sender: Any) {
         setButton(exceptButton: dayButton, exceptView: dayView)
-        changeChartViewData(dataArray: weekArray)
+        viewModel.getProductCandles(productID: viewModel.productID.value,
+                                    time: .day) { [weak self] candle in
+            self?.dayArray = candle
+            print("Day Array: \(candle)")
+        }
+        changeChartViewData(dataArray: dayArray)
     }
     
     @IBAction func didWeekButtonTapped(_ sender: Any) {
         setButton(exceptButton: weekButton, exceptView: weekView)
-        changeChartViewData(dataArray: monthArray)
+        viewModel.getProductCandles(productID: viewModel.productID.value,
+                                    time: .week) { [weak self] candle in
+            self?.weekArray = candle
+            print("Week Array: \(candle)")
+        }
+        changeChartViewData(dataArray: weekArray)
     }
+    
     @IBAction func didMonthButtonTapped(_ sender: Any) {
         setButton(exceptButton: monthButton, exceptView: monthView)
-        changeChartViewData(dataArray: threeMonthArray)
+        viewModel.getProductCandles(productID: viewModel.productID.value,
+                                    time: .month) { [weak self] candle in
+            self?.monthArray = candle
+            print("Month Array: \(candle)")
+        }
+        changeChartViewData(dataArray: monthArray)
     }
+    
     @IBAction func didThreeMonthButtonTapped(_ sender: Any) {
         setButton(exceptButton: threeMonthButton, exceptView: threeMonthView)
-        changeChartViewData(dataArray: yearArray)
+        changeChartViewData(dataArray: threeMonthArray)
+        viewModel.getProductCandles(productID: viewModel.productID.value,
+                                    time: .threeMonth) { [weak self] candle in
+            self?.threeMonthArray = candle
+            print("Three Month Array: \(candle)")
+        }
     }
+    
     @IBAction func didYearButtonTapped(_ sender: Any) {
         setButton(exceptButton: yearButton, exceptView: yearView)
-        changeChartViewData(dataArray: allArray)
+        changeChartViewData(dataArray: yearArray)
     }
+    
     @IBAction func didAllButtonTapped(_ sender: Any) {
         setButton(exceptButton: allButton, exceptView: allView)
-        changeChartViewData(dataArray: dayArray)
+        changeChartViewData(dataArray: allArray)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -101,7 +132,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
 // MARK: Setup UI
 
 extension ChartTableViewCell {
-    private func setChartView(dataArray: [Double]) {
+    func setChartView(dataArray: [Double]) {
         lineChartView.delegate = self
         lineChartView.chartDescription.enabled = false
         lineChartView.legend.enabled = false
@@ -199,7 +230,6 @@ extension ChartTableViewCell {
         }
         lineChartView.notifyDataSetChanged()
     }
-    
 }
 
 extension ChartTableViewCell: ValueFormatter {
@@ -257,5 +287,7 @@ class ImageMarkerView: MarkerView {
         let offset = super.offsetForDrawing(atPoint: point)
         return offset
     }
-    
 }
+
+
+
