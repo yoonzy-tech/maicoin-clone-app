@@ -14,8 +14,8 @@ struct Order: Codable {
     let productId: String
     let profileId: String
     let side: String
-    let funds: String
-    let specifiedFunds: String
+    let funds: String?
+    let specifiedFunds: String?
     let type: String
     let timeInForce: String
     let postOnly: Bool

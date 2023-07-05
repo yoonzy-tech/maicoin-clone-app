@@ -21,4 +21,15 @@ extension String {
         dateFormatter2.timeZone = TimeZone(secondsFromGMT: 0) // Set the output time zone to UTC
         return dateFormatter2.string(from: utc8Date)
     }
+    
+    func convertToDouble() -> Double? {
+        // Remove special characters from the string
+        let decimalSeparator = NumberFormatter().decimalSeparator ?? "."
+        let nonDecimalCharacters = CharacterSet(charactersIn: "0123456789" + decimalSeparator).inverted
+        let sanitizedString = self.components(separatedBy: nonDecimalCharacters).joined()
+        
+        // Convert the sanitized string to a Double
+        return Double(sanitizedString)
+    }
+    
 }

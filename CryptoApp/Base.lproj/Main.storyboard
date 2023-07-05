@@ -253,14 +253,14 @@
         <scene sceneID="ek0-WF-vcT">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="upc-lI-oZR" customClass="BuySellViewController" customModule="CryptoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tOj-Wt-v2W">
+                    <view key="view" contentMode="scaleAspectFill" id="tOj-Wt-v2W">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wlw-gA-2Ny">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="250"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 BTC = 664,015 TWD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FS4-Qm-kqR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FS4-Qm-kqR">
                                         <rect key="frame" x="16" y="119.99999999999999" width="361" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -297,7 +297,7 @@
                                             <action selector="switchEditableField:" destination="upc-lI-oZR" eventType="touchUpInside" id="2xa-wf-DsY"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Utd-fW-Apk">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Utd-fW-Apk">
                                         <rect key="frame" x="8.0000000000000071" y="16" width="123.66666666666669" height="63"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -316,22 +316,22 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Jz-BB-Q0y">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Jz-BB-Q0y">
                                         <rect key="frame" x="155.66666666666663" y="47.666666666666657" width="165.33333333333337" height="46"/>
                                         <fontDescription key="fontDescription" name="PingFangHK-Semibold" family="PingFang HK" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10000" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TI9-cR-1f0">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TI9-cR-1f0">
                                         <rect key="frame" x="155.66666666666663" y="172.66666666666666" width="165.33333333333337" height="31.333333333333343"/>
                                         <fontDescription key="fontDescription" name="PingFangHK-Semibold" family="PingFang HK" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5e-i3-DU7">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5e-i3-DU7">
                                         <rect key="frame" x="8.0000000000000071" y="140.99999999999997" width="123.66666666666669" height="63"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="TWD" image="USDT"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="USDT" title="TWD" imagePadding="10"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="USD" title="USDC" imagePadding="10"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -370,12 +370,6 @@
                                     <constraint firstItem="YsF-qn-3MS" firstAttribute="leading" secondItem="ViK-Qz-ppF" secondAttribute="trailing" constant="8" id="yBt-mM-eLE"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLX-sj-zcI">
-                                <rect key="frame" x="24" y="408.33333333333331" width="345" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wL0-Po-z8u">
                                 <rect key="frame" x="16" y="770" width="361" height="48"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.32941176470588235" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -395,6 +389,36 @@
                                     <segue destination="oWe-o3-Iru" kind="show" identifier="openOrderResult" id="JxZ-br-TwW"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hvd-3w-swT">
+                                <rect key="frame" x="80.333333333333329" y="400.33333333333331" width="232.66666666666669" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可用餘額：0.05326852 BTC" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLX-sj-zcI">
+                                        <rect key="frame" x="0.0" y="0.0" width="194.66666666666666" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-dX-dx4">
+                                        <rect key="frame" x="202.66666666666669" y="0.0" width="30" height="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Max"/>
+                                        <connections>
+                                            <action selector="useMaxBalance:" destination="upc-lI-oZR" eventType="touchUpInside" id="Lfd-pM-Eak"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2MT-Wt-wRm"/>
+                                    <constraint firstAttribute="bottom" secondItem="RrJ-dX-dx4" secondAttribute="bottom" id="6el-gf-gKN"/>
+                                    <constraint firstAttribute="bottom" secondItem="DLX-sj-zcI" secondAttribute="bottom" id="Ijp-wD-8Ui"/>
+                                    <constraint firstItem="RrJ-dX-dx4" firstAttribute="leading" secondItem="DLX-sj-zcI" secondAttribute="trailing" constant="8" id="WeT-G4-zNi"/>
+                                    <constraint firstItem="DLX-sj-zcI" firstAttribute="top" secondItem="hvd-3w-swT" secondAttribute="top" id="cnB-ts-2tJ"/>
+                                    <constraint firstItem="DLX-sj-zcI" firstAttribute="leading" secondItem="hvd-3w-swT" secondAttribute="leading" id="d6x-2y-eYm"/>
+                                    <constraint firstAttribute="trailing" secondItem="RrJ-dX-dx4" secondAttribute="trailing" id="ofJ-4F-e3N"/>
+                                    <constraint firstItem="RrJ-dX-dx4" firstAttribute="top" secondItem="hvd-3w-swT" secondAttribute="top" id="uhu-R6-YqH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Kec-tA-KUb"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
@@ -403,14 +427,13 @@
                             <constraint firstItem="wlw-gA-2Ny" firstAttribute="top" secondItem="tOj-Wt-v2W" secondAttribute="top" id="12b-mD-Fyq"/>
                             <constraint firstItem="bk4-Zp-2kN" firstAttribute="leading" secondItem="Kec-tA-KUb" secondAttribute="leading" constant="24" id="28W-eY-XfI"/>
                             <constraint firstItem="bk4-Zp-2kN" firstAttribute="top" secondItem="FS4-Qm-kqR" secondAttribute="bottom" constant="24" id="3LF-g8-f6b"/>
-                            <constraint firstItem="DLX-sj-zcI" firstAttribute="leading" secondItem="Kec-tA-KUb" secondAttribute="leading" constant="24" id="438-94-qB4"/>
                             <constraint firstItem="wL0-Po-z8u" firstAttribute="leading" secondItem="Kec-tA-KUb" secondAttribute="leading" constant="16" id="48A-PR-xW6"/>
-                            <constraint firstItem="DLX-sj-zcI" firstAttribute="top" secondItem="bk4-Zp-2kN" secondAttribute="bottom" constant="24" id="7V4-QH-4MP"/>
                             <constraint firstItem="Kec-tA-KUb" firstAttribute="trailing" secondItem="wL0-Po-z8u" secondAttribute="trailing" constant="16" id="Jdd-Gw-fJV"/>
-                            <constraint firstItem="Kec-tA-KUb" firstAttribute="trailing" secondItem="DLX-sj-zcI" secondAttribute="trailing" constant="24" id="LBl-NR-3lu"/>
                             <constraint firstItem="wlw-gA-2Ny" firstAttribute="trailing" secondItem="Kec-tA-KUb" secondAttribute="trailing" id="Sux-ZX-gxT"/>
                             <constraint firstItem="wlw-gA-2Ny" firstAttribute="leading" secondItem="Kec-tA-KUb" secondAttribute="leading" id="pyk-2R-Gvo"/>
                             <constraint firstItem="Kec-tA-KUb" firstAttribute="trailing" secondItem="bk4-Zp-2kN" secondAttribute="trailing" constant="24" id="rcJ-kw-NYM"/>
+                            <constraint firstItem="hvd-3w-swT" firstAttribute="top" secondItem="bk4-Zp-2kN" secondAttribute="bottom" constant="16" id="wrf-1t-Zje"/>
+                            <constraint firstItem="hvd-3w-swT" firstAttribute="centerX" secondItem="tOj-Wt-v2W" secondAttribute="centerX" id="zRY-7Z-79f"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tog-Nq-nPw"/>
@@ -418,6 +441,8 @@
                         <outlet property="bottomCurrencyButton" destination="U5e-i3-DU7" id="vYA-Bt-pQo"/>
                         <outlet property="bottomTextField" destination="TI9-cR-1f0" id="2LC-NP-ILD"/>
                         <outlet property="converterView" destination="bk4-Zp-2kN" id="n4v-en-iAj"/>
+                        <outlet property="exchangeRateLabel" destination="FS4-Qm-kqR" id="geM-q0-cxT"/>
+                        <outlet property="maxButton" destination="RrJ-dX-dx4" id="Y3W-8h-B5D"/>
                         <outlet property="noteLabel" destination="DLX-sj-zcI" id="79r-gm-vHc"/>
                         <outlet property="sendDealButton" destination="wL0-Po-z8u" id="Nz3-NL-yaM"/>
                         <outlet property="spendGainLabel" destination="bW5-tX-JUn" id="13X-SF-gQ7"/>
@@ -630,6 +655,7 @@
     </scenes>
     <resources>
         <image name="BTC" width="32" height="32"/>
+        <image name="USD" width="36" height="36"/>
         <image name="USDT" width="32" height="32"/>
         <image name="arrows" width="30" height="30"/>
         <image name="chart.bar" catalog="system" width="128" height="89"/>

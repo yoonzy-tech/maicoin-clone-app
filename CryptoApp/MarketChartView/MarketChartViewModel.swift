@@ -15,12 +15,11 @@ enum Time: Int {
 import Foundation
 
 class MarketChartViewModel {
-    
+    // CoinCode, Pair ID: ("BTC", "BTC-USD")
     var productID: ObservableObject<String> = ObservableObject("")
     
     var historyDataSource: ObservableObject<[Order]?> = ObservableObject(nil)
     
-    // CoinCode, Pair ID: ("BTC", "BTC-USD")
     var candles: ObservableObject<[[Double]]> = ObservableObject([])
     
     var realtimeBuyPrice: ObservableObject<Double> = ObservableObject(0)

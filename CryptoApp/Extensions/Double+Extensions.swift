@@ -8,15 +8,50 @@
 import Foundation
 
 extension Double {
-    func roundToDecimal(_ decimalPlaces: Int) -> Double {
-        let multiplier = pow(10.0, Double(decimalPlaces))
+    // New Keep
+//    func rounded(toDecimalPlaces decimalPlaces: Int) -> Double {
+//        let multiplier = pow(10.0, Double(decimalPlaces))
+//        return (self * multiplier).rounded() / multiplier
+//    }
+    
+    func formattedAccountingString(decimalPlaces: Int, accountFormat: Bool) -> String {
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = accountFormat ? .decimal : .none
+        numberFormatter.groupingSeparator = ","
+        numberFormatter.decimalSeparator = "."
+        numberFormatter.minimumFractionDigits = decimalPlaces
+        numberFormatter.maximumFractionDigits = decimalPlaces
+        
+        let formattedNumber = numberFormatter.string(from: NSNumber(value: self))
+        
+        if let result = formattedNumber, self > 0 {
+            return result
+        } else {
+            return "0"
+        }
+    }
+    
+    func roundedDouble(toDecimalPlaces: Int) -> Double {
+        let multiplier = pow(10.0, Double(toDecimalPlaces))
+        let roundedValue = (self * multiplier).rounded() / multiplier
+        return roundedValue
+    }
+        
+    func roundedString(toDecimalPlaces: Int) -> String {
+        let multiplier = pow(10.0, Double(toDecimalPlaces))
         let roundedValue = (self * multiplier).rounded() / multiplier
         
-        if roundedValue == 0.0 {
-            let roundedToZero = (roundedValue * multiplier).rounded() / multiplier
-            return roundedToZero
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = toDecimalPlaces
+        let formattedNumber = numberFormatter.string(from: NSNumber(value: roundedValue))
+        
+        if let result = formattedNumber {
+            return result
+        } else {
+            return "0"
         }
-        return roundedValue
     }
     
     func formatMarketDataString() -> String {

@@ -60,6 +60,11 @@ class MarketChartViewController: UIViewController {
            let destinationVC = segue.destination as? BuySellViewController {
             destinationVC.actionType = button.tag == 0 ? .buy : .sell
             destinationVC.title = button.tag == 0 ? "買入\(coinCodeProductID.0)" : "賣出\(coinCodeProductID.0)"
+            // MARK: Pass Product Coin Code / Pair
+            destinationVC.product = [
+                "coinCode": coinCodeProductID.0,
+                "pair": coinCodeProductID.1
+            ]
         }
     }
     
@@ -92,14 +97,28 @@ class MarketChartViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        websocket.subscribeProductID = coinCodeProductID.1
         websocket.connect()
-        websocket.socket.delegate = self
+        websocket.completion = { [weak self] tickerMessage in
+            self?.updateRealtimeBuySell(bid: tickerMessage.bestBid, ask: tickerMessage.bestAsk)
+        }
+        viewModel.productID.value = coinCodeProductID.1
         viewModel.getProductOrderHistory()
+    }
+    
+    func updateRealtimeBuySell(bid: String?, ask: String?) {
+        let indexPath = IndexPath(row: 0, section: 0)
+        if let cell = tableView.cellForRow(at: indexPath) as? ChartTableViewCell,
+           let buyPrice = Double(bid ?? ""),
+           let sellPrice = Double(ask ?? "") {
+            cell.realtimeBuyPriceLabel.text = buyPrice.formatMarketDataString()
+            cell.realtimeSellPriceLabel.text = sellPrice.formatMarketDataString()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        WebsocketService.shared.unsubscribe(productID: coinCodeProductID.1)
+        websocket.unsubscribe(productID: coinCodeProductID.1)
     }
     
     private func setupBinders() {
@@ -217,60 +236,6 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
             }
             
             return cell
-        }
-    }
-}
-
-// MARK: Websocket Delegate
-
-extension MarketChartViewController: WebSocketDelegate {
-    
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
-        switch event {
-        case .connected(let headers):
-            // subscribe to channel
-            WebsocketService.shared.subscribe(productID: coinCodeProductID.1)
-            print("websocket is connected: \(headers)")
-            
-        case .disconnected(let reason, let code):
-            print("WebSocket is disconnected: \(reason) with code: \(code)")
-            
-        case .text(let string):
-            // print("Received text: \(string)")
-            do {
-                let jsonData = string.data(using: .utf8)!
-                let tickerData = try JSONDecoder().decode(TickerMessage.self, from: jsonData)
-               
-//                 print("Type: \(tickerData.type)")
-//                 print("Sequence: \(tickerData.sequence)")
-//                 print("Product ID: \(tickerData.productId)")
-//                 print("Price: \(tickerData.price)")
-                
-                let indexPath = IndexPath(row: 0, section: 0)
-                if let cell = tableView.cellForRow(at: indexPath) as? ChartTableViewCell,
-                   let buyPrice = Double(tickerData.bestAsk ?? ""),
-                   let sellPrice = Double(tickerData.bestBid ?? "") {
-                    cell.realtimeBuyPriceLabel.text = buyPrice.formatMarketDataString()
-                    cell.realtimeSellPriceLabel.text = sellPrice.formatMarketDataString()
-                }
-                
-            } catch {
-                print("Error decoding JSON: \(error)")
-            }
-        case .binary:
-            break
-        case .ping:
-            break
-        case .pong:
-            break
-        case .viabilityChanged:
-            break
-        case .reconnectSuggested:
-            break
-        case .cancelled:
-            break
-        case .error(let error):
-            print(error?.localizedDescription ?? "Websocket encountered an error")
         }
     }
 }
