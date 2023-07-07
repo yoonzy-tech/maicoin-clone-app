@@ -31,9 +31,11 @@ class HistoryTableViewCell: UITableViewCell {
     
     func updateCell(data: Order, coinCode: String) {
         self.volumeLabel.text = data.size
-        let price = Double(data.price) ?? 0
+        let priceString = data.price ?? ""
+        let price = Double(priceString) ?? 0
         self.dealPriceLabel.text = "US$ \(price.rounded().formatMarketDataString())"
-        self.timeLabel.text = data.doneAt.convertCoinbaseTimestamp()
+        let timestamp = data.doneAt ?? ""
+        self.timeLabel.text = timestamp.convertCoinbaseTimestamp()
         self.descriptionLabel.text = (data.side == "buy" ? "購入" : "售出") + " \(coinCode)"
         self.statusLabel.text = statusTWZH[data.status]
         self.typeButton.setTitle(data.side == "buy" ? "Buy" : "Sell", for: .normal)

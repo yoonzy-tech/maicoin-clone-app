@@ -5,7 +5,7 @@
 //  Created by Ruby Chew on 2023/7/4.
 //
 
-enum ActionType {
+enum ActionType: String {
     case buy
     case sell
 }
@@ -15,10 +15,16 @@ struct ProductPair {
     var productPair: String
 }
 
+protocol OrderDelegate: AnyObject {
+    func didSendOrder(orderID: String)
+}
+
 import UIKit
 import Starscream
 
 class BuySellViewController: UIViewController {
+    
+    var delegate: OrderDelegate?
     
     var product: [String: String] = ["coinCode": "", "pair": ""]
     
@@ -78,7 +84,20 @@ class BuySellViewController: UIViewController {
     }
     
     @IBAction func sendDeal(_ sender: Any) {
+        // let rate = String(realtimeRate)
+        let size = topTextField.text ?? ""
+        let productID = product["pair"] ?? ""
         
+        guard let orderID = CoinbaseService.shared.createOrders(
+            size: size,
+            side: actionType.rawValue,
+            productId: productID) else {
+            print("Unable to get the posted order id")
+            return
+        }
+        print("✅ I got the order ID: \(orderID)")
+        // Next page show total amount spend and gain: size * rate
+        delegate?.didSendOrder(orderID: orderID)
     }
     
     override func viewDidLoad() {
@@ -98,7 +117,6 @@ class BuySellViewController: UIViewController {
         let productID = product["pair"] ?? ""
         websocket.subscribeProductID = productID
         websocket.connect()
-        // Websocket completion to get ticker message
         websocket.completion = { [weak self] tickerMessage in
             let bid = tickerMessage.bestBid ?? ""
             let ask = tickerMessage.bestAsk ?? ""
@@ -179,13 +197,13 @@ extension BuySellViewController {
             
             if topTextField.isEditing {
                 let text = topTextField.text ?? "0"
-                let size = text.convertToDouble() ?? 0
+                let size = text.convertToDouble()
                 let price = size * rate
                 bottomTextField.text = price.formattedAccountingString(decimalPlaces: 8,
                                                                        accountFormat: true)
             } else {
                 let text = bottomTextField.text ?? "0"
-                let price = text.convertToDouble() ?? 0
+                let price = text.convertToDouble()
                 let size = price / rate
                 topTextField.text = size.formattedAccountingString(decimalPlaces: 8,
                                                                    accountFormat: true)
@@ -230,9 +248,8 @@ extension BuySellViewController: UITextFieldDelegate {
         
         if textField == topTextField,
            let text = topTextField.text,
-           let enteredNumber = text.convertToDouble(),
            let balance = Double(currentBalance),
-           enteredNumber > balance {
+            text.convertToDouble() > balance {
             return false
         }
 

@@ -9,23 +9,23 @@ import Foundation
 
 struct Order: Codable {
     let id: String
-    let price: String
+    let price: String?
     let size: String
     let productId: String
-    let profileId: String
+    let profileId: String?
     let side: String
     let funds: String?
     let specifiedFunds: String?
     let type: String
-    let timeInForce: String
+    let timeInForce: String?
     let postOnly: Bool
     let createdAt: String
-    let doneAt: String
-    let doneReason: String
+    let doneAt: String?
+    let doneReason: String?
     let fillFees: String
     let filledSize: String
     let executedValue: String
-    let marketType: String
+    let marketType: String?
     let status: String
     let settled: Bool
     

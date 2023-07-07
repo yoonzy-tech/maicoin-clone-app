@@ -23,9 +23,15 @@ class OrderResultViewController: UIViewController {
     @IBOutlet weak var detailsView: UIView!
     
     var orderDetails: Order?
-
+    
     @IBAction func confirmDetails(_ sender: Any) {
         // Go to wallet page
+        if let tabBarController = self.tabBarController {
+            let desiredTabIndex = 1
+            if desiredTabIndex < tabBarController.viewControllers?.count ?? 0 {
+                tabBarController.selectedIndex = desiredTabIndex
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -35,6 +41,10 @@ class OrderResultViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        CoinbaseService.shared.fetchProductOrders(productID: <#T##String#>, status: <#T##String#>, limit: <#T##Int#>) { <#[Order]#> in
+//            <#code#>
+//        }
+        
         guard let orderDetails = orderDetails else {
             print("No Order Details Received.")
             return
@@ -55,5 +65,12 @@ class OrderResultViewController: UIViewController {
         self.doneAtTimeLabel.text = order.doneAt
         self.priceLabel.text = order.price
         self.fundsLabel.text = order.funds
+    }
+}
+
+extension OrderResultViewController: OrderDelegate {
+    func didSendOrder(orderID: String) {
+//        let order = CoinbaseService.shared.
+        print("😛 I received Order ID: \(orderID)")
     }
 }

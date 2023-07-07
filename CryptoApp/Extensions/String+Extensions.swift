@@ -22,14 +22,15 @@ extension String {
         return dateFormatter2.string(from: utc8Date)
     }
     
-    func convertToDouble() -> Double? {
-        // Remove special characters from the string
+    func convertToDouble(defaultValue: Double = 0.0) -> Double {
         let decimalSeparator = NumberFormatter().decimalSeparator ?? "."
         let nonDecimalCharacters = CharacterSet(charactersIn: "0123456789" + decimalSeparator).inverted
         let sanitizedString = self.components(separatedBy: nonDecimalCharacters).joined()
         
-        // Convert the sanitized string to a Double
-        return Double(sanitizedString)
+        if let convertedValue = Double(sanitizedString) {
+            return convertedValue
+        } else {
+            return defaultValue
+        }
     }
-    
 }

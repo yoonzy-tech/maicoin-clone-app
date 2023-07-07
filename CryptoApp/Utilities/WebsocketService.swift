@@ -21,7 +21,7 @@ class WebsocketService {
     var completion: ((TickerMessage) -> Void)?
     
     func connect() {
-        var request = URLRequest(url: URL(string: "wss://ws-feed.exchange.coinbase.com")!)
+        var request = URLRequest(url: URL(string: "wss://ws-feed-public.sandbox.exchange.coinbase.com")!)
         request.timeoutInterval = 5
         socket = WebSocket(request: request)
         socket.delegate = self

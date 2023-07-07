@@ -28,7 +28,8 @@ class MarketChartViewModel {
     
     func getProductOrderHistory() {
         CoinbaseService.shared.fetchProductOrders(productID: productID.value) { orders in
-            let sortedOrders = orders.sorted { $0.doneAt > $1.doneAt }
+            
+            let sortedOrders = orders.sorted { $0.doneAt ?? "" > $1.doneAt ?? "" }
             self.historyDataSource.value = sortedOrders
         }
     }

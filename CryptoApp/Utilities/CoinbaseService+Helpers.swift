@@ -42,7 +42,6 @@ extension CoinbaseService {
                                     requestPath: String = "",
                                     httpMethod: HttpMethod = .GET,
                                     body: String = "",
-                                    parameters: String? = nil,
                                     completion: @escaping (T) -> Void) {
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -68,8 +67,8 @@ extension CoinbaseService {
         }
         request.httpMethod = httpMethod.rawValue
         
-        if let parameters = parameters, httpMethod == .POST {
-            let postData = parameters.data(using: .utf8)
+        if httpMethod == .POST {
+            let postData = body.data(using: .utf8)
             request.httpBody = postData
         }
         
@@ -123,6 +122,11 @@ extension CoinbaseService {
         }
         request.httpMethod = httpMethod.rawValue
         
+        if httpMethod == .POST {
+            let postData = body.data(using: .utf8)
+            request.httpBody = postData
+        }
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 print(String(describing: error))
@@ -132,8 +136,9 @@ extension CoinbaseService {
             
             do {
                 let decoder = JSONDecoder()
-                let decodedData = try decoder.decode(T.self, from: data)
-                responseData = decodedData
+                let response = try decoder.decode(T.self, from: data)
+                responseData = response
+                print("📱 Response: \(responseData)")
             } catch {
                 print("Error decoding data: \(error)")
             }

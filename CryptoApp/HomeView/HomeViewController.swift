@@ -154,7 +154,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "BannerBalanceTableViewCell", for: indexPath) as? BannerBalanceTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            cell.accountTotalBalance = viewModel.accountTotalBalance.value.convertToTWD().rounded()
+            cell.accountTotalBalance = viewModel.accountTotalBalance.value
             
             return cell
         

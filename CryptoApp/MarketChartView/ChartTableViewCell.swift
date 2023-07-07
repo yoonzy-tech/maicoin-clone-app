@@ -31,7 +31,6 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
   
     var allArray: [Double] = []
 
-    
     @IBOutlet weak var realtimeSellPriceLabel: UILabel!
     @IBOutlet weak var realtimeBuyPriceLabel: UILabel!
     @IBOutlet weak var historyAveragePriceView: UIView!
@@ -288,6 +287,3 @@ class ImageMarkerView: MarkerView {
         return offset
     }
 }
-
-
-

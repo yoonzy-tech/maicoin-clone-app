@@ -109,8 +109,8 @@ class MarketChartViewController: UIViewController {
     func updateRealtimeBuySell(bid: String?, ask: String?) {
         let indexPath = IndexPath(row: 0, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) as? ChartTableViewCell,
-           let buyPrice = Double(bid ?? ""),
-           let sellPrice = Double(ask ?? "") {
+           let buyPrice = Double(ask ?? ""),
+           let sellPrice = Double(bid ?? "") {
             cell.realtimeBuyPriceLabel.text = buyPrice.formatMarketDataString()
             cell.realtimeSellPriceLabel.text = sellPrice.formatMarketDataString()
         }

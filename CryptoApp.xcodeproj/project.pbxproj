@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045BCCF82A56675900AAEF13 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BCCF72A56675900AAEF13 /* WalletViewController.swift */; };
+		045BCD062A566C6A00AAEF13 /* CoinAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BCD042A566C6900AAEF13 /* CoinAccountTableViewCell.swift */; };
+		045BCD072A566C6A00AAEF13 /* CoinAccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045BCD052A566C6A00AAEF13 /* CoinAccountTableViewCell.xib */; };
+		045BCD0B2A56792300AAEF13 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BCD0A2A56792300AAEF13 /* ProfileViewController.swift */; };
+		045BCD112A56933300AAEF13 /* FullHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BCD102A56933300AAEF13 /* FullHistoryViewController.swift */; };
+		045BCD132A56CEE300AAEF13 /* FilterOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BCD122A56CEE300AAEF13 /* FilterOptionViewController.swift */; };
+		045BCD152A56CF4800AAEF13 /* FilterOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BCD142A56CF4800AAEF13 /* FilterOptionTableViewCell.swift */; };
 		048D83162A4FF8B700226EC5 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83152A4FF8B700226EC5 /* WebsocketService.swift */; };
 		048D83182A500A4300226EC5 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D83172A500A4300226EC5 /* Order.swift */; };
 		048D831B2A501B6000226EC5 /* MarketChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */; };
@@ -54,6 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		045BCCF72A56675900AAEF13 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		045BCD042A566C6900AAEF13 /* CoinAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAccountTableViewCell.swift; sourceTree = "<group>"; };
+		045BCD052A566C6A00AAEF13 /* CoinAccountTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinAccountTableViewCell.xib; sourceTree = "<group>"; };
+		045BCD0A2A56792300AAEF13 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		045BCD102A56933300AAEF13 /* FullHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHistoryViewController.swift; sourceTree = "<group>"; };
+		045BCD122A56CEE300AAEF13 /* FilterOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionViewController.swift; sourceTree = "<group>"; };
+		045BCD142A56CF4800AAEF13 /* FilterOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionTableViewCell.swift; sourceTree = "<group>"; };
 		048D83152A4FF8B700226EC5 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
 		048D83172A500A4300226EC5 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		048D831A2A501B6000226EC5 /* MarketChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewModel.swift; sourceTree = "<group>"; };
@@ -116,6 +130,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045BCCF92A56682400AAEF13 /* WalletView */ = {
+			isa = PBXGroup;
+			children = (
+				045BCCF72A56675900AAEF13 /* WalletViewController.swift */,
+				045BCD042A566C6900AAEF13 /* CoinAccountTableViewCell.swift */,
+				045BCD052A566C6A00AAEF13 /* CoinAccountTableViewCell.xib */,
+			);
+			path = WalletView;
+			sourceTree = "<group>";
+		};
 		048D83192A501AEB00226EC5 /* MarketChartView */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,11 +185,16 @@
 				049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */,
 				049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */,
 				049AA0F02A4C1D980065CAA9 /* Main.storyboard */,
+				045BCD142A56CF4800AAEF13 /* FilterOptionTableViewCell.swift */,
+				045BCD122A56CEE300AAEF13 /* FilterOptionViewController.swift */,
 				049AA0F52A4C1D9A0065CAA9 /* LaunchScreen.storyboard */,
 				049AA0F32A4C1D9A0065CAA9 /* Assets.xcassets */,
 				049AA0F82A4C1D9A0065CAA9 /* Info.plist */,
 				04A94E002A54135900EB95CC /* OrderResultViewController.swift */,
+				045BCD102A56933300AAEF13 /* FullHistoryViewController.swift */,
 				04A94E022A5413AE00EB95CC /* BuySellViewController.swift */,
+				045BCCF92A56682400AAEF13 /* WalletView */,
+				045BCD0A2A56792300AAEF13 /* ProfileViewController.swift */,
 			);
 			path = CryptoApp;
 			sourceTree = "<group>";
@@ -306,6 +335,7 @@
 				04A90F702A4D4CAC00D59211 /* BannerBalanceTableViewCell.xib in Resources */,
 				049AA0F72A4C1D9A0065CAA9 /* LaunchScreen.storyboard in Resources */,
 				049AA1082A4C3E130065CAA9 /* ProductListTableViewCell.xib in Resources */,
+				045BCD072A566C6A00AAEF13 /* CoinAccountTableViewCell.xib in Resources */,
 				04A90F742A4D9D6800D59211 /* ProductsTableViewHeaderView.xib in Resources */,
 				048D832B2A505D8500226EC5 /* HistoryHeaderView.xib in Resources */,
 				048D83252A505CFC00226EC5 /* ChartTableViewCell.xib in Resources */,
@@ -386,6 +416,7 @@
 				04A90F842A4F073C00D59211 /* UIColor+Extensions.swift in Sources */,
 				048D83162A4FF8B700226EC5 /* WebsocketService.swift in Sources */,
 				049AA0EF2A4C1D980065CAA9 /* HomeViewController.swift in Sources */,
+				045BCD112A56933300AAEF13 /* FullHistoryViewController.swift in Sources */,
 				04A90F7E2A4EEAAF00D59211 /* Constants.swift in Sources */,
 				04A90F722A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift in Sources */,
 				049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */,
@@ -395,8 +426,11 @@
 				04A94DFE2A51AB3900EB95CC /* NoDataTableViewCell.swift in Sources */,
 				04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */,
 				048D83182A500A4300226EC5 /* Order.swift in Sources */,
+				045BCCF82A56675900AAEF13 /* WalletViewController.swift in Sources */,
 				049AA1032A4C2FD80065CAA9 /* CoinbaseService.swift in Sources */,
+				045BCD062A566C6A00AAEF13 /* CoinAccountTableViewCell.swift in Sources */,
 				04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */,
+				045BCD132A56CEE300AAEF13 /* FilterOptionViewController.swift in Sources */,
 				049AA10B2A4C472B0065CAA9 /* TradingPair.swift in Sources */,
 				04A90F822A4F06ED00D59211 /* TabBarViewController.swift in Sources */,
 				04A90F7C2A4DF12900D59211 /* CoinbaseService+Helpers.swift in Sources */,
@@ -405,7 +439,9 @@
 				04A94E012A54135900EB95CC /* OrderResultViewController.swift in Sources */,
 				04A90F642A4C685D00D59211 /* Account.swift in Sources */,
 				04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */,
+				045BCD152A56CF4800AAEF13 /* FilterOptionTableViewCell.swift in Sources */,
 				048D83242A505CFC00226EC5 /* ChartTableViewCell.swift in Sources */,
+				045BCD0B2A56792300AAEF13 /* ProfileViewController.swift in Sources */,
 				04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */,
 				04A94E032A5413AE00EB95CC /* BuySellViewController.swift in Sources */,
 				049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */,

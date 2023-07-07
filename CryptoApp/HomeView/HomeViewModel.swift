@@ -44,12 +44,22 @@ extension HomeViewModel {
     }
 
     func getAccountsTotalBalance() {
-        CoinbaseService.shared.fetchAccounts { [weak self] accounts in
-             // print("Account: \(accounts)")
-            self?.accountTotalBalance.value = Double(accounts.first { $0.currency == "USD" }?.balance ?? "") ?? 0
-            // guard let accountTotalBalance = self?.accountTotalBalance else { return }
-            // print("Total Account Balance: \(accountTotalBalance.value)")
+        guard let accounts = CoinbaseService.shared.fetchAccountsNew() else {
+            print("Fail to get accounts data")
+            return
         }
+        
+        let totalBalance = accounts.reduce(0) { partialResult, account in
+            if let rate = CoinbaseService.shared.getExchangeRate(from: account.currency) {
+                let currencyBalance = account.balance.convertToDouble()
+                return partialResult + (currencyBalance * rate)
+            } else {
+                print("Failed to get exchange for \(account.currency) to TWD")
+                return partialResult
+            }
+        }
+        
+        self.accountTotalBalance.value = totalBalance
     }
 
     func getUSDPairsProductFluctRateAvgPrice() {
@@ -70,17 +80,15 @@ extension HomeViewModel {
                 self?.fluctuateRateAvgPrice.value.append((flucRate, avgPrice))
             }
         }
-        // print(fluctuateRateAvgPrice.value)
     }
     
     func getCurrencyNames() {
         currencyNames.value = []
-        usdTradingPairs.value.forEach { currency in
-            
-            CoinbaseService.shared.fetchCurrencyDetail(currencyID: currency.0) { [weak self] currencyInfo in
-                self?.currencyNames.value.append((currencyInfo.id, currencyInfo.name))
-            }
+        usdTradingPairs.value.forEach { [weak self] currency in
+            let currencyInfo = CoinbaseService.shared.fetchCurrencyDetailNew(currencyID: currency.0)
+            let coinId = currencyInfo?.id ?? ""
+            let coinName = currencyInfo?.name ?? ""
+            self?.currencyNames.value.append((coinId, coinName))
         }
-         // print(currencyNames.value)
     }
 }

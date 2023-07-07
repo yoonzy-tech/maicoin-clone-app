@@ -19,7 +19,8 @@ class ProductListTableViewCell: UITableViewCell, ChartViewDelegate {
     
     var coinCode: String = "" {
         didSet {
-            coinIconImageView.image = UIImage(named: coinCode)
+            CoinbaseService.shared.getIconUrl(imageView: coinIconImageView, for: coinCode)
+            // coinIconImageView.image = UIImage(named: coinCode)
             coinNameLabel.text = coinCode
             coinFullNameLabel.text = coinCodeToZHTWName[coinCode]
         }
