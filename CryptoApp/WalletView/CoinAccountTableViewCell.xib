@@ -29,7 +29,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="USD" translatesAutoresizingMaskIntoConstraints="NO" id="wvP-kS-Efg">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="wvP-kS-Efg">
                         <rect key="frame" x="16" y="27.666666666666671" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Oc0-gw-qVc"/>
@@ -67,6 +67,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="USD" width="36" height="36"/>
+        <image name="coin placeholder" width="48" height="48"/>
     </resources>
 </document>

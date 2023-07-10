@@ -11,7 +11,7 @@ target 'CryptoApp' do
   pod 'Kingfisher'
   pod 'MJRefresh'
   pod 'Alamofire' 
-  pod 'ProgressHUD'
+  pod 'JGProgressHUD'
   pod 'iCarousel'
   pod 'DGCharts'
   pod 'TinyConstraints'

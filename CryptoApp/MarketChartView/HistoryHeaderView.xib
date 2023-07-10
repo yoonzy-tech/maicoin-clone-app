@@ -31,7 +31,6 @@
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="viewAllButton:" destination="-1" eventType="touchUpInside" id="kTF-TE-tIk"/>
                         <action selector="viewAllButton:" destination="dTC-rv-xHe" eventType="touchUpInside" id="tn1-VM-dr1"/>
                     </connections>
                 </button>

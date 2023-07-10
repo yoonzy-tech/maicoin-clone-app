@@ -28,6 +28,7 @@ struct Order: Codable {
     let marketType: String?
     let status: String
     let settled: Bool
+    let fundingCurrency: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -50,5 +51,6 @@ struct Order: Codable {
         case marketType = "market_type"
         case status
         case settled
+        case fundingCurrency
     }
 }

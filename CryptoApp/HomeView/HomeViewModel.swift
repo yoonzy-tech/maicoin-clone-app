@@ -12,6 +12,9 @@ import Foundation
 class HomeViewModel {
     
     var accountTotalBalance: ObservableObject<Double> = ObservableObject(0)
+    
+    // coinCode, productId, coinName
+    var productPack: ObservableObject<ProductPack> = ObservableObject(ProductPack())
    
     // CoinCode, Pair ID: ("BTC", "BTC-USD")
     var usdTradingPairs: ObservableObject<[(String, String)]> = ObservableObject([])

@@ -9,15 +9,18 @@ import UIKit
 
 class HistoryHeaderView: UITableViewHeaderFooterView {
 
+    weak var navigationController: UINavigationController?
+    
+    var selectedCoin: String = ""
+    
     @IBAction func viewAllButton(_ sender: Any) {
         // perform segue to all history view controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let fullHistoryVC = storyboard
+            .instantiateViewController(withIdentifier: "FullHistoryViewController") as? FullHistoryViewController else {
+            return
+        }
+        fullHistoryVC.filteredCoin = selectedCoin
+        navigationController?.pushViewController(fullHistoryVC, animated: true)
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }

@@ -12,7 +12,6 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: self)!
-
         let timeZoneOffset = TimeInterval(8 * 60 * 60) // 8 hours in seconds
         let utc8Date = date.addingTimeInterval(timeZoneOffset)
 

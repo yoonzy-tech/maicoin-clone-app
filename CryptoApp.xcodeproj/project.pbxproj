@@ -133,11 +133,32 @@
 		045BCCF92A56682400AAEF13 /* WalletView */ = {
 			isa = PBXGroup;
 			children = (
+				045BCD0A2A56792300AAEF13 /* ProfileViewController.swift */,
 				045BCCF72A56675900AAEF13 /* WalletViewController.swift */,
 				045BCD042A566C6900AAEF13 /* CoinAccountTableViewCell.swift */,
 				045BCD052A566C6A00AAEF13 /* CoinAccountTableViewCell.xib */,
 			);
 			path = WalletView;
+			sourceTree = "<group>";
+		};
+		045BCD162A58485A00AAEF13 /* FullHistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				04A94E002A54135900EB95CC /* OrderResultViewController.swift */,
+				045BCD102A56933300AAEF13 /* FullHistoryViewController.swift */,
+				04A94E022A5413AE00EB95CC /* BuySellViewController.swift */,
+				045BCD142A56CF4800AAEF13 /* FilterOptionTableViewCell.swift */,
+				045BCD122A56CEE300AAEF13 /* FilterOptionViewController.swift */,
+			);
+			path = FullHistoryView;
+			sourceTree = "<group>";
+		};
+		045BCD172A58489300AAEF13 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				049AA0F32A4C1D9A0065CAA9 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		048D83192A501AEB00226EC5 /* MarketChartView */ = {
@@ -176,25 +197,20 @@
 		049AA0E92A4C1D980065CAA9 /* CryptoApp */ = {
 			isa = PBXGroup;
 			children = (
-				049AA1012A4C2E730065CAA9 /* Utilities */,
-				04A90F6A2A4D442900D59211 /* Extensions */,
+				045BCD172A58489300AAEF13 /* Resources */,
 				049AA1092A4C47160065CAA9 /* Models */,
+				04A90F6A2A4D442900D59211 /* Extensions */,
+				049AA1012A4C2E730065CAA9 /* Utilities */,
 				049AA1042A4C3DCA0065CAA9 /* HomeView */,
 				048D83192A501AEB00226EC5 /* MarketChartView */,
+				045BCCF92A56682400AAEF13 /* WalletView */,
+				045BCD162A58485A00AAEF13 /* FullHistoryView */,
 				04A90F812A4F06ED00D59211 /* TabBarViewController.swift */,
 				049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */,
 				049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */,
 				049AA0F02A4C1D980065CAA9 /* Main.storyboard */,
-				045BCD142A56CF4800AAEF13 /* FilterOptionTableViewCell.swift */,
-				045BCD122A56CEE300AAEF13 /* FilterOptionViewController.swift */,
 				049AA0F52A4C1D9A0065CAA9 /* LaunchScreen.storyboard */,
-				049AA0F32A4C1D9A0065CAA9 /* Assets.xcassets */,
 				049AA0F82A4C1D9A0065CAA9 /* Info.plist */,
-				04A94E002A54135900EB95CC /* OrderResultViewController.swift */,
-				045BCD102A56933300AAEF13 /* FullHistoryViewController.swift */,
-				04A94E022A5413AE00EB95CC /* BuySellViewController.swift */,
-				045BCCF92A56682400AAEF13 /* WalletView */,
-				045BCD0A2A56792300AAEF13 /* ProfileViewController.swift */,
 			);
 			path = CryptoApp;
 			sourceTree = "<group>";

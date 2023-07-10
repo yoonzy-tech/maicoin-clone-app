@@ -123,7 +123,7 @@ extension CoinbaseService {
     func getIconUrl(imageView: UIImageView, for coinCode: String, style: String = "icon") {
         let lowercased = coinCode.lowercased()
         let coinIconUrl = "https://cryptoicons.org/api/\(style)/\(lowercased)/200"
-        imageView.kf.setImage(with: URL(string: coinIconUrl))
+        imageView.kf.setImage(with: URL(string: coinIconUrl), placeholder: UIImage(named: "coin placeholder"))
     }
     
     func fetchCurrencyDetailNew(currencyID: String) -> CurrencyInfo? {
@@ -135,14 +135,14 @@ extension CoinbaseService {
         return currencyInfo
     }
     
-    func createOrders(price: String = "35000.99", // realtime rate
+    func createOrders( // realtime rate, price: String = "35000.99",
                       size: String, // user entered value
                       side: String, // actionType
                       productId: String) -> String? {
         
         let body = """
         {
-            "price": "\(price)",
+            "type": "market",
             "size": "\(size)",
             "side": "\(side)",
             "product_id": "\(productId)",
@@ -162,15 +162,31 @@ extension CoinbaseService {
         return order?.id
     }
     
-//    func fetchProductOrders(productID: String, status: String = "done", limit: Int = 5, completion: @escaping ([Order]) -> Void) {
-//        // Only showing top 5-6 history, newest on top
-//        getApiResponse(api: .allOrders(limit: limit,
-//                                       status: status,
-//                                       productID: productID),
-//                       authRequired: true,
-//                       requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",
-//                       httpMethod: .GET) { (orders: [Order]) in
-//            completion(orders)
-//        }
-//    }
+    func fetchCompletedOrderNew(orderID: String) -> Order? {
+        
+        guard let order: Order? = getApiResponseNoCompletion(api: .getOrder(orderID: orderID),
+                                                                    authRequired: true,
+                                                             requestPath: "/orders/" + orderID,
+                                                             httpMethod: .GET)
+        else {
+            print("Failed to get the transaction details")
+            return nil
+        }
+        return order
+    }
+    
+    func fetchProductOrdersNew(productID: String, status: String = "done", limit: Int = 5) -> [Order]? {
+        
+        guard let histories: [Order]? = getApiResponseNoCompletion(
+            api: .allOrders(limit: limit, status: status, productID: productID),
+            authRequired: true,
+            requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",
+            httpMethod: .GET) else {
+            print("Failed to get the \(productID) product order details")
+            return nil
+        }
+        
+        return histories
+        
+    }
 }

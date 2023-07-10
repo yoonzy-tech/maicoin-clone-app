@@ -13,6 +13,12 @@ enum CurrencyName: String {
     case USD
 }
 
+struct ProductPack {
+    var coinCode: String = ""
+    var productId: String = ""
+    var coinName: String = ""
+}
+
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -26,6 +32,8 @@ class HomeViewController: UIViewController {
     var passedCoinCode: String = ""
     
     var passedCoinName: String = ""
+    
+    var productPack: ProductPack = ProductPack()
     
     var passCoinCodeProductID: (String, String) = ("", "")
     
@@ -54,7 +62,7 @@ class HomeViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    func requestAPIAgain() {
+    private func requestAPIAgain() {
         viewModel.getAccountsTotalBalance()
         viewModel.getUSDTradingPairs()
         viewModel.getUSDPairsProductFluctRateAvgPrice()
@@ -163,6 +171,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "ProductListTableViewCell", for: indexPath) as? ProductListTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
+            // New
+            
+            
+            // Work
             let coinCode = viewModel.usdTradingPairs.value[indexPath.row].0
             cell.coinCode = coinCode
             cell.price = viewModel.fluctuateRateAvgPrice.value[indexPath.row].1.convertToTWD().rounded()

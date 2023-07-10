@@ -177,6 +177,8 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HistoryHeaderView")
                     as? HistoryHeaderView
             else { fatalError("Unable to generate Table View Section Header") }
+            headerView.navigationController = navigationController
+            headerView.selectedCoin = coinCodeProductID.0
             return headerView
         }
     }
@@ -220,6 +222,7 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
             cell.setChartView(dataArray: cell.dayArray)
             
             return cell
+            
         default:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "HistoryTableViewCell", for: indexPath) as? HistoryTableViewCell

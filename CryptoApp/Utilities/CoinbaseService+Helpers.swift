@@ -10,6 +10,7 @@ import Foundation
 import FoundationNetworking
 #endif
 import CryptoKit
+import JGProgressHUD
 
 extension CoinbaseService {
     func getTimestampSignature(requestPath: String,
@@ -50,7 +51,7 @@ extension CoinbaseService {
             return
         }
         
-        print("URL: \(url)")
+        // print("URL: \(url)")
         
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -86,6 +87,7 @@ extension CoinbaseService {
                 completion(response)
             } catch {
                 print("Error decoding data: \(error)")
+                
             }
             semaphore.signal()
         }
@@ -138,9 +140,13 @@ extension CoinbaseService {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(T.self, from: data)
                 responseData = response
-                print("📱 Response: \(responseData)")
+                // print("📱 Response: \(responseData)")
             } catch {
                 print("Error decoding data: \(error)")
+                DispatchQueue.main.async {
+                    JGProgressHUD().textLabel.text = "內部服務器錯誤\n請稍後再試"
+                    JGProgressHUD().indicatorView = JGProgressHUDErrorIndicatorView()
+                }
             }
             semaphore.signal()
         }

@@ -78,7 +78,7 @@ class MarketChartViewModel {
                     let low = candle[1]
                     let high = candle[2]
                     var avgPrice = (low + high) / 2
-                    avgPrice = avgPrice.formatMarketDataDouble()
+                    avgPrice = avgPrice
                     avgPriceArray.insert(avgPrice, at: 0)
                 }
                 completion(avgPriceArray)
@@ -114,7 +114,7 @@ class MarketChartViewModel {
                     let low = candle[1]
                     let high = candle[2]
                     var avgPrice = (low + high) / 2
-                    avgPrice = avgPrice.formatMarketDataDouble()
+                    avgPrice = avgPrice
                     avgPriceArray.insert(avgPrice, at: 0)
                 }
                 
@@ -147,7 +147,7 @@ class MarketChartViewModel {
                 let low = candle[1]
                 let high = candle[2]
                 var avgPrice = (low + high) / 2
-                avgPrice = avgPrice.formatMarketDataDouble()
+                avgPrice = avgPrice
                 avgPriceArray.insert(avgPrice, at: 0)
             }
         }
@@ -161,7 +161,7 @@ class MarketChartViewModel {
                 let low = candle[1]
                 let high = candle[2]
                 var avgPrice = (low + high) / 2
-                avgPrice = avgPrice.formatMarketDataDouble()
+                avgPrice = avgPrice
                 avgPriceArray.insert(avgPrice, at: 0)
             }
         }
