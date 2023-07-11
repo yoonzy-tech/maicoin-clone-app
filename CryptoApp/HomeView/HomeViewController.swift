@@ -14,9 +14,11 @@ enum CurrencyName: String {
 }
 
 struct ProductPack {
-    var coinCode: String = ""
+    var baseCurrency: String = ""
     var productId: String = ""
-    var coinName: String = ""
+    var baseCurrencyName: String = ""
+    var fluctuateRate: Double = 0
+    var averagePrice: Double = 0
 }
 
 class HomeViewController: UIViewController {
@@ -40,7 +42,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupBinders()
+//        setupBinders()
         tableView.mj_header = MJRefreshNormalHeader()
         tableView.mj_header?.setRefreshingTarget(self, refreshingAction: #selector(refreshPage))
     }
@@ -48,13 +50,14 @@ class HomeViewController: UIViewController {
     @objc func refreshPage() {
         requestAPIAgain()
         tableView.mj_header?.endRefreshing()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        // Data Fetching
-        requestAPIAgain()
+         requestAPIAgain()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,10 +66,13 @@ class HomeViewController: UIViewController {
     }
     
     private func requestAPIAgain() {
-        viewModel.getAccountsTotalBalance()
-        viewModel.getUSDTradingPairs()
-        viewModel.getUSDPairsProductFluctRateAvgPrice()
-        viewModel.getCurrencyNames()
+        viewModel.getAccountsTotalBalanceNew()
+        viewModel.prepareHomepageData {
+            self.tableView.reloadData()
+        }
+        
+//        viewModel.getUSDPairsProductFluctRateAvgPrice()
+//        viewModel.getCurrencyNames()
     }
     
     private func setupTableView() {
@@ -151,7 +157,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return 1 // BannerBalanceCell
         default:
-            return viewModel.usdTradingPairs.value.count
+            return viewModel.usdProductPacks.value.count
         }
     }
     
@@ -171,14 +177,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 withIdentifier: "ProductListTableViewCell", for: indexPath) as? ProductListTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            // New
-            
-            
-            // Work
-            let coinCode = viewModel.usdTradingPairs.value[indexPath.row].0
-            cell.coinCode = coinCode
-            cell.price = viewModel.fluctuateRateAvgPrice.value[indexPath.row].1.convertToTWD().rounded()
-            cell.rate = viewModel.fluctuateRateAvgPrice.value[indexPath.row].0
+            cell.coinCode = viewModel.usdProductPacks.value[indexPath.row].baseCurrency
+            cell.price = viewModel.usdProductPacks.value[indexPath.row].averagePrice
+            cell.rate = viewModel.usdProductPacks.value[indexPath.row].fluctuateRate
             
             return cell
         }
@@ -192,6 +193,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             self.passedCoinName = coinCodeToZHTWName[self.passedCoinCode] ?? self.passedCoinCode
             self.passCoinCodeProductID = viewModel.usdTradingPairs.value[indexPath.row]
             performSegue(withIdentifier: "openCoinMarketChart", sender: nil)
+        
         default:
             return
         }

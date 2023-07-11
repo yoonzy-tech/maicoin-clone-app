@@ -37,6 +37,7 @@
 		049AA1082A4C3E130065CAA9 /* ProductListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049AA1062A4C3E130065CAA9 /* ProductListTableViewCell.xib */; };
 		049AA10B2A4C472B0065CAA9 /* TradingPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA10A2A4C472B0065CAA9 /* TradingPair.swift */; };
 		049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA10C2A4C5F390065CAA9 /* Profile.swift */; };
+		049FD6452A5D36D90098783E /* CoinbaseService+Refactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FD6442A5D36D90098783E /* CoinbaseService+Refactor.swift */; };
 		04A90F642A4C685D00D59211 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F632A4C685D00D59211 /* Account.swift */; };
 		04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F652A4D227700D59211 /* CurrencyInfo.swift */; };
 		04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F672A4D314B00D59211 /* ProductStats.swift */; };
@@ -93,6 +94,7 @@
 		049AA1062A4C3E130065CAA9 /* ProductListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductListTableViewCell.xib; sourceTree = "<group>"; };
 		049AA10A2A4C472B0065CAA9 /* TradingPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPair.swift; sourceTree = "<group>"; };
 		049AA10C2A4C5F390065CAA9 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		049FD6442A5D36D90098783E /* CoinbaseService+Refactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoinbaseService+Refactor.swift"; sourceTree = "<group>"; };
 		04A90F632A4C685D00D59211 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		04A90F652A4D227700D59211 /* CurrencyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
 		04A90F672A4D314B00D59211 /* ProductStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStats.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				049AA0F02A4C1D980065CAA9 /* Main.storyboard */,
 				049AA0F52A4C1D9A0065CAA9 /* LaunchScreen.storyboard */,
 				049AA0F82A4C1D9A0065CAA9 /* Info.plist */,
+				049FD6442A5D36D90098783E /* CoinbaseService+Refactor.swift */,
 			);
 			path = CryptoApp;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */,
 				048D83182A500A4300226EC5 /* Order.swift in Sources */,
 				045BCCF82A56675900AAEF13 /* WalletViewController.swift in Sources */,
+				049FD6452A5D36D90098783E /* CoinbaseService+Refactor.swift in Sources */,
 				049AA1032A4C2FD80065CAA9 /* CoinbaseService.swift in Sources */,
 				045BCD062A566C6A00AAEF13 /* CoinAccountTableViewCell.swift in Sources */,
 				04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */,

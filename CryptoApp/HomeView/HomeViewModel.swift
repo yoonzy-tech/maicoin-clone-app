@@ -11,8 +11,8 @@ class HomeViewModel {
     
     var accountTotalBalance: ObservableObject<Double> = ObservableObject(0)
     
-    // coinCode, productId, coinName
-    var productPack: ObservableObject<ProductPack> = ObservableObject(ProductPack())
+    // coinCode, productId, coinName, rate, price
+    var usdProductPacks: ObservableObject<[ProductPack]> = ObservableObject([])
    
     // CoinCode, Pair ID: ("BTC", "BTC-USD")
     var usdTradingPairs: ObservableObject<[(String, String)]> = ObservableObject([])
@@ -40,26 +40,6 @@ extension HomeViewModel {
             // print("USD Curreny Pairs (Array): \(USDPairs)")
             self?.usdTradingPairs.value = newUSDPairs.sorted(by: { $0 < $1 })
         }
-        
-    }
-
-    func getAccountsTotalBalance() {
-        guard let accounts = CoinbaseService.shared.fetchAccountsNew() else {
-            print("Fail to get accounts data")
-            return
-        }
-        
-        let totalBalance = accounts.reduce(0) { partialResult, account in
-            if let rate = CoinbaseService.shared.getExchangeRate(from: account.currency) {
-                let currencyBalance = account.balance.convertToDouble()
-                return partialResult + (currencyBalance * rate)
-            } else {
-                print("Failed to get exchange for \(account.currency) to TWD")
-                return partialResult
-            }
-        }
-        
-        self.accountTotalBalance.value = totalBalance
     }
 
     func getUSDPairsProductFluctRateAvgPrice() {
@@ -89,6 +69,108 @@ extension HomeViewModel {
             let coinId = currencyInfo?.id ?? ""
             let coinName = currencyInfo?.name ?? ""
             self?.currencyNames.value.append((coinId, coinName))
+        }
+    }
+    
+    func getAccountsTotalBalanceNew() {
+        CoinbaseService.shared.getAccounts { accounts in
+            var totalBalance: Double = 0
+            
+            let group = DispatchGroup()
+            
+            accounts.forEach { account in
+                group.enter()
+                CoinbaseService.shared.getExchangeRate(for: account.currency) { rate in
+                    defer {
+                        group.leave()
+                    }
+                    let accountBalance = account.balance.convertToDouble()
+                    let balanceInTWD = accountBalance * rate
+                    totalBalance += balanceInTWD
+                }
+            }
+            
+            group.notify(queue: .main) {
+                self.accountTotalBalance.value = totalBalance
+                print("Total Balance: \(totalBalance)")
+            }
+        }
+    }
+    
+    func getUSDTradingPairsNEW(completion: @escaping () -> Void) {
+        CoinbaseService.shared.getTradingPairs { tradingPairs in
+            let usdTradingPairs = tradingPairs.filter { tradingPair in
+                return tradingPair.quoteCurrency == "USD"
+                && tradingPair.auctionMode == false
+                && tradingPair.status == "online"
+            }
+            let usdProductPacks = usdTradingPairs.compactMap { tradingPairs in
+                return ProductPack(baseCurrency: tradingPairs.baseCurrency,
+                                   productId: tradingPairs.id)
+            }.sorted { $0.baseCurrency < $1.baseCurrency }
+            
+            self.usdProductPacks.value = usdProductPacks
+            // print("USD Product Packs: \(usdProductPacks)")
+            completion()
+        }
+    }
+    
+    func getCurrencyNamesNEW(completion: @escaping () -> Void) {
+        let group = DispatchGroup()
+        usdProductPacks.value.enumerated().forEach { index, productPack in
+            group.enter()
+            CoinbaseService.shared.getCurrencyInfo(currency: productPack.baseCurrency) { [weak self] currencyInfo in
+                
+                // Update the Product Pack
+                var updatedProduct = productPack
+                updatedProduct.baseCurrencyName = currencyInfo.name
+                self?.usdProductPacks.value[index] = updatedProduct
+                print("😇 Updated Product Pack: \(updatedProduct)")
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            completion()
+        }
+    }
+    
+    func getUSDProductsStatsNEW(completion: @escaping () -> Void) {
+        let group = DispatchGroup()
+        usdProductPacks.value.enumerated().forEach { index, productPack in
+            group.enter()
+            CoinbaseService.shared.getProductStats(productId: productPack.productId) { [weak self] productStats in
+                
+                let lastPrice = Double(productStats.last) ?? 0
+                let openPrice = Double(productStats.open) ?? 0
+                let flucRate = (lastPrice - openPrice) / lastPrice * 100
+                
+                let highPrice = Double(productStats.high) ?? 0
+                let lowPrice = Double(productStats.low) ?? 0
+                let avgPrice = (highPrice + lowPrice) / 2
+                
+                // Update the Product Pack
+                var updatedProduct = productPack
+                updatedProduct.fluctuateRate = flucRate
+                updatedProduct.averagePrice = avgPrice
+                self?.usdProductPacks.value[index] = updatedProduct
+                print("🤡 Updated Product Pack: \(updatedProduct)")
+                group.leave()
+            }
+            
+        }
+        group.notify(queue: .main) {
+            completion()
+        }
+    }
+    
+    func prepareHomepageData(completion: @escaping () -> Void) {
+        getUSDTradingPairsNEW {
+            self.getCurrencyNamesNEW {
+                self.getUSDProductsStatsNEW {
+                    print("💀 USD Product Pack: \(self.usdProductPacks.value)")
+                    completion()
+                }
+            }
         }
     }
 }

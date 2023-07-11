@@ -27,7 +27,7 @@ extension CoinbaseService {
     
     func fetchProductStats(productID: String,
                            completion: @escaping (ProductStats) -> Void) {
-        getApiResponse(api: .productStats(productID: productID),
+        getApiResponse(api: .productStats(productId: productID),
                        authRequired: false) { (productStats: ProductStats) in
             completion(productStats)
         }
@@ -114,7 +114,7 @@ extension CoinbaseService {
     
     func fetchCurrencyDetailNew(currencyID: String) -> CurrencyInfo? {
         guard let currencyInfo: CurrencyInfo? = getApiResponseNoCompletion(
-            api: .currencyDetail(currencyID: currencyID), authRequired: false) else {
+            api: .currencyDetail(currency: currencyID), authRequired: false) else {
             print("Failed to get \(currencyID) coin icon")
             return nil
         }
