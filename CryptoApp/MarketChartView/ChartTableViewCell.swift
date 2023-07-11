@@ -31,6 +31,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
   
     var allArray: [Double] = []
 
+    @IBOutlet weak var historyTimeLabel: UILabel!
     @IBOutlet weak var realtimeSellPriceLabel: UILabel!
     @IBOutlet weak var realtimeBuyPriceLabel: UILabel!
     @IBOutlet weak var historyAveragePriceView: UIView!
@@ -114,6 +115,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
         guard let lineChartView = chartView as? LineChartView else {
             return
         }
+        
         historyAveragePriceView.isHidden = true
         lineChartView.data?.dataSets.forEach { dataSet in
             if dataSet is LineChartDataSet {
@@ -123,6 +125,14 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     }
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        
+        let timestamp: TimeInterval = entry.x
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 8 * 60 * 60)
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateString = dateFormatter.string(from: date)
+        historyTimeLabel.text = dateString
         historyAveragePriceLabel.text = "\(entry.y)"
         historyAveragePriceView.isHidden = false
     }

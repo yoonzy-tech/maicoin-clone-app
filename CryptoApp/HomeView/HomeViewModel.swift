@@ -7,8 +7,6 @@
 
 import Foundation
 
-// State Management
-
 class HomeViewModel {
     
     var accountTotalBalance: ObservableObject<Double> = ObservableObject(0)
@@ -24,7 +22,6 @@ class HomeViewModel {
     
     // Rate, AvgPrice
     var fluctuateRateAvgPrice: ObservableObject<[(Double, Double)]> = ObservableObject([])
-    
 }
 
 extension HomeViewModel {
@@ -72,13 +69,13 @@ extension HomeViewModel {
             
             CoinbaseService.shared.fetchProductStats(productID: productID.1) { [weak self] productStats in
                 // print("\(productID.0): \(productStats)"
-                let lastPrice = productStats.last
-                let openPrice = productStats.open
-                let flucRate = ((Double(lastPrice) ?? 0) - (Double(openPrice) ?? 0)) / (Double(lastPrice) ?? 0) * 100
+                let lastPrice = Double(productStats.last) ?? 0
+                let openPrice = Double(productStats.open) ?? 0
+                let flucRate = (lastPrice - openPrice) / lastPrice * 100
                 
-                let highPrice = productStats.high
-                let lowPrice = productStats.low
-                let avgPrice = ((Double(highPrice) ?? 0) + (Double(lowPrice) ?? 0)) / 2
+                let highPrice = Double(productStats.high) ?? 0
+                let lowPrice = Double(productStats.low) ?? 0
+                let avgPrice = (highPrice + lowPrice) / 2
                 
                 self?.fluctuateRateAvgPrice.value.append((flucRate, avgPrice))
             }
