@@ -46,8 +46,8 @@
                                     <action selector="hideAccountBalance:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Tsk-uo-wE1"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NT$ XX,XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igu-ML-XxK">
-                                <rect key="frame" x="16" y="58.66666666666665" width="134.66666666666666" height="28.666666666666664"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NT$ ******" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igu-ML-XxK">
+                                <rect key="frame" x="15.999999999999993" y="58.66666666666665" width="111.33333333333331" height="28.666666666666664"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

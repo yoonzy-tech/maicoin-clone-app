@@ -37,7 +37,7 @@ extension CoinbaseService {
         // Only showing top 5-6 history, newest on top
         getApiResponse(api: .allOrders(limit: limit,
                                        status: status,
-                                       productID: productID),
+                                       productId: productID),
                        authRequired: true,
                        requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",
                        httpMethod: .GET) { (orders: [Order]) in
@@ -164,7 +164,7 @@ extension CoinbaseService {
     func fetchProductOrdersNew(productID: String, status: String = "done", limit: Int = 5) -> [Order]? {
         
         guard let histories: [Order]? = getApiResponseNoCompletion(
-            api: .allOrders(limit: limit, status: status, productID: productID),
+            api: .allOrders(limit: limit, status: status, productId: productID),
             authRequired: true,
             requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",
             httpMethod: .GET) else {
@@ -173,6 +173,5 @@ extension CoinbaseService {
         }
         
         return histories
-        
     }
 }

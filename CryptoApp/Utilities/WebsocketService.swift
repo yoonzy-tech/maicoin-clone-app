@@ -16,7 +16,7 @@ class WebsocketService {
     
     var socket: WebSocket!
     
-    var subscribeProductID: String!
+    var subscribeProductId: String!
     
     var completion: ((TickerMessage) -> Void)?
     
@@ -37,12 +37,12 @@ class WebsocketService {
         socket.delegate = nil
     }
     
-    func subscribe(productID: String) {
+    func subscribe(productId: String) {
         let subscriptionMessage = """
             {
                 "type": "subscribe",
                 "product_ids": [
-                    "\(productID)"
+                    "\(productId)"
                 ],
                 "channels": ["ticker_batch"]
             }
@@ -50,13 +50,13 @@ class WebsocketService {
         socket.write(string: subscriptionMessage)
     }
     
-    func unsubscribe(productID: String) {
+    func unsubscribe(productId: String) {
         // Unsubscribe from the ticker batch channel
         let unsubscribeMessage = """
             {
                 "type": "unsubscribe",
                 "product_ids": [
-                    "\(productID)"
+                    "\(productId)"
                 ],
                 "channels": ["ticker_batch"]
             }
@@ -72,7 +72,7 @@ extension WebsocketService: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             // subscribe channel
-            self.subscribe(productID: subscribeProductID)
+            self.subscribe(productId: subscribeProductId)
             
             print("websocket is connected: \(headers)")
 

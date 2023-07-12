@@ -38,6 +38,7 @@
 		049AA10B2A4C472B0065CAA9 /* TradingPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA10A2A4C472B0065CAA9 /* TradingPair.swift */; };
 		049AA10D2A4C5F390065CAA9 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AA10C2A4C5F390065CAA9 /* Profile.swift */; };
 		049FD6452A5D36D90098783E /* CoinbaseService+Refactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FD6442A5D36D90098783E /* CoinbaseService+Refactor.swift */; };
+		049FD6472A5E3D5D0098783E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FD6462A5E3D5D0098783E /* TabBarViewController.swift */; };
 		04A90F642A4C685D00D59211 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F632A4C685D00D59211 /* Account.swift */; };
 		04A90F662A4D227700D59211 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F652A4D227700D59211 /* CurrencyInfo.swift */; };
 		04A90F682A4D314B00D59211 /* ProductStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F672A4D314B00D59211 /* ProductStats.swift */; };
@@ -50,7 +51,6 @@
 		04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F792A4DC94200D59211 /* Double+Extensions.swift */; };
 		04A90F7C2A4DF12900D59211 /* CoinbaseService+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F7B2A4DF12900D59211 /* CoinbaseService+Helpers.swift */; };
 		04A90F7E2A4EEAAF00D59211 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F7D2A4EEAAF00D59211 /* Constants.swift */; };
-		04A90F822A4F06ED00D59211 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F812A4F06ED00D59211 /* TabBarViewController.swift */; };
 		04A90F842A4F073C00D59211 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */; };
 		04A90F862A4F0C1B00D59211 /* MarketChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */; };
 		04A94DF92A51944700EB95CC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A94DF82A51944700EB95CC /* String+Extensions.swift */; };
@@ -95,6 +95,7 @@
 		049AA10A2A4C472B0065CAA9 /* TradingPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPair.swift; sourceTree = "<group>"; };
 		049AA10C2A4C5F390065CAA9 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		049FD6442A5D36D90098783E /* CoinbaseService+Refactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoinbaseService+Refactor.swift"; sourceTree = "<group>"; };
+		049FD6462A5E3D5D0098783E /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		04A90F632A4C685D00D59211 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		04A90F652A4D227700D59211 /* CurrencyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
 		04A90F672A4D314B00D59211 /* ProductStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStats.swift; sourceTree = "<group>"; };
@@ -107,7 +108,6 @@
 		04A90F792A4DC94200D59211 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		04A90F7B2A4DF12900D59211 /* CoinbaseService+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoinbaseService+Helpers.swift"; sourceTree = "<group>"; };
 		04A90F7D2A4EEAAF00D59211 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		04A90F812A4F06ED00D59211 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = /Users/rubychew/Desktop/CryptoApp/CryptoApp/TabBarViewController.swift; sourceTree = "<absolute>"; };
 		04A90F832A4F073C00D59211 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		04A90F852A4F0C1B00D59211 /* MarketChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketChartViewController.swift; sourceTree = "<group>"; };
 		04A94DF82A51944700EB95CC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 				048D83192A501AEB00226EC5 /* MarketChartView */,
 				045BCCF92A56682400AAEF13 /* WalletView */,
 				045BCD162A58485A00AAEF13 /* FullHistoryView */,
-				04A90F812A4F06ED00D59211 /* TabBarViewController.swift */,
+				049FD6462A5E3D5D0098783E /* TabBarViewController.swift */,
 				049AA0EA2A4C1D980065CAA9 /* AppDelegate.swift */,
 				049AA0EC2A4C1D980065CAA9 /* SceneDelegate.swift */,
 				049AA0F02A4C1D980065CAA9 /* Main.storyboard */,
@@ -439,6 +439,7 @@
 				04A90F7E2A4EEAAF00D59211 /* Constants.swift in Sources */,
 				04A90F722A4D9D3C00D59211 /* ProductsTableViewHeaderView.swift in Sources */,
 				049AA0EB2A4C1D980065CAA9 /* AppDelegate.swift in Sources */,
+				049FD6472A5E3D5D0098783E /* TabBarViewController.swift in Sources */,
 				048D832E2A505DA000226EC5 /* HistoryTableViewCell.swift in Sources */,
 				048D831D2A50241D00226EC5 /* TickerMessage.swift in Sources */,
 				04A90F782A4DC1CA00D59211 /* HomeViewModel.swift in Sources */,
@@ -452,7 +453,6 @@
 				04A90F7A2A4DC94200D59211 /* Double+Extensions.swift in Sources */,
 				045BCD132A56CEE300AAEF13 /* FilterOptionViewController.swift in Sources */,
 				049AA10B2A4C472B0065CAA9 /* TradingPair.swift in Sources */,
-				04A90F822A4F06ED00D59211 /* TabBarViewController.swift in Sources */,
 				04A90F7C2A4DF12900D59211 /* CoinbaseService+Helpers.swift in Sources */,
 				04A90F762A4DC03400D59211 /* ObservableObject.swift in Sources */,
 				049AA0FF2A4C1EEE0065CAA9 /* ApiKeys.swift in Sources */,

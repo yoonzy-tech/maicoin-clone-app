@@ -9,40 +9,18 @@ import UIKit
 import MJRefresh
 import Starscream
 
-enum CurrencyName: String {
-    case USD
-}
-
-struct ProductPack {
-    var baseCurrency: String = ""
-    var productId: String = ""
-    var baseCurrencyName: String = ""
-    var fluctuateRate: Double = 0
-    var averagePrice: Double = 0
-}
-
 class HomeViewController: UIViewController {
-    
-    @IBOutlet weak var tableView: UITableView!
     
     let viewModel = HomeViewModel()
     
-    var socket: WebSocket!
+    var passProductPack: ProductPack = ProductPack()
     
-    var isConnected: Bool = false
-    
-    var passedCoinCode: String = ""
-    
-    var passedCoinName: String = ""
-    
-    var productPack: ProductPack = ProductPack()
-    
-    var passCoinCodeProductID: (String, String) = ("", "")
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-//        setupBinders()
+        setupBinders()
         tableView.mj_header = MJRefreshNormalHeader()
         tableView.mj_header?.setRefreshingTarget(self, refreshingAction: #selector(refreshPage))
     }
@@ -50,13 +28,12 @@ class HomeViewController: UIViewController {
     @objc func refreshPage() {
         requestAPIAgain()
         tableView.mj_header?.endRefreshing()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-         requestAPIAgain()
+        requestAPIAgain()
         
     }
     
@@ -66,13 +43,7 @@ class HomeViewController: UIViewController {
     }
     
     private func requestAPIAgain() {
-        viewModel.getAccountsTotalBalanceNew()
-        viewModel.prepareHomepageData {
-            self.tableView.reloadData()
-        }
-        
-//        viewModel.getUSDPairsProductFluctRateAvgPrice()
-//        viewModel.getCurrencyNames()
+        viewModel.prepareHomepageData()
     }
     
     private func setupTableView() {
@@ -97,7 +68,7 @@ class HomeViewController: UIViewController {
             }
         }
 
-        viewModel.usdTradingPairs.bind { [weak self] _ in
+        viewModel.usdProductPacks.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             }
@@ -107,23 +78,20 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Check if the scroll offset has reached the scroll edge threshold
         let scrollOffset = scrollView.contentOffset.y
-        let scrollEdgeThreshold: CGFloat = 50 // Adjust this threshold value as per your requirement
+        let scrollEdgeThreshold: CGFloat = 50
         
         if scrollOffset >= scrollEdgeThreshold {
-            // Set the title for the navigation bar when the scroll offset reaches the scroll edge threshold
             navigationItem.title = "市場"
             navigationController?.setNavigationBarHidden(false, animated: false)
         } else {
-            // Remove the title otherwise
             navigationItem.title = nil
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
 }
 
-// MARK: TableView Delegate
+// MARK: - TableView Delegate
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -154,22 +122,24 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 1 // BannerBalanceCell
-        default:
+        
+        case 0: // BannerBalanceCell
+            return 1
+        
+        default: // ProductListCell
             return viewModel.usdProductPacks.value.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
+            
         case 0:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "BannerBalanceTableViewCell", for: indexPath) as? BannerBalanceTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
             cell.accountTotalBalance = viewModel.accountTotalBalance.value
-            
             return cell
         
         default:
@@ -180,7 +150,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.coinCode = viewModel.usdProductPacks.value[indexPath.row].baseCurrency
             cell.price = viewModel.usdProductPacks.value[indexPath.row].averagePrice
             cell.rate = viewModel.usdProductPacks.value[indexPath.row].fluctuateRate
-            
             return cell
         }
     }
@@ -189,9 +158,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
             
         case 1:
-            self.passedCoinCode = viewModel.usdTradingPairs.value[indexPath.row].0
-            self.passedCoinName = coinCodeToZHTWName[self.passedCoinCode] ?? self.passedCoinCode
-            self.passCoinCodeProductID = viewModel.usdTradingPairs.value[indexPath.row]
+            self.passProductPack = viewModel.usdProductPacks.value[indexPath.row]
             performSegue(withIdentifier: "openCoinMarketChart", sender: nil)
         
         default:
@@ -202,9 +169,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openCoinMarketChart",
             let destinationVC = segue.destination as? MarketChartViewController {
-            destinationVC.title = "\(self.passedCoinName) (\(self.passedCoinCode))"
-            print("PassCoinCodeProductID: \(passCoinCodeProductID)")
-            destinationVC.coinCodeProductID = passCoinCodeProductID
+            let coinNameInTW = coinCodeToZHTWName[passProductPack.baseCurrency] ?? ""
+            destinationVC.title = "\(coinNameInTW) (\(passProductPack.baseCurrency))"
+            destinationVC.viewModel.productPack.value = passProductPack
         }
     }
 }

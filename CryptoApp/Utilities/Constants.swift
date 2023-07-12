@@ -30,7 +30,7 @@ enum CoinbaseApi {
     case allCurrenciesDetail
     case currencyDetail(currency: String)
     case productStats(productId: String)
-    case allOrders(limit: Int, status: String, productID: String)
+    case allOrders(limit: Int, status: String, productId: String)
     case createOrder
     case getOrder(orderID: String)
     case allCandles(productID: String, granularity: String, start: String, end: String)
@@ -54,8 +54,8 @@ enum CoinbaseApi {
             return "\(baseURL)/currencies"
         case .currencyDetail(currency: let currency):
             return "\(baseURL)/currencies/\(currency)"
-        case .allOrders(limit: let limit, status: let status, productID: let productID):
-            return "\(baseURL)/orders?limit=\(limit)&status=\(status)&product_id=\(productID)"
+        case .allOrders(limit: let limit, status: let status, productId: let productId):
+            return "\(baseURL)/orders?limit=\(limit)&status=\(status)&product_id=\(productId)"
         case .createOrder:
             return "\(baseURL)/orders"
         case .getOrder(orderID: let orderID):

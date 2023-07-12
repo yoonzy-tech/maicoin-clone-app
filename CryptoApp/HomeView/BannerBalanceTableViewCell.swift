@@ -65,7 +65,8 @@ class BannerBalanceTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        stopBannerAutoplay()
+        // startBannerAutoplay()
+        // stopBannerAutoplay()
     }
     
     private func setupCarouselView() {
@@ -132,7 +133,7 @@ extension BannerBalanceTableViewCell: iCarouselDelegate, iCarouselDataSource {
     }
     
     private func startBannerAutoplay() {
-        timer = Timer.scheduledTimer(timeInterval: 3.0,
+        timer = Timer.scheduledTimer(timeInterval: 2.0,
                                      target: self,
                                      selector: #selector(autoplayTimerFired),
                                      userInfo: nil,

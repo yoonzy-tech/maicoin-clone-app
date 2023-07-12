@@ -6,10 +6,13 @@
 //
 
 enum Time: Int {
-    case day, week = 3600
-        // 24, 24 * 7
-    case month, threeMonth, year, all = 86400
-        // 30, 30 * 3, 30 * 12, N
+    case day, week
+    case month, threeMonth, year, all
+}
+
+struct Candle {
+    var timestamp: Double = 0
+    var averagePrice: Double = 0
 }
 
 import Foundation
@@ -17,6 +20,8 @@ import Foundation
 class MarketChartViewModel {
     // CoinCode, Pair ID: ("BTC", "BTC-USD")
     var productID: ObservableObject<String> = ObservableObject("")
+    
+    var productPack: ObservableObject<ProductPack> = ObservableObject(ProductPack())
     
     var historyDataSource: ObservableObject<[Order]?> = ObservableObject(nil)
     
@@ -26,146 +31,160 @@ class MarketChartViewModel {
     
     var realtimeSellPrice: ObservableObject<Double> = ObservableObject(0)
     
-    func getProductOrderHistory() {
-        CoinbaseService.shared.fetchProductOrders(productID: productID.value) { orders in
-            
+    func getProductOrderHistoryNEW(completion: @escaping () -> Void, errorHandle: @escaping (Error) -> Void) {
+        let productId = productPack.value.productId
+        CoinbaseService.shared.getOrderHistory(productId: productId) { [weak self] orders in
             let sortedOrders = orders.sorted { $0.doneAt ?? "" > $1.doneAt ?? "" }
-            self.historyDataSource.value = sortedOrders
+            self?.historyDataSource.value = sortedOrders
+        } errorHandle: { error in
+            errorHandle(error)
         }
     }
     
-    func getProductCandles(productID: String, time: Time, completion: @escaping ([Double]) -> Void) {
+    func getTimeCandles(time: Time, completion: @escaping ([Candle]) -> Void) {
         
+        // get the date today
+        let calendar = Calendar.current // use the current calander
+        let endDate = Date() // get current date
+        var startDate: Date
         var granularity: String
         
         switch time {
         case .day:
             granularity = "3600"
+            startDate = calendar.date(byAdding: .day, value: -1, to: endDate) ?? Date()
         case .week:
             granularity = "21600"
+            startDate = calendar.date(byAdding: .day, value: -7, to: endDate) ?? Date()
         case .month:
             granularity = "86400"
+            startDate = calendar.date(byAdding: .month, value: -1, to: endDate) ?? Date()
         case .threeMonth:
             granularity = "86400"
+            startDate = calendar.date(byAdding: .month, value: -3, to: endDate) ?? Date()
         case .year:
-            granularity = "86400"
+            return
         case .all:
-            granularity = "86400"
+            return
         }
         
-        CoinbaseService.shared.fetchProductCandles(productID: productID,
-                                                   granularity: granularity) { candles in
-            
-            var takeCount: Int
-            
-            switch time {
-            case .day:
-                takeCount = 24
-            case .week:
-                takeCount = 4 * 7
-            case .month:
-                takeCount = 30
-            case .threeMonth:
-                takeCount = 30 * 3
-            default:
-                takeCount = 0
+        let productId = productPack.value.productId
+        let endTime = "\(Int(endDate.timeIntervalSince1970))"
+        let startTime = "\(Int(startDate.timeIntervalSince1970))"
+        CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
+                                                 startTime: startTime, endTime: endTime) { candlesArr in
+
+            var extractedCandles: [Candle] = candlesArr.compactMap { candle in
+                // Calculate Average Price
+                let low = candle[1]
+                let high = candle[2]
+                let avgPrice = (low + high) / 2
+                return Candle(timestamp: candle[0], averagePrice: avgPrice)
             }
+            extractedCandles.reverse()
             
-            if takeCount != 0 {
-                var avgPriceArray: [Double] = []
-                let filteredResponse = candles[0..<takeCount]
-                filteredResponse.forEach { candle in
-                    let low = candle[1]
-                    let high = candle[2]
-                    var avgPrice = (low + high) / 2
-                    avgPrice = avgPrice
-                    avgPriceArray.insert(avgPrice, at: 0)
-                }
-                completion(avgPriceArray)
-            } else {
-                // handle year, all
-                
-            }
+            // print("Extracted Candles: \(extractedCandles)")
+            completion(extractedCandles)
         }
     }
     
-    func getAllCandles(productID: String, completion: @escaping ([Double]) -> Void) {
+    func getAllCandles(completion: @escaping ([Candle]) -> Void) {
+        let group = DispatchGroup()
+        group.enter()
         
-        // get the date today
-        let calendar = Calendar.current // use the current calander
-        var endTime = Date() // get current date
-        
-        var avgPriceArray = [Double]()
-        var candleResponse = [[Double]]()
-        var index: Int = 0
+        let calendar = Calendar.current
+        var endDate = Date()
+
+        let productId = productPack.value.productId
+        let granularity = "86400"
         
         let semaphore = DispatchSemaphore(value: 0)
+        var candlesResponse = [[Double]]()
+        var index: Double = 0
+        var extractedCandles = [Candle]()
         
         repeat {
-            // get a 300 days ago timestamp to fetch history: start, end
-            let threeHundredDaysAgo = calendar.date(byAdding: .day, value: -300, to: endTime) ??  Date()
-            
-            CoinbaseService.shared.fetchProductCandles(productID: productID,
-                                                       granularity: "86400",
-                                                       startTime: "\(Int(threeHundredDaysAgo.timeIntervalSince1970))",
-                                                       endTime: "\(Int(endTime.timeIntervalSince1970))") { candles in
-    
-                candles.forEach { candle in
-                    let low = candle[1]
-                    let high = candle[2]
-                    var avgPrice = (low + high) / 2
-                    avgPrice = avgPrice
-                    avgPriceArray.insert(avgPrice, at: 0)
-                }
+            let startDate = calendar.date(byAdding: .day, value: -300, to: endDate) ?? Date()
+            let startTime = "\(Int(startDate.timeIntervalSince1970))"
+            var endTime = "\(Int(endDate.timeIntervalSince1970))"
+            // print("❗️Start: \(startTime)")
+            // print("❗️End: \(endTime)")
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.1 * index) {
                 
-                candleResponse = candles
-                endTime = threeHundredDaysAgo
-                index += 1
-                semaphore.signal()
+                CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
+                                                         startTime: startTime, endTime: endTime) { candlesArr in
+                    
+                    candlesArr.forEach { candle in
+                        // Calculate Average Price
+                        let low = candle[1]
+                        let high = candle[2]
+                        let avgPrice = (low + high) / 2
+                        let element = Candle(timestamp: candle[0], averagePrice: avgPrice)
+                        extractedCandles.insert(element, at: 0)
+                    }
+                    
+                    candlesResponse = candlesArr
+                    endDate = startDate
+                    index += 1
+                    semaphore.signal()
+                }
             }
-            
             semaphore.wait()
-            
-        } while(candleResponse.count != 0) // condition to continue the loop
+        } while (candlesResponse.count != 0)
         
-        completion(avgPriceArray)
+        group.leave()
+        group.notify(queue: .main) {
+            extractedCandles.sort { $0.timestamp < $1.timestamp }
+            completion(extractedCandles)
+        }
     }
     
-    func getYearCandles(productID: String, completion: @escaping ([Double]) -> Void) {
+    func getYearCandles(completion: @escaping ([Candle]) -> Void) {
+        let group = DispatchGroup()
         let calendar = Calendar.current
-        let todayDate = Date()
-        let threeHundredDaysAgo = calendar.date(byAdding: .day, value: -300, to: todayDate) ??  Date()
-        let yearAgo = calendar.date(byAdding: .year, value: -1, to: todayDate) ?? Date()
-        var avgPriceArray: [Double] = []
+        let endDate = Date()
+        let threeHundredDaysAgo = calendar.date(byAdding: .day, value: -300, to: endDate) ?? Date()
+        let aYearAgo = calendar.date(byAdding: .year, value: -1, to: endDate) ?? Date()
         
-        CoinbaseService.shared.fetchProductCandles(productID: productID,
-                                                   granularity: "86400",
-                                                   startTime: "\(Int(threeHundredDaysAgo.timeIntervalSince1970))",
-                                                   endTime: "\(Int(todayDate.timeIntervalSince1970))") { candles in
-            
-            candles.forEach { candle in
+        let productId = productPack.value.productId
+        let granularity = "86400"
+        let endTime = "\(Int(endDate.timeIntervalSince1970))"
+        let threeHundredDaysAgoTime = "\(Int(threeHundredDaysAgo.timeIntervalSince1970))"
+        let aYearAgoTime = "\(Int(aYearAgo.timeIntervalSince1970))"
+        var extractedCandles = [Candle]()
+        
+        group.enter()
+        CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
+                                                 startTime: threeHundredDaysAgoTime, endTime: endTime) { candlesArr in
+            candlesArr.forEach { candle in
+                // Calculate Average Price
                 let low = candle[1]
                 let high = candle[2]
-                var avgPrice = (low + high) / 2
-                avgPrice = avgPrice
-                avgPriceArray.insert(avgPrice, at: 0)
+                let avgPrice = (low + high) / 2
+                let element = Candle(timestamp: candle[0], averagePrice: avgPrice)
+                extractedCandles.insert(element, at: 0)
             }
+            group.leave()
         }
         
-        CoinbaseService.shared.fetchProductCandles(productID: productID,
-                                                   granularity: "86400",
-                                                   startTime: "\(Int(yearAgo.timeIntervalSince1970))",
-                                                   endTime: "\(Int(threeHundredDaysAgo.timeIntervalSince1970))") { candles in
+        group.enter()
+        CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
+                                                 startTime: aYearAgoTime, endTime: threeHundredDaysAgoTime) { candlesArr in
             
-            candles.forEach { candle in
+            candlesArr.forEach { candle in
+                // Calculate Average Price
                 let low = candle[1]
                 let high = candle[2]
-                var avgPrice = (low + high) / 2
-                avgPrice = avgPrice
-                avgPriceArray.insert(avgPrice, at: 0)
+                let avgPrice = (low + high) / 2
+                let element = Candle(timestamp: candle[0], averagePrice: avgPrice)
+                extractedCandles.insert(element, at: 0)
             }
+            group.leave()
         }
         
-        completion(avgPriceArray)
+        group.notify(queue: .main) {
+            extractedCandles.sort { $0.timestamp < $1.timestamp }
+            completion(extractedCandles)
+        }
     }
 }

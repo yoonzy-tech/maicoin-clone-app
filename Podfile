@@ -7,10 +7,8 @@ target 'CryptoApp' do
 
   # Pods for CryptoApp
   pod 'SwiftLint'
-  pod 'IQKeyboardManagerSwift'
   pod 'Kingfisher'
   pod 'MJRefresh'
-  pod 'Alamofire' 
   pod 'JGProgressHUD'
   pod 'iCarousel'
   pod 'DGCharts'

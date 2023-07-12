@@ -21,9 +21,10 @@ protocol OrderDelegate: AnyObject {
 
 import UIKit
 import Starscream
-//import ProgressHUD
 
 class BuySellViewController: UIViewController {
+    
+    var productPack: ProductPack = ProductPack()
     
     var product: [String: String] = ["coinCode": "", "pair": ""]
     
@@ -92,7 +93,7 @@ class BuySellViewController: UIViewController {
         
         // Check if has sufficient balance
         if size.convertToDouble() > currentBalance.convertToDouble() {
-            //ProgressHUD.show("餘額不足\n請輸入有效餘額", icon: .exclamation)
+            // ProgressHUD.show("餘額不足\n請輸入有效餘額", icon: .exclamation)
             return
         }
         
@@ -141,7 +142,7 @@ class BuySellViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let productID = product["pair"] ?? ""
-        websocket.subscribeProductID = productID
+        websocket.subscribeProductId = productID
         websocket.connect()
         websocket.completion = { [weak self] tickerMessage in
             let bid = tickerMessage.bestBid ?? ""
@@ -154,7 +155,7 @@ class BuySellViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         let productID = product["pair"] ?? ""
-        websocket.unsubscribe(productID: productID)
+        websocket.unsubscribe(productId: productID)
     }
     
     private func getCurrencyAccount() {

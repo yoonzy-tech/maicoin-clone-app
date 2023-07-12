@@ -20,16 +20,28 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     var dataEntries: [ChartDataEntry] = []
     
     var dayArray: [Double] = []
-//    var dayArray: [Double] = [24.453, 24.5434, 24.865, 25.3, 23.2344, 24.2353, 24.822, 24.1422, 23.2123, 25.2, 24.23435, 22.8, 24.122, 24.33, 23.23, 24.235, 24.8, 25.122, 25.423]
-    var weekArray: [Double] = [24.45, 24.1434, 24.865, 25.3, 24.2344, 24.2353, 24.822, 24.1422, 24.2123, 25.5, 24.24435, 23.8, 24.122, 25, 23.23, 23.235, 23.8, 24.122, 25.123]
-    var monthArray: [Double] = [25.45, 26.1434, 25.865, 25.3, 25.2344, 25.2353, 24.822, 24.1422, 24.2123, 25.5, 25.24435, 25.8, 26.122, 25, 25.23, 23.235, 24.8, 28.122, 25.123]
-    var threeMonthArray: [Double] = [25.453, 23.5434, 24.865, 25.3, 25.2344, 24.2353, 24.822, 24.1422, 23.2123, 25.2, 24.23435, 22.8, 24.122, 24.33, 23.23, 24.235, 24.8, 25.122, 25.423]
-    var yearArray: [Double] = [23.45, 24.1434, 24.865, 25.3, 24.2344,
-                               26.2353, 24.822, 24.1422, 24.2123, 25.5,
-                               25.24435, 26.8, 24.122, 24, 23.23, 23.235,
-                               23.8, 29.122, 25.123]
+    
+    var weekArray: [Double] = []
+    
+    var monthArray: [Double] = []
+    
+    var threeMonthArray: [Double] = []
+    
+    var yearArray: [Double] = []
   
     var allArray: [Double] = []
+    
+    var dayTimeArray: [Double] = []
+    
+    var weekTimeArray: [Double] = []
+    
+    var monthTimeArray: [Double] = []
+    
+    var threeMonthTimeArray: [Double] = []
+    
+    var yearTimeArray: [Double] = []
+  
+    var allTimeArray: [Double] = []
 
     @IBOutlet weak var historyTimeLabel: UILabel!
     @IBOutlet weak var realtimeSellPriceLabel: UILabel!
@@ -37,12 +49,14 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     @IBOutlet weak var historyAveragePriceView: UIView!
     @IBOutlet weak var historyAveragePriceLabel: UILabel!
     @IBOutlet weak var lineChartView: LineChartView!
+    
     @IBOutlet weak var dayButton: UIButton!
     @IBOutlet weak var weekButton: UIButton!
     @IBOutlet weak var monthButton: UIButton!
     @IBOutlet weak var threeMonthButton: UIButton!
     @IBOutlet weak var yearButton: UIButton!
     @IBOutlet weak var allButton: UIButton!
+    
     @IBOutlet weak var dayView: UIView!
     @IBOutlet weak var weekView: UIView!
     @IBOutlet weak var monthView: UIView!
@@ -59,52 +73,63 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     
     @IBAction func didDayButtonTapped(_ sender: Any) {
         setButton(exceptButton: dayButton, exceptView: dayView)
-        viewModel.getProductCandles(productID: viewModel.productID.value,
-                                    time: .day) { [weak self] candle in
-            self?.dayArray = candle
-            print("Day Array: \(candle)")
-        }
-        changeChartViewData(dataArray: dayArray)
+        changeChartViewData(dataArray: dayArray, timeArray: dayTimeArray)
+//        viewModel.getTimeCandles(time: .day) { [weak self] extractedCandles in
+//             print("🟢 Day Candles Count: \(extractedCandles.count)")
+//             print("🟢 Day Candles: \(extractedCandles)")
+//            self?.dayArray = extractedCandles.compactMap({ $0.averagePrice })
+//        }
     }
     
     @IBAction func didWeekButtonTapped(_ sender: Any) {
         setButton(exceptButton: weekButton, exceptView: weekView)
-        viewModel.getProductCandles(productID: viewModel.productID.value,
-                                    time: .week) { [weak self] candle in
-            self?.weekArray = candle
-            print("Week Array: \(candle)")
-        }
-        changeChartViewData(dataArray: weekArray)
+        changeChartViewData(dataArray: weekArray, timeArray: weekTimeArray)
+//        viewModel.getTimeCandles(time: .week) { [weak self] extractedCandles in
+//             print("🟠 Week Candles Count: \(extractedCandles.count)")
+//             print("🟠 Week Candles: \(extractedCandles)")
+//            self?.weekArray = extractedCandles.compactMap({ $0.averagePrice })
+//            self?.changeChartViewData(dataArray: self?.weekArray ?? [], timeArray: self?.weekTimeArray ?? [])
+//        }
     }
     
     @IBAction func didMonthButtonTapped(_ sender: Any) {
         setButton(exceptButton: monthButton, exceptView: monthView)
-        viewModel.getProductCandles(productID: viewModel.productID.value,
-                                    time: .month) { [weak self] candle in
-            self?.monthArray = candle
-            print("Month Array: \(candle)")
-        }
-        changeChartViewData(dataArray: monthArray)
+        changeChartViewData(dataArray: monthArray, timeArray: monthArray)
+//        viewModel.getTimeCandles(time: .month) { [weak self] extractedCandles in
+//             print("🟡 1 Month Candles Count: \(extractedCandles.count)")
+//             print("🟡 1 Month Candles: \(extractedCandles)")
+//            self?.monthArray = extractedCandles.compactMap({ $0.averagePrice })
+//        }
     }
     
     @IBAction func didThreeMonthButtonTapped(_ sender: Any) {
         setButton(exceptButton: threeMonthButton, exceptView: threeMonthView)
-        changeChartViewData(dataArray: threeMonthArray)
-        viewModel.getProductCandles(productID: viewModel.productID.value,
-                                    time: .threeMonth) { [weak self] candle in
-            self?.threeMonthArray = candle
-            print("Three Month Array: \(candle)")
-        }
+        changeChartViewData(dataArray: threeMonthArray, timeArray: threeMonthTimeArray)
+//        viewModel.getTimeCandles(time: .threeMonth) { [weak self] extractedCandles in
+//             print("🔵 3 Months Candles Count: \(extractedCandles.count)")
+//             print("🔵 3 Months Candles: \(extractedCandles)")
+//            self?.threeMonthArray = extractedCandles.compactMap({ $0.averagePrice })
+//        }
     }
     
     @IBAction func didYearButtonTapped(_ sender: Any) {
         setButton(exceptButton: yearButton, exceptView: yearView)
-        changeChartViewData(dataArray: yearArray)
+        changeChartViewData(dataArray: yearArray, timeArray: yearTimeArray)
+//        viewModel.getYearCandles { [weak self] extractedCandles in
+//             print("🟤 1 Year Candles Count: \(extractedCandles.count)")
+//             print("🟤 1 Year Candles: \(extractedCandles)")
+//            self?.yearArray = extractedCandles.compactMap({ $0.averagePrice })
+//        }
     }
     
     @IBAction func didAllButtonTapped(_ sender: Any) {
         setButton(exceptButton: allButton, exceptView: allView)
-        changeChartViewData(dataArray: allArray)
+        changeChartViewData(dataArray: allArray, timeArray: allTimeArray)
+//        viewModel.getAllCandles { [weak self] extractedCandles in
+//             print("🟣 All Candles Count: \(extractedCandles.count)")
+//             print("🟣 All Candles: \(extractedCandles)")
+//            self?.allArray = extractedCandles.compactMap({ $0.averagePrice })
+//        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -153,7 +178,7 @@ extension ChartTableViewCell {
         lineChartView.doubleTapToZoomEnabled = false
         //  lineChartView.xAxis.valueFormatter = XAxisValueFormatter(monthlyTotalAmounts: monthlyTotalAmounts)
         // 設定折線圖的數據
-        changeChartViewData(dataArray: dayArray)
+        changeChartViewData(dataArray: dayArray, timeArray: dayTimeArray)
     }
     private func setButton(exceptButton currentButton: UIButton, exceptView currentView: UIView) {
         let buttons: [UIButton] = [
@@ -181,18 +206,20 @@ extension ChartTableViewCell {
         }
     }
     
-    private func changeChartViewData(dataArray: [Double]) {
+    func changeChartViewData(dataArray: [Double], timeArray: [Double]) {
         lineChartView.data = nil
         lineChartView.xAxis.valueFormatter = nil
         lineChartView.marker = nil
         lineChartView.notifyDataSetChanged()
-        minXIndex = Double(dataArray.firstIndex(of: dataArray.min()!)!) + 1
-        maxXIndex = Double(dataArray.firstIndex(of: dataArray.max()!)!) + 1
+        if dataArray.isEmpty == false {
+            minXIndex = timeArray[dataArray.firstIndex(of: dataArray.min() ?? 0) ?? 0]
+            maxXIndex = timeArray[dataArray.firstIndex(of: dataArray.max() ?? 0) ?? 0]
+        }
         dataEntries = []
         dataSet = nil
         for i in 0..<dataArray.count {
             let formattedValue = String(format: "%.2f", dataArray[i])
-            let dataEntry = ChartDataEntry(x: Double(i+1), y: Double(formattedValue) ?? 0)
+            let dataEntry = ChartDataEntry(x: timeArray[i], y: Double(formattedValue) ?? 0)
             dataEntries.append(dataEntry)
         }
         

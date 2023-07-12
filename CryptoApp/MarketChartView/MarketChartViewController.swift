@@ -8,25 +8,14 @@
 import UIKit
 import Starscream
 
-enum CBGranularity: Int {
-    case hour = 3600
-    case sixHours = 21600
-    case twentyFourHours = 86400
-}
-
 class MarketChartViewController: UIViewController {
-
-    var dayArr: [Double] = []
     
-    var weekArr: [Double] = []
-    
-    var monthArr: [Double] = []
-    
-    var threeMonthArr: [Double] = []
-    
-    var yearArr: [Double] = []
-    
-    var allArr: [Double] = []
+    var newDayArr: [Candle] = []
+    var newWeekArr: [Candle] = []
+    var newMonthArr: [Candle] = []
+    var newThreeMonthArr: [Candle] = []
+    var newYearArr: [Candle] = []
+    var newAllArr: [Candle] = []
     
     let viewModel = MarketChartViewModel()
     
@@ -51,59 +40,88 @@ class MarketChartViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupBinders()
-        callApis()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openBuySellPage",
-           let button = sender as? UIButton,
-           let destinationVC = segue.destination as? BuySellViewController {
-            destinationVC.actionType = button.tag == 0 ? .buy : .sell
-            destinationVC.title = button.tag == 0 ? "買入\(coinCodeProductID.0)" : "賣出\(coinCodeProductID.0)"
-            // MARK: Pass Product Coin Code / Pair
-            destinationVC.product = [
-                "coinCode": coinCodeProductID.0,
-                "pair": coinCodeProductID.1
-            ]
-        }
     }
     
     func callApis() {
-        let productID = coinCodeProductID.1
-        
-        viewModel.getProductCandles(productID: productID, time: .day) { [weak self] candles in
-            self?.dayArr = candles
+        viewModel.getProductOrderHistoryNEW {
+            print("-----getProductOrderHistoryNEWAAA-----")
+        } errorHandle: { error in
+            print("-----getProductOrderHistoryNEWBBB-----")
         }
         
-        viewModel.getProductCandles(productID: productID, time: .week) { [weak self] candles in
-            self?.weekArr = candles
+        let group = DispatchGroup()
+        
+        DispatchQueue.global().async {
+            group.enter()
+            self.viewModel.getTimeCandles(time: .day) { [weak self] extractedCandles in
+                // print("🟢 Day Candles Count: \(extractedCandles.count)")
+                // print("🟢 Day Candles: \(extractedCandles)")
+                self?.newDayArr = extractedCandles
+                group.leave()
+            }
+            
+            group.enter()
+            self.viewModel.getTimeCandles(time: .week) { [weak self] extractedCandles in
+                // print("🟠 Week Candles Count: \(extractedCandles.count)")
+                // print("🟠 Week Candles: \(extractedCandles)")
+                self?.newWeekArr = extractedCandles
+                group.leave()
+            }
+            
+            group.enter()
+            self.viewModel.getTimeCandles(time: .month) { [weak self] extractedCandles in
+                 print("🟡 1 Month Candles Count: \(extractedCandles.count)")
+                 print("🟡 1 Month Candles: \(extractedCandles)")
+                print("-----oneMonth-----")
+                self?.newMonthArr = extractedCandles
+                group.leave()
+            }
+            
+            group.enter()
+            self.viewModel.getTimeCandles(time: .threeMonth) { [weak self] extractedCandles in
+                // print("🔵 3 Months Candles Count: \(extractedCandles.count)")
+                // print("🔵 3 Months Candles: \(extractedCandles)")
+                print("-----threeMonth-----")
+                self?.newThreeMonthArr = extractedCandles
+                group.leave()
+            }
+            
+            group.enter()
+            self.viewModel.getYearCandles { [weak self] extractedCandles in
+                // print("🟤 1 Year Candles Count: \(extractedCandles.count)")
+                // print("🟤 1 Year Candles: \(extractedCandles)")
+                print("-----getYearCandles-----")
+                self?.newYearArr = extractedCandles
+                group.leave()
+            }
+            
+            group.enter()
+            self.viewModel.getAllCandles { [weak self] extractedCandles in
+                // print("🟣 All Candles Count: \(extractedCandles.count)")
+                // print("🟣 All Candles: \(extractedCandles)")
+                print("-----getAllCandlesgetAllCandlesgetAllCandlesgetAllCandles-----")
+                
+                self?.newAllArr = extractedCandles
+                group.leave()
+            }
+                        
+            group.notify(queue: .main) {
+                DispatchQueue.main.async {
+                    print("-----reloadData-----")
+                    self.tableView.reloadData()
+                }
+            }
         }
         
-        viewModel.getProductCandles(productID: productID, time: .month) { [weak self] candles in
-            self?.monthArr = candles
-        }
-        
-        viewModel.getProductCandles(productID: productID, time: .threeMonth) { [weak self] candles in
-            self?.threeMonthArr = candles
-        }
-        viewModel.getYearCandles(productID: productID) { [weak self] candles in
-            self?.yearArr = candles
-        }
-        viewModel.getAllCandles(productID: productID) { [weak self] candles in
-            self?.allArr = candles
-        }
-        
-        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        websocket.subscribeProductID = coinCodeProductID.1
+        websocket.subscribeProductId = viewModel.productPack.value.productId
         websocket.connect()
         websocket.completion = { [weak self] tickerMessage in
             self?.updateRealtimeBuySell(bid: tickerMessage.bestBid, ask: tickerMessage.bestAsk)
         }
-        viewModel.productID.value = coinCodeProductID.1
-        viewModel.getProductOrderHistory()
+        callApis()
     }
     
     func updateRealtimeBuySell(bid: String?, ask: String?) {
@@ -118,21 +136,22 @@ class MarketChartViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        websocket.unsubscribe(productID: coinCodeProductID.1)
+        let productId = viewModel.productPack.value.productId
+        websocket.unsubscribe(productId: productId)
     }
     
     private func setupBinders() {
-        viewModel.productID.bind { [weak self] _ in
-            // self?.viewModel.getProductCandles()
-            self?.viewModel.getProductOrderHistory()
-        }
+        //        viewModel.productID.bind { [weak self] _ in
+        //            // self?.viewModel.getProductCandles()
+        //            self?.viewModel.getProductOrderHistory()
+        //        }
         
         viewModel.historyDataSource.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             }
         }
-
+        
         viewModel.candles.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
@@ -141,8 +160,7 @@ class MarketChartViewController: UIViewController {
     }
     
     private func setupUI() {
-        tableView.dataSource = self
-        tableView.delegate = self
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.sectionHeaderTopPadding = 0
         tableView.register(UINib(nibName: "ChartTableViewCell",
@@ -158,6 +176,27 @@ class MarketChartViewController: UIViewController {
                            forHeaderFooterViewReuseIdentifier: "HistoryHeaderView")
         buyButton.layer.cornerRadius = 5
         sellButton.layer.cornerRadius = 5
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openBuySellPage",
+           let button = sender as? UIButton,
+           let destinationVC = segue.destination as? BuySellViewController {
+            destinationVC.actionType = button.tag == 0 ? .buy : .sell
+            
+            let baseCurrency = viewModel.productPack.value.baseCurrency
+            let productId = viewModel.productPack.value.productId
+            destinationVC.title = button.tag == 0 ? "買入\(baseCurrency)" : "賣出\(baseCurrency)"
+            // MARK: Pass Product Coin Code / Pair
+            destinationVC.productPack = viewModel.productPack.value
+            destinationVC.product = [
+                "coinCode": baseCurrency,
+                "pair": productId
+            ]
+        }
     }
 }
 
@@ -178,7 +217,7 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
                     as? HistoryHeaderView
             else { fatalError("Unable to generate Table View Section Header") }
             headerView.navigationController = navigationController
-            headerView.selectedCoin = coinCodeProductID.0
+            headerView.selectedCoin = viewModel.productPack.value.baseCurrency
             return headerView
         }
     }
@@ -213,12 +252,24 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
                 withIdentifier: "ChartTableViewCell", for: indexPath) as? ChartTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
             
-            cell.dayArray = dayArr
-            cell.weekArray = weekArr
-            cell.monthArray = monthArr
-            cell.threeMonthArray = threeMonthArr
-            cell.yearArray = yearArr
-            cell.allArray = allArr
+            cell.dayArray = newDayArr.compactMap({ $0.averagePrice })
+            cell.weekArray = newWeekArr.compactMap({ $0.averagePrice })
+            cell.monthArray = newMonthArr.compactMap({ $0.averagePrice })
+            cell.threeMonthArray = newThreeMonthArr.compactMap({ $0.averagePrice })
+            cell.yearArray = newYearArr.compactMap({ $0.averagePrice })
+            cell.allArray = newAllArr.compactMap({ $0.averagePrice })
+            
+            cell.dayTimeArray = newDayArr.compactMap({ $0.timestamp })
+            cell.weekTimeArray = newWeekArr.compactMap({ $0.timestamp })
+            cell.monthTimeArray = newMonthArr.compactMap({ $0.timestamp })
+            cell.threeMonthTimeArray = newThreeMonthArr.compactMap({ $0.timestamp })
+            cell.yearTimeArray = newYearArr.compactMap({ $0.timestamp })
+            cell.allTimeArray = newAllArr.compactMap({ $0.timestamp })
+            
+            print("------------------------")
+            print(cell.dayArray)
+            print("------------------------")
+            
             cell.setChartView(dataArray: cell.dayArray)
             
             return cell
@@ -227,11 +278,10 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "HistoryTableViewCell", for: indexPath) as? HistoryTableViewCell
             else { fatalError("Unable to generate Table View Cell") }
-            
+            let coinCode = viewModel.productPack.value.baseCurrency
             if let data = viewModel.historyDataSource.value, data.count > 0 {
-                cell.updateCell(data: data[indexPath.row], coinCode: coinCodeProductID.0)
+                cell.updateCell(data: data[indexPath.row], coinCode: coinCode)
             } else {
-                // Now has no data
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: "NoDataTableViewCell", for: indexPath) as? NoDataTableViewCell
                 else { fatalError("Unable to generate Table View Cell") }
@@ -242,3 +292,17 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
         }
     }
 }
+
+/*
+ //        viewModel.getYearCandles { [weak self] extractedCandles in
+ //             print("🟤 1 Year Candles Count: \(extractedCandles.count)")
+ //             print("🟤 1 Year Candles: \(extractedCandles)")
+ //            self?.newYearArr = extractedCandles
+ //        }
+ //
+ //        viewModel.getAllCandles { [weak self] extractedCandles in
+ //             print("🟣 All Candles Count: \(extractedCandles.count)")
+ //             print("🟣 All Candles: \(extractedCandles)")
+ //            self?.newAllArr = extractedCandles
+ //        }
+ */
