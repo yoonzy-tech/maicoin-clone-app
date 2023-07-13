@@ -13,15 +13,26 @@ struct AuthOutput {
     var signature: String
 }
 
+enum NetworkError: Error {
+    case invalidURL
+    case noData
+}
+
+final class CoinbaseService {
+    static let shared = CoinbaseService()
+    private init() {}
+}
+
 extension CoinbaseService {
-    
-    func getAuthOutput(requestPath: String, httpMethod: String) -> AuthOutput {
+    // MARK: Refactored Core Functions
+    func getAuthOutput(requestPath: String, httpMethod: String, httpBody: String = "") -> AuthOutput {
         let date = Date().timeIntervalSince1970
         let cbAccessTimestamp = String(date)
         let secret = secret
         let requestPath = requestPath
         let httpMethod = httpMethod
-        let message = "\(cbAccessTimestamp)\(httpMethod)\(requestPath)"
+        let httpBody = httpBody
+        let message = "\(cbAccessTimestamp)\(httpMethod)\(requestPath)\(httpBody)"
         
         guard let keyData = Data(base64Encoded: secret) else {
             fatalError("Failed to decode secret as base64")
@@ -53,7 +64,7 @@ extension CoinbaseService {
         
         if authRequired {
             let authOutput = getAuthOutput(requestPath: requestPath, httpMethod: httpMethod.rawValue)
-            print("Auth Output: \(authOutput)")
+            // print("Auth Output: \(authOutput)")
             request.addValue(apiKey, forHTTPHeaderField: "cb-access-key")
             request.addValue(passPhrase, forHTTPHeaderField: "cb-access-passphrase")
             request.addValue(authOutput.timestamp, forHTTPHeaderField: "cb-access-timestamp")
@@ -61,45 +72,27 @@ extension CoinbaseService {
         }
         request.httpMethod = httpMethod.rawValue
         
-        print("🟪 HttpBody: \(httpBody)")
         if httpMethod == .POST {
             request.httpBody = httpBody.data(using: .utf8)
         }
-        
-        print("-----Start-----")
-        print(api.path)
-        print("---------------")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("-----Error-----")
-                print(api.path)
-                print("---------------")
                 completion(.failure(error))
                 return
             }
             
             guard let data = data else {
-                print("-----No Data---")
-                print(api.path)
-                print("---------------")
-                
                 completion(.failure(NetworkError.noData))
                 return
             }
             
             do {
-                print("-----Decode----")
-                print(api.path)
-                print("---------------")
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(T.self, from: data)
                 // print("📱 Response: \(response)")
                 completion(.success(response))
             } catch {
-                print("--Decode Error--")
-                print(api.path)
-                print("---------------")
                 let response = String(data: data, encoding: String.Encoding.utf8) as Any
                 print("API Error Response: \(response)")
                 print("Error decoding data: \(error)")
@@ -110,10 +103,10 @@ extension CoinbaseService {
     }
 }
 
+// MARK: Request API Functions
+
 extension CoinbaseService {
-    
     // MARK: Homepage, Wallet View
-    
     func getAccounts(completion: @escaping ([Account]) -> Void) {
         fetchData(api: .accounts, authRequired: true, requestPath: "/accounts") { (result: Result<[Account], Error>) in
             switch result {
@@ -175,11 +168,11 @@ extension CoinbaseService {
     }
     
     // MARK: Market Charts View
-    
     func getOrderHistory(limit: Int = 5, status: String = "done", productId: String, completion: @escaping ([Order]) -> Void, errorHandle: @escaping (Error) -> Void) {
         fetchData(api: .allOrders(limit: limit, status: status, productId: productId),
                   authRequired: true,
-                  requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productId)") { (result: Result<[Order], Error>) in
+                  requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productId)") {
+            (result: Result<[Order], Error>) in
             switch result {
             case .success(let orders):
                 completion(orders)
@@ -190,20 +183,17 @@ extension CoinbaseService {
         }
     }
     
-    func getProductCandles(productId: String, granularity: String = "", startTime start: String = "", endTime end: String = "", completion: @escaping ([[Double]]) -> Void) {
-        fetchData(api: .allCandles(productID: productId, granularity: granularity, start: start, end: end), authRequired: false) { (result: Result<[[Double]], Error>) in
+    func getProductCandles(productId: String, granularity: String = "", startTime start: String = "", endTime end: String = "", completion: @escaping ([[Double]]) -> Void, errorHandle: @escaping (Error) -> Void) {
+        fetchData(api: .allCandles(productID: productId, granularity: granularity, start: start, end: end), authRequired: false) {
+            (result: Result<[[Double]], Error>) in
             switch result {
             case .success(let candles):
                 completion(candles)
             case .failure(let error):
                 print("Error in Product Candles API: \(error)")
+                errorHandle(error)
             }
         }
     }
     
-}
-
-enum NetworkError: Error {
-    case invalidURL
-    case noData
 }

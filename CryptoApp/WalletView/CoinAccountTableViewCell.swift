@@ -18,17 +18,6 @@ class CoinAccountTableViewCell: UITableViewCell {
     
     @IBOutlet weak var coinIconImageView: UIImageView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    
     func updateCell(data: Account) {
         currencyLabel.text = data.currency
         let accountBalance = data.balance.convertToDouble().formattedAccountingString(decimalPlaces: 8, accountFormat: true)
@@ -39,6 +28,6 @@ class CoinAccountTableViewCell: UITableViewCell {
         let balance = data.balance.convertToDouble()
         let twdBalance = balance.convertToTWD()
         let formatted = twdBalance.formattedAccountingString(decimalPlaces: 2, accountFormat: true)
-        equivalentTWDLabel.text = "NT$ \(formatted)"
+        equivalentTWDLabel.text = "= NT$ \(formatted)"
     }
 }

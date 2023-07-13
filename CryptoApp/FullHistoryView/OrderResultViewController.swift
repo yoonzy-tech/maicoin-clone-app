@@ -24,8 +24,9 @@ class OrderResultViewController: UIViewController {
     @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var detailsView: UIView!
     
+    @IBOutlet weak var infoLabel: UILabel!
+    
     @IBAction func confirmDetails(_ sender: Any) {
-        // Go to wallet page
         if let tabBarController = self.tabBarController {
             let desiredTabIndex = 1
             if desiredTabIndex < tabBarController.viewControllers?.count ?? 0 {
@@ -45,34 +46,42 @@ class OrderResultViewController: UIViewController {
         guard let orderDetails = orderDetails else { return }
         updateDetails(order: orderDetails)
         
-        if tabBarController?.selectedIndex == 1 {
+        if tabBarController?.selectedIndex == 1,
+           navigationController?.viewControllers.contains(where: { $0 is OrderResultViewController }) == true {
             confirmButton.isHidden = true
         }
-
     }
     
     private func setupUI() {
         detailsView.layer.cornerRadius = 5
         sideTagButton.layer.cornerRadius = 5
         confirmButton.layer.cornerRadius = 5
+        
+        let phoneNumber = "(02)2722-1314"
+        let emailAddress = "info@maicoin.com"
+        let fullText = "訂單相關問題，請撥打客服專線\(phoneNumber)或來信至\(emailAddress)"
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let phoneNumberRange = (fullText as NSString).range(of: phoneNumber)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: phoneNumberRange)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: phoneNumberRange)
+        let emailRange = (fullText as NSString).range(of: emailAddress)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: emailRange)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: emailRange)
+        infoLabel.attributedText = attributedString
     }
     
     func updateDetails(order: Order) {
-        // print("Side: \(order.side)")
         self.sideTagButton.setTitle(order.side == "buy" ? "BUY" : "SELL", for: .normal)
+        self.sideTagButton.backgroundColor = UIColor(hexString: order.side == "buy" ? .green : .red)
         self.sizeLabel.text = order.size
         self.createdAtTimeLabel.text = order.createdAt.convertCoinbaseTimestamp()
         self.doneAtTimeLabel.text = order.doneAt?.convertCoinbaseTimestamp()
         
-        // unit price: Executed value - filled fee (response) / size
         let executedValue = order.executedValue.convertToDouble()
         let fees = order.fillFees.convertToDouble()
         let size = order.size.convertToDouble()
         let unitPrice = (executedValue - fees) / size
         self.priceLabel.text = "US$ " + unitPrice.formattedAccountingString(decimalPlaces: 2, accountFormat: true)
-
-        // Red: Executed value
         self.fundsLabel.text = "US$ " + executedValue.formattedAccountingString(decimalPlaces: 8, accountFormat: true)
-        
     }
 }

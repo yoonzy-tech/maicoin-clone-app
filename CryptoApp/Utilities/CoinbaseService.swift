@@ -8,69 +8,10 @@
 import Foundation
 import Kingfisher
 
-final class CoinbaseService {
-    
-    static let shared = CoinbaseService()
-    
-    private init() {}
-    
-}
-
 extension CoinbaseService {
-
-    func fetchTradingPairs(completion: @escaping ([TradingPair]) -> Void) {
-        getApiResponse(api: .allTradingPairs,
-                       authRequired: false) { (tradingPairs: [TradingPair]) in
-            completion(tradingPairs)
-        }
-    }
-    
-    func fetchProductStats(productID: String,
-                           completion: @escaping (ProductStats) -> Void) {
-        getApiResponse(api: .productStats(productId: productID),
-                       authRequired: false) { (productStats: ProductStats) in
-            completion(productStats)
-        }
-    }
-    
-    func fetchProductOrders(productID: String, status: String = "done", limit: Int = 5, completion: @escaping ([Order]) -> Void) {
-        // Only showing top 5-6 history, newest on top
-        getApiResponse(api: .allOrders(limit: limit,
-                                       status: status,
-                                       productId: productID),
-                       authRequired: true,
-                       requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",
-                       httpMethod: .GET) { (orders: [Order]) in
-            completion(orders)
-        }
-    }
-    
-    func fetchCurrencyRate(currency: String = "USD", completion: @escaping (Double) -> Void) {
-        getApiResponse(api: .exchangeRate(currency: currency), authRequired: false) { (allRates: ExchangeRates) in
-            let rate = Double(allRates.data.rates["TWD"] ?? "0") ?? 0
-            completion(rate)
-        }
-    }
-    
-    func fetchProductCandles(productID: String,
-                             granularity: String = "",
-                             startTime: String = "",
-                             endTime: String = "",
-                             completion: @escaping ([[Double]]) -> Void) {
-        
-        getApiResponse(api: .allCandles(productID: productID,
-                                        granularity: granularity,
-                                        start: startTime,
-                                        end: endTime),
-                       authRequired: false) { (candles: [[Double]]) in
-            completion(candles)
-        }
-    }
-        
-    // MARK: Good Ones ---------
+    // MARK: Use Semaphore
     func getExchangeRate(from base: String = "USD", to currency: String = "TWD") -> Double? {
-        
-        guard let response: ExchangeRates? = getApiResponseNoCompletion(api: .exchangeRate(currency: base),
+        guard let response: ExchangeRates? = getApiResponseSemaphore(api: .exchangeRate(currency: base),
                                                                         authRequired: false) else {
             print("Failed to fetch current \(currency) exchange rate ")
             return nil
@@ -85,7 +26,7 @@ extension CoinbaseService {
     }
     
     func fetchAccountsNew() -> [Account]? {
-        guard let accounts: [Account]? = getApiResponseNoCompletion(api: .accounts,
+        guard let accounts: [Account]? = getApiResponseSemaphore(api: .accounts,
                                                                     authRequired: true,
                                                                     requestPath: "/accounts", httpMethod: .GET) else {
             print("Failed to fetch accounts.")
@@ -95,7 +36,7 @@ extension CoinbaseService {
     }
     
     func fetchUserProfileNew() -> Profile? {
-        let profiles: [Profile]? = getApiResponseNoCompletion(api: .profile,
+        let profiles: [Profile]? = getApiResponseSemaphore(api: .profile,
                                                               authRequired: true,
                                                               requestPath: "/profiles?active",
                                                               httpMethod: .GET)
@@ -113,7 +54,7 @@ extension CoinbaseService {
     }
     
     func fetchCurrencyDetailNew(currencyID: String) -> CurrencyInfo? {
-        guard let currencyInfo: CurrencyInfo? = getApiResponseNoCompletion(
+        guard let currencyInfo: CurrencyInfo? = getApiResponseSemaphore(
             api: .currencyDetail(currency: currencyID), authRequired: false) else {
             print("Failed to get \(currencyID) coin icon")
             return nil
@@ -122,11 +63,11 @@ extension CoinbaseService {
     }
     
     func createOrders( // realtime rate, price: String = "35000.99",
-                      size: String, // user entered value
-                      side: String, // actionType
-                      productId: String) -> String? {
-        
-        let body = """
+        size: String, // user entered value
+        side: String, // actionType
+        productId: String) -> String? {
+            
+            let httpBody = """
         {
             "type": "market",
             "size": "\(size)",
@@ -135,23 +76,23 @@ extension CoinbaseService {
             "time_in_force": "FOK"
         }
         """
-        print("😎 Body: \(body)")
-        guard let order: Order? = getApiResponseNoCompletion(api: .createOrder,
-                                                             authRequired: true,
-                                                             requestPath: "/orders",
-                                                             httpMethod: .POST,
-                                                             body: body) else {
-            print("Failed to get order response")
-            return nil
+            print("😎 Body: \(httpBody)")
+            guard let order: Order? = getApiResponseSemaphore(api: .createOrder,
+                                                                 authRequired: true,
+                                                                 requestPath: "/orders",
+                                                                 httpMethod: .POST,
+                                                                 httpBody: httpBody) else {
+                print("Failed to get order response")
+                return nil
+            }
+            
+            return order?.id
         }
-        
-        return order?.id
-    }
     
     func fetchCompletedOrderNew(orderID: String) -> Order? {
         
-        guard let order: Order? = getApiResponseNoCompletion(api: .getOrder(orderID: orderID),
-                                                                    authRequired: true,
+        guard let order: Order? = getApiResponseSemaphore(api: .getOrder(orderID: orderID),
+                                                             authRequired: true,
                                                              requestPath: "/orders/" + orderID,
                                                              httpMethod: .GET)
         else {
@@ -163,7 +104,7 @@ extension CoinbaseService {
     
     func fetchProductOrdersNew(productID: String, status: String = "done", limit: Int = 5) -> [Order]? {
         
-        guard let histories: [Order]? = getApiResponseNoCompletion(
+        guard let histories: [Order]? = getApiResponseSemaphore(
             api: .allOrders(limit: limit, status: status, productId: productID),
             authRequired: true,
             requestPath: "/orders?limit=\(limit)&status=\(status)&product_id=\(productID)",

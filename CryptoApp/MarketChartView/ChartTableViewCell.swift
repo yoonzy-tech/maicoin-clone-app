@@ -10,6 +10,8 @@ import DGCharts
 
 class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     
+    weak var tableView: UITableView?
+    
     let viewModel = MarketChartViewModel()
 
     var minXIndex: Double!
@@ -94,7 +96,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     
     @IBAction func didMonthButtonTapped(_ sender: Any) {
         setButton(exceptButton: monthButton, exceptView: monthView)
-        changeChartViewData(dataArray: monthArray, timeArray: monthArray)
+        changeChartViewData(dataArray: monthArray, timeArray: monthTimeArray)
 //        viewModel.getTimeCandles(time: .month) { [weak self] extractedCandles in
 //             print("🟡 1 Month Candles Count: \(extractedCandles.count)")
 //             print("🟡 1 Month Candles: \(extractedCandles)")
@@ -132,10 +134,6 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
 //        }
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     func chartViewDidEndPanning(_ chartView: ChartViewBase) {
         guard let lineChartView = chartView as? LineChartView else {
             return
@@ -158,7 +156,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
         let date = Date(timeIntervalSince1970: timestamp)
         let dateString = dateFormatter.string(from: date)
         historyTimeLabel.text = dateString
-        historyAveragePriceLabel.text = "\(entry.y)"
+        historyAveragePriceLabel.text = "\(entry.y.formattedAccountingString(decimalPlaces: 0, accountFormat: true))"
         historyAveragePriceView.isHidden = false
     }
 }
@@ -176,6 +174,7 @@ extension ChartTableViewCell {
         lineChartView.scaleXEnabled = false
         lineChartView.scaleYEnabled = false
         lineChartView.doubleTapToZoomEnabled = false
+        lineChartView.animate(xAxisDuration: 1.5)
         //  lineChartView.xAxis.valueFormatter = XAxisValueFormatter(monthlyTotalAmounts: monthlyTotalAmounts)
         // 設定折線圖的數據
         changeChartViewData(dataArray: dayArray, timeArray: dayTimeArray)
@@ -227,11 +226,11 @@ extension ChartTableViewCell {
         dataSet.mode = .linear
         dataSet.drawCirclesEnabled = false
         dataSet.valueFormatter = self
-        dataSet.highlightLineWidth = 1.5
+        dataSet.highlightLineWidth = 1
         dataSet.highlightColor = .red
         dataSet.highlightEnabled = true
         dataSet.drawHorizontalHighlightIndicatorEnabled = false
-        dataSet.lineWidth = 1.5
+        dataSet.lineWidth = 1
         dataSet.colors = [UIColor.red]
         dataSet.valueColors = [UIColor.red]
         dataSet.valueFont = .systemFont(ofSize: 12)
@@ -312,7 +311,8 @@ class ImageMarkerView: MarkerView {
         circleImageView?.frame.size = imageSize
         addSubview(circleImageView!)
         
-        circleImageView?.center = CGPoint(x: bounds.size.width / 2, y: bounds.size.height / 2)
+        circleImageView?.center = CGPoint(x: bounds.size.width / 2,
+                                          y: bounds.size.height / 2)
     }
     
     required init?(coder aDecoder: NSCoder) {

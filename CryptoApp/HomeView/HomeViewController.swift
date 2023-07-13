@@ -8,12 +8,15 @@
 import UIKit
 import MJRefresh
 import Starscream
+import JGProgressHUD
 
 class HomeViewController: UIViewController {
     
     let viewModel = HomeViewModel()
     
     var passProductPack: ProductPack = ProductPack()
+    
+    let hud = JGProgressHUD()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,7 +37,6 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         requestAPIAgain()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,7 +45,11 @@ class HomeViewController: UIViewController {
     }
     
     private func requestAPIAgain() {
-        viewModel.prepareHomepageData()
+        hud.textLabel.text = "讀取最新市場資料"
+        hud.show(in: self.view)
+        viewModel.prepareHomepageData {
+            self.hud.dismiss()
+        }
     }
     
     private func setupTableView() {

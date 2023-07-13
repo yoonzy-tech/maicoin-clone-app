@@ -451,13 +451,13 @@
                                         <color key="textColor" red="0.93333333330000001" green="0.3294117647" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="US$ 250" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZd-ew-UDi">
-                                        <rect key="frame" x="257.66666666666669" y="392.33333333333337" width="71.333333333333314" height="21.666666666666686"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="US$ 10.12203" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZd-ew-UDi">
+                                        <rect key="frame" x="217" y="392" width="112" height="22"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.880994 USDT" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Clg-Eb-ClI">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00284 USDT" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Clg-Eb-ClI">
                                         <rect key="frame" x="172.66666666666663" y="158.66666666666669" width="156.33333333333337" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -543,8 +543,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ⓘ 確認相關問題，請撥打客服專線(02)2722-1314 或來信至 info@maicoin.com" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yS-fz-5dL">
-                                <rect key="frame" x="24" y="573" width="345" height="45"/>
-                                <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="16"/>
+                                <rect key="frame" x="24" y="573" width="345" height="47.666666666666629"/>
+                                <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -573,6 +573,7 @@
                         <outlet property="detailsView" destination="0HR-gJ-QV9" id="Wtn-ud-Cxp"/>
                         <outlet property="doneAtTimeLabel" destination="6Y0-j8-Fbm" id="5xI-ZO-4LM"/>
                         <outlet property="fundsLabel" destination="EZd-ew-UDi" id="74m-cO-UYr"/>
+                        <outlet property="infoLabel" destination="8yS-fz-5dL" id="MA5-cw-943"/>
                         <outlet property="priceLabel" destination="ri8-Ci-2nc" id="2Bs-8s-GM6"/>
                         <outlet property="resultStatusLabel" destination="U04-Od-uIB" id="lHa-4P-IED"/>
                         <outlet property="sideTagButton" destination="gZR-cR-QEu" id="rgf-Hb-G02"/>
@@ -728,7 +729,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mcp-dt-EVx"/>
                                 </constraints>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="全部幣種" imagePadding="15">
                                     <imageReference key="image" image="arrowtriangle.down.circle.fill" catalog="system" symbolScale="medium"/>
@@ -885,7 +886,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Rock Man" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfb-xG-nIu">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Johnson Rock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfb-xG-nIu">
                                 <rect key="frame" x="16" y="127" width="233" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -967,7 +968,7 @@
     </scenes>
     <resources>
         <image name="BTC" width="32" height="32"/>
-        <image name="USD" width="36" height="36"/>
+        <image name="USD" width="32" height="32"/>
         <image name="USDT" width="32" height="32"/>
         <image name="arrows" width="30" height="30"/>
         <image name="arrowshape.right" catalog="system" width="128" height="104"/>

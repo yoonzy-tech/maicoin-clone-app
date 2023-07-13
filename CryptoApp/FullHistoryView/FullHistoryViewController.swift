@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import MJRefresh
+import JGProgressHUD
 
 class FullHistoryViewController: UIViewController {
     
@@ -26,12 +28,16 @@ class FullHistoryViewController: UIViewController {
         title = "資產紀錄"
         setupTableView()
         filterButton.setTitle(filteredCoin, for: .normal)
-        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getHistorty(coinName: filteredCoin)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        getHistorty(coinName: filteredCoin)
     }
     
     @IBAction func openFilterSheet(_ sender: Any) {
@@ -46,18 +52,33 @@ class FullHistoryViewController: UIViewController {
         }
     }
     
+    func showServerErrorAlert() {
+        let alert = UIAlertController(title: "500:內部伺服器錯誤",
+                                      message: "系統無法取得資料，請稍候再試",
+                                      preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "重新整理", style: .default) { [weak self] _ in
+            self?.getHistorty(coinName: self?.filteredCoin ?? "")
+        }
+        alert.addAction(confirmAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     func getHistorty(coinName: String) {
-        // get the first 100 transactions in the past 6 months
+        
         if coinName != "所有幣種" {
             if let coinHistories = CoinbaseService.shared.fetchProductOrdersNew(productID: "\(filteredCoin)-USD", limit: 100) {
-                print("Failed to get \(filteredCoin) to USD product order histories")
                 self.histories = coinHistories
             } else {
+                print("Failed to get \(filteredCoin) to USD product order histories")
+                // MARK: Handle Error, Recall API
                 self.histories = []
+                showServerErrorAlert()
             }
         } else {
             guard let coinHistories = CoinbaseService.shared.fetchProductOrdersNew(productID: "", limit: 100)  else {
                 print("Failed to get \(filteredCoin) to USD product order histories")
+                // MARK: Handle Error, Recall API
+                showServerErrorAlert()
                 return
             }
             self.histories = coinHistories
@@ -73,6 +94,13 @@ class FullHistoryViewController: UIViewController {
         tableView.register(UINib(nibName: "NoDataTableViewCell",
                                  bundle: nil),
                            forCellReuseIdentifier: "NoDataTableViewCell")
+        tableView.mj_header = MJRefreshNormalHeader()
+        tableView.mj_header?.setRefreshingTarget(self, refreshingAction: #selector(refreshPage))
+    }
+    
+    @objc func refreshPage() {
+        getHistorty(coinName: filteredCoin)
+        tableView.mj_header?.endRefreshing()
     }
 }
 
@@ -111,7 +139,6 @@ extension FullHistoryViewController: UITableViewDataSource, UITableViewDelegate 
                  as? OrderResultViewController else { return }
         
         let order = histories[indexPath.row]
-        // print("Order: \(order)")
         orderResultVC.orderDetails = order
         navigationController?.pushViewController(orderResultVC, animated: true)
     }

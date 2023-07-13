@@ -43,5 +43,6 @@ class HistoryTableViewCell: UITableViewCell {
         self.descriptionLabel.text = (data.side == "buy" ? "購入" : "售出") + " \(coinCode)"
         self.statusLabel.text = statusTWZH[data.status]
         self.typeButton.setTitle(data.side == "buy" ? "BUY" : "SELL", for: .normal)
+        self.typeButton.backgroundColor = UIColor(hexString: data.side == "buy" ? .green : .red)
     }
 }

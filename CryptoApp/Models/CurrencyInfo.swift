@@ -2,7 +2,7 @@
 //  CurrenciesModel.swift
 //  DoubleCoin
 //
-//  Created by 姜權芳 on 2023/6/29.
+//  Created by Ruby Chew on 2023/6/29.
 //
 
 import Foundation

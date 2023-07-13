@@ -76,6 +76,11 @@ class BannerBalanceTableViewCell: UITableViewCell {
         carousel.dataSource = self
     }
     
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        stopBannerAutoplay()
+    }
+    
     private func setupAccountBalanceView() {
         accountBalanceView.layer.cornerRadius = 5
         accountBalanceView.layer.shadowColor = UIColor.darkGray.cgColor

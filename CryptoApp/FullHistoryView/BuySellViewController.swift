@@ -21,6 +21,7 @@ protocol OrderDelegate: AnyObject {
 
 import UIKit
 import Starscream
+import JGProgressHUD
 
 class BuySellViewController: UIViewController {
     
@@ -59,6 +60,8 @@ class BuySellViewController: UIViewController {
     
     var useMaxBalance: Bool = false
     
+    let progressHUD = JGProgressHUD()
+    
     @IBOutlet weak var exchangeRateLabel: UILabel!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
@@ -89,18 +92,21 @@ class BuySellViewController: UIViewController {
     
     @IBAction func sendDeal(_ sender: Any) {
         let size = topTextField.text ?? ""
-        let productID = product["pair"] ?? ""
+        let productID = productPack.productId
         
         // Check if has sufficient balance
         if size.convertToDouble() > currentBalance.convertToDouble() {
-            // ProgressHUD.show("餘額不足\n請輸入有效餘額", icon: .exclamation)
+            progressHUD.textLabel.text = "餘額不足\n請輸入有效餘額"
+            progressHUD.indicatorView = JGProgressHUDErrorIndicatorView()
+            progressHUD.show(in: self.view)
+            progressHUD.dismiss(afterDelay: 2.0)
             return
         }
         
         // Double confirm if wanna sell all the coins
         if size.convertToDouble() == currentBalance.convertToDouble() {
-            let coinCode = product["coinCode"] ?? ""
-            let alert = UIAlertController(title: "想全數售出此貨幣嗎?",
+            let coinCode = productPack.baseCurrency
+            let alert = UIAlertController(title: "⚠️ 想全數售出此貨幣嗎?",
                                           message: "此操作將出售您帳戶中的所有\(coinCode)\n確定要繼續嗎？",
                                           preferredStyle: .alert)
             // MARK: 🚨 For development purpose, do nothing in cofirmation !!!
@@ -111,26 +117,44 @@ class BuySellViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             
         } else {
+            progressHUD.textLabel.text = "交易進行中"
+            progressHUD.show(in: self.view)
+            print("🔫 Size: \(size)")
             guard let orderID = CoinbaseService.shared.createOrders(
                 size: size,
                 side: actionType.rawValue,
                 productId: productID) else {
                 print("Unable to get the posted order id")
+                // MARK: Error Handle: Resend order
+                showTransactionFailedErrorAlert()
                 return
             }
             self.orderID = orderID
             print("✅ I got the order ID: \(orderID)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.orderDetails = CoinbaseService.shared.fetchCompletedOrderNew(orderID: orderID)
+                self.progressHUD.dismiss()
                 self.performSegue(withIdentifier: "openOrderResult", sender: nil)
             }
         }
     }
     
+    func showTransactionFailedErrorAlert() {
+        let alert = UIAlertController(title: "交易失敗",
+                                      message: "因內部伺服器錯誤(500)無法完成交易，要再次進行交易嗎？",
+                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        let confirmAction = UIAlertAction(title: "確定", style: .destructive) { [weak self] _ in
+            self?.sendDeal(UIButton()) // TODO: Test
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(confirmAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        // Dismiss Keyboard Gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
     }
@@ -141,7 +165,7 @@ class BuySellViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let productID = product["pair"] ?? ""
+        let productID = productPack.productId
         websocket.subscribeProductId = productID
         websocket.connect()
         websocket.completion = { [weak self] tickerMessage in
@@ -154,12 +178,12 @@ class BuySellViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        let productID = product["pair"] ?? ""
+        let productID = productPack.productId
         websocket.unsubscribe(productId: productID)
     }
     
     private func getCurrencyAccount() {
-        let coinCode = product["coinCode"] ?? ""
+        let coinCode = productPack.baseCurrency
         let accounts = CoinbaseService.shared.fetchAccountsNew()
         let currentAccount = accounts?.filter { $0.currency == coinCode }
         currentBalance = currentAccount?.first?.balance ?? "0"
@@ -170,7 +194,7 @@ class BuySellViewController: UIViewController {
     }
     
     private func setupUI() {
-        let coinCode = product["coinCode"] ?? ""
+        let coinCode = productPack.baseCurrency
         topCurrencyButton.setTitle(coinCode, for: .normal)
         topCurrencyButton.setImage(UIImage(named: coinCode), for: .normal)
         topTextField.borderStyle = .none
@@ -215,32 +239,27 @@ class BuySellViewController: UIViewController {
 extension BuySellViewController {
     private func updateUI() {
         // Update UI
-        if let coinCode = product["coinCode"] {
-            let rate = realtimeRate.roundedDouble(toDecimalPlaces: 3)
-            let formattedRate = rate.formattedAccountingString(decimalPlaces: 3, accountFormat: true)
-            let labelText = "1 \(coinCode) = \(formattedRate) USD"
-            let attributedString = NSMutableAttributedString(string: labelText)
-            // Define the range of text that should be bold
-            let boldRange = (labelText as NSString).range(of: "\(formattedRate)")
-            // Apply the bold attribute to the specified range
-            let boldFont = UIFont.boldSystemFont(ofSize: 22) // Set the desired bold font
-            attributedString.addAttribute(.font, value: boldFont, range: boldRange)
-            // Update Text Change Rate Label
-            self.exchangeRateLabel.attributedText = attributedString
-            
-            if topTextField.isEditing {
-                let text = topTextField.text ?? "0"
-                let size = text.convertToDouble()
-                let price = size * rate
-                bottomTextField.text = price.formattedAccountingString(decimalPlaces: 8,
-                                                    accountFormat: true)
-            } else {
-                let text = bottomTextField.text ?? "0"
-                let price = text.convertToDouble()
-                let size = price / rate
-                topTextField.text = size.formattedAccountingString(decimalPlaces: 8,
-                                                                   accountFormat: true)
-            }
+        let coinCode = productPack.baseCurrency
+        let rate = realtimeRate.roundedDouble(toDecimalPlaces: 3)
+        let formattedRate = rate.formattedAccountingString(decimalPlaces: 3, accountFormat: true)
+        let labelText = "1 \(coinCode) = \(formattedRate) USD"
+        let attributedString = NSMutableAttributedString(string: labelText)
+        let boldRange = (labelText as NSString).range(of: "\(formattedRate)")
+        let boldFont = UIFont.boldSystemFont(ofSize: 22)
+        attributedString.addAttribute(.font, value: boldFont, range: boldRange)
+        self.exchangeRateLabel.attributedText = attributedString
+        
+        if topTextField.isEditing {
+            let text = topTextField.text ?? "0"
+            let size = text.convertToDouble()
+            let price = size * rate
+            bottomTextField.text = price.formattedAccountingString(decimalPlaces: 8,
+                                                accountFormat: true)
+        } else {
+            let text = bottomTextField.text ?? "0"
+            let price = text.convertToDouble()
+            let size = price / rate
+            topTextField.text = size.formattedAccountingString(decimalPlaces: 8, accountFormat: true)
         }
     }
 }
@@ -251,7 +270,7 @@ extension BuySellViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         updateUI()
-        // if top text field text is larger than the balance (show HUD)
+        // TODO: if top text field text is larger than the balance (show HUD)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

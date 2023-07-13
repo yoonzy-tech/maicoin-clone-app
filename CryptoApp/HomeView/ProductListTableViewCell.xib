@@ -49,7 +49,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7X-YM-r74" customClass="LineChartView" customModule="DGCharts">
-                        <rect key="frame" x="300.66666666666669" y="16" width="115.33333333333331" height="65"/>
+                        <rect key="frame" x="280.66666666666669" y="8" width="144" height="81"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="q7X-YM-r74" secondAttribute="height" multiplier="16:9" id="Woz-7D-YWO"/>
                         </constraints>
@@ -61,15 +61,15 @@
                     <constraint firstAttribute="bottom" secondItem="SOo-vl-xbd" secondAttribute="bottom" constant="16" id="FoT-mE-vdZ"/>
                     <constraint firstAttribute="trailing" secondItem="tt4-Fw-KCL" secondAttribute="trailing" constant="16" id="KbM-f2-TVe"/>
                     <constraint firstItem="cg3-XQ-pqD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Kdc-Dd-Jxs"/>
-                    <constraint firstItem="q7X-YM-r74" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Ovc-OQ-Oor"/>
+                    <constraint firstItem="q7X-YM-r74" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-20" id="Ovc-OQ-Oor"/>
                     <constraint firstItem="cg3-XQ-pqD" firstAttribute="leading" secondItem="9PM-U0-hVN" secondAttribute="trailing" constant="8" id="Tpo-u6-KVO"/>
                     <constraint firstItem="43h-Ro-7pt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2" id="YkD-Yl-q1R"/>
                     <constraint firstItem="43h-Ro-7pt" firstAttribute="bottom" secondItem="SOo-vl-xbd" secondAttribute="bottom" id="f4Z-U8-FmS"/>
-                    <constraint firstItem="q7X-YM-r74" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="hob-J7-4vp"/>
+                    <constraint firstItem="q7X-YM-r74" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="hob-J7-4vp"/>
                     <constraint firstItem="9PM-U0-hVN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jSS-JM-3A3"/>
                     <constraint firstItem="9PM-U0-hVN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="mRe-2R-GAp"/>
                     <constraint firstAttribute="trailing" secondItem="43h-Ro-7pt" secondAttribute="trailing" constant="16" id="mVd-Ob-f0z"/>
-                    <constraint firstAttribute="bottom" secondItem="q7X-YM-r74" secondAttribute="bottom" constant="16" id="olD-Fl-ixL"/>
+                    <constraint firstAttribute="bottom" secondItem="q7X-YM-r74" secondAttribute="bottom" constant="8" id="olD-Fl-ixL"/>
                     <constraint firstItem="cg3-XQ-pqD" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2" id="v94-SV-Fun"/>
                     <constraint firstItem="SOo-vl-xbd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2" id="vJ1-FH-qlA"/>
                     <constraint firstAttribute="centerY" secondItem="tt4-Fw-KCL" secondAttribute="bottom" constant="2" id="wXT-ac-thK"/>

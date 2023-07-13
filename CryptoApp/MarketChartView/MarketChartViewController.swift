@@ -7,6 +7,7 @@
 
 import UIKit
 import Starscream
+import JGProgressHUD
 
 class MarketChartViewController: UIViewController {
     
@@ -19,10 +20,9 @@ class MarketChartViewController: UIViewController {
     
     let viewModel = MarketChartViewModel()
     
-    // ("BTC", "BTC-USD") = (0: coinCode, 1: productID)
-    var coinCodeProductID: (String, String) = ("", "")
-    
     private var websocket = WebsocketService.shared
+    
+    let hud = JGProgressHUD()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buyButton: UIButton!
@@ -38,81 +38,170 @@ class MarketChartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupBinders()
+        buyButton.layer.cornerRadius = 5
+        sellButton.layer.cornerRadius = 5
+        setupTableView()
+        callApis()
+        //        setupBinders()
+    }
+    
+    func showServerErrorHUD(text: String) {
+        let alert = UIAlertController(title: "伺服器錯誤",
+                                      message: "暫時無法取得\(text)數據，請稍候再試",
+                                      preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "重新整理", style: .default) { [weak self] _ in
+            self?.callApis()
+        }
+        alert.addAction(confirmAction)
+        present(alert, animated: true, completion: nil)
     }
     
     func callApis() {
-        viewModel.getProductOrderHistoryNEW {
-            print("-----getProductOrderHistoryNEWAAA-----")
-        } errorHandle: { error in
-            print("-----getProductOrderHistoryNEWBBB-----")
-        }
-        
+        hud.textLabel.text = "資料加載中"
+        hud.show(in: self.view)
         let group = DispatchGroup()
+        var countGroup = 0
         
         DispatchQueue.global().async {
-            group.enter()
-            self.viewModel.getTimeCandles(time: .day) { [weak self] extractedCandles in
-                // print("🟢 Day Candles Count: \(extractedCandles.count)")
-                // print("🟢 Day Candles: \(extractedCandles)")
-                self?.newDayArr = extractedCandles
-                group.leave()
+            if self.newDayArr.isEmpty {
+                group.enter()
+                countGroup += 1
+                print(countGroup)
+                self.viewModel.getTimeCandles(time: .day) { [weak self] extractedCandles in
+                    self?.newDayArr = extractedCandles
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                } errorHandle: { [weak self] error in
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                    print("Show Error HUD for 1 Day Candles: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self?.showServerErrorHUD(text: "當日")
+                    }
+                }
             }
             
-            group.enter()
-            self.viewModel.getTimeCandles(time: .week) { [weak self] extractedCandles in
-                // print("🟠 Week Candles Count: \(extractedCandles.count)")
-                // print("🟠 Week Candles: \(extractedCandles)")
-                self?.newWeekArr = extractedCandles
-                group.leave()
+            if self.newWeekArr.isEmpty {
+                group.enter()
+                countGroup += 1
+                print(countGroup)
+                self.viewModel.getTimeCandles(time: .week) { [weak self] extractedCandles in
+                    self?.newWeekArr = extractedCandles
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                } errorHandle: { [weak self] error in
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                    print("Show Error HUD for 1 Week Candles: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self?.showServerErrorHUD(text: "當周")
+                    }
+                }
             }
             
-            group.enter()
-            self.viewModel.getTimeCandles(time: .month) { [weak self] extractedCandles in
-                 print("🟡 1 Month Candles Count: \(extractedCandles.count)")
-                 print("🟡 1 Month Candles: \(extractedCandles)")
-                print("-----oneMonth-----")
-                self?.newMonthArr = extractedCandles
-                group.leave()
+            if self.newMonthArr.isEmpty {
+                group.enter()
+                countGroup += 1
+                print(countGroup)
+                self.viewModel.getTimeCandles(time: .month) { [weak self] extractedCandles in
+                    self?.newMonthArr = extractedCandles
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                } errorHandle: { [weak self] error in
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                    print("Show Error HUD for 1 Month Candles: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self?.showServerErrorHUD(text: "當月")
+                    }
+                }
             }
             
-            group.enter()
-            self.viewModel.getTimeCandles(time: .threeMonth) { [weak self] extractedCandles in
-                // print("🔵 3 Months Candles Count: \(extractedCandles.count)")
-                // print("🔵 3 Months Candles: \(extractedCandles)")
-                print("-----threeMonth-----")
-                self?.newThreeMonthArr = extractedCandles
-                group.leave()
+            if self.newThreeMonthArr.isEmpty {
+                group.enter()
+                countGroup += 1
+                print(countGroup)
+                self.viewModel.getTimeCandles(time: .threeMonth) { [weak self] extractedCandles in
+                    self?.newThreeMonthArr = extractedCandles
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                } errorHandle: { [weak self] error in
+                    countGroup -= 1
+                    print(countGroup)
+                    group.leave()
+                    print("Show Error HUD for 3 Months Candles: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self?.showServerErrorHUD(text: "前三月")
+                    }
+                }
             }
             
-            group.enter()
-            self.viewModel.getYearCandles { [weak self] extractedCandles in
-                // print("🟤 1 Year Candles Count: \(extractedCandles.count)")
-                // print("🟤 1 Year Candles: \(extractedCandles)")
-                print("-----getYearCandles-----")
-                self?.newYearArr = extractedCandles
-                group.leave()
+            if self.newYearArr.isEmpty {
+//                group.enter()
+                countGroup += 1
+                print(countGroup)
+                self.viewModel.getYearCandles(group: group) { [weak self] extractedCandles in
+                    self?.newYearArr = extractedCandles
+                    print("----- Year out ----")
+                    countGroup -= 1
+                    print(countGroup)
+//                    group.leave()
+                } errorHandle: { [weak self] error in
+                    print("----- Year out ----")
+                    countGroup -= 1
+                    print(countGroup)
+//                    group.leave()
+                    print("Show Error HUD for Year Candles: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self?.showServerErrorHUD(text: "當年")
+                    }
+                }
             }
             
-            group.enter()
-            self.viewModel.getAllCandles { [weak self] extractedCandles in
-                // print("🟣 All Candles Count: \(extractedCandles.count)")
-                // print("🟣 All Candles: \(extractedCandles)")
-                print("-----getAllCandlesgetAllCandlesgetAllCandlesgetAllCandles-----")
+            let concurrentQueue = DispatchQueue(label: "com.example.concurrentQueue", attributes: .concurrent)
+            
+            if self.newAllArr.isEmpty {
                 
-                self?.newAllArr = extractedCandles
-                group.leave()
+                self.viewModel.getAllCandles { [weak self] extractedCandles in
+                    self?.newAllArr = extractedCandles
+                    
+                } errorHandle: { [weak self] error in
+                    
+                    print("Show Error HUD for All Candles: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self?.showServerErrorHUD(text: "所有歷史")
+                    }
+                }
+                
             }
-                        
+            
             group.notify(queue: .main) {
                 DispatchQueue.main.async {
-                    print("-----reloadData-----")
                     self.tableView.reloadData()
+                    // Loading HUD Dismiss
+                    self.hud.dismiss()
                 }
             }
         }
         
+        viewModel.getProductOrderHistoryNEW {
+            DispatchQueue.main.async {
+                self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            }
+            
+        } errorHandle: { [weak self] error in
+            print("Show Error HUD: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                self?.showServerErrorHUD(text: "歷史訂單")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +210,6 @@ class MarketChartViewController: UIViewController {
         websocket.completion = { [weak self] tickerMessage in
             self?.updateRealtimeBuySell(bid: tickerMessage.bestBid, ask: tickerMessage.bestAsk)
         }
-        callApis()
     }
     
     func updateRealtimeBuySell(bid: String?, ask: String?) {
@@ -141,26 +229,21 @@ class MarketChartViewController: UIViewController {
     }
     
     private func setupBinders() {
-        //        viewModel.productID.bind { [weak self] _ in
-        //            // self?.viewModel.getProductCandles()
-        //            self?.viewModel.getProductOrderHistory()
-        //        }
-        
-        viewModel.historyDataSource.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-            }
-        }
-        
         viewModel.candles.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             }
         }
+        viewModel.historyDataSource.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            }
+        }
     }
     
-    private func setupUI() {
-        
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.sectionHeaderTopPadding = 0
         tableView.register(UINib(nibName: "ChartTableViewCell",
@@ -174,11 +257,7 @@ class MarketChartViewController: UIViewController {
                            forCellReuseIdentifier: "NoDataTableViewCell")
         tableView.register(UINib(nibName: "HistoryHeaderView", bundle: nil),
                            forHeaderFooterViewReuseIdentifier: "HistoryHeaderView")
-        buyButton.layer.cornerRadius = 5
-        sellButton.layer.cornerRadius = 5
         
-        tableView.dataSource = self
-        tableView.delegate = self
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -196,6 +275,8 @@ class MarketChartViewController: UIViewController {
                 "coinCode": baseCurrency,
                 "pair": productId
             ]
+            
+            print("♥️ baseCurrency: \(baseCurrency), productId: \(productId)")
         }
     }
 }
@@ -265,10 +346,6 @@ extension MarketChartViewController: UITableViewDataSource, UITableViewDelegate 
             cell.threeMonthTimeArray = newThreeMonthArr.compactMap({ $0.timestamp })
             cell.yearTimeArray = newYearArr.compactMap({ $0.timestamp })
             cell.allTimeArray = newAllArr.compactMap({ $0.timestamp })
-            
-            print("------------------------")
-            print(cell.dayArray)
-            print("------------------------")
             
             cell.setChartView(dataArray: cell.dayArray)
             

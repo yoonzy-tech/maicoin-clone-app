@@ -18,7 +18,7 @@ struct Candle {
 import Foundation
 
 class MarketChartViewModel {
-    // CoinCode, Pair ID: ("BTC", "BTC-USD")
+
     var productID: ObservableObject<String> = ObservableObject("")
     
     var productPack: ObservableObject<ProductPack> = ObservableObject(ProductPack())
@@ -41,7 +41,7 @@ class MarketChartViewModel {
         }
     }
     
-    func getTimeCandles(time: Time, completion: @escaping ([Candle]) -> Void) {
+    func getTimeCandles(time: Time, completion: @escaping ([Candle]) -> Void, errorHandle: @escaping (Error) -> Void) {
         
         // get the date today
         let calendar = Calendar.current // use the current calander
@@ -73,7 +73,7 @@ class MarketChartViewModel {
         let startTime = "\(Int(startDate.timeIntervalSince1970))"
         CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
                                                  startTime: startTime, endTime: endTime) { candlesArr in
-
+            
             var extractedCandles: [Candle] = candlesArr.compactMap { candle in
                 // Calculate Average Price
                 let low = candle[1]
@@ -82,16 +82,14 @@ class MarketChartViewModel {
                 return Candle(timestamp: candle[0], averagePrice: avgPrice)
             }
             extractedCandles.reverse()
-            
             // print("Extracted Candles: \(extractedCandles)")
             completion(extractedCandles)
+        } errorHandle: { error in
+            errorHandle(error)
         }
     }
     
-    func getAllCandles(completion: @escaping ([Candle]) -> Void) {
-        let group = DispatchGroup()
-        group.enter()
-        
+    func getAllCandles(completion: @escaping ([Candle]) -> Void, errorHandle: @escaping (Error) -> Void) {
         let calendar = Calendar.current
         var endDate = Date()
 
@@ -106,10 +104,10 @@ class MarketChartViewModel {
         repeat {
             let startDate = calendar.date(byAdding: .day, value: -300, to: endDate) ?? Date()
             let startTime = "\(Int(startDate.timeIntervalSince1970))"
-            var endTime = "\(Int(endDate.timeIntervalSince1970))"
+            let endTime = "\(Int(endDate.timeIntervalSince1970))"
             // print("❗️Start: \(startTime)")
             // print("❗️End: \(endTime)")
-            DispatchQueue.global().asyncAfter(deadline: .now() + 0.1 * index) {
+            DispatchQueue.global().async {
                 
                 CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
                                                          startTime: startTime, endTime: endTime) { candlesArr in
@@ -127,19 +125,19 @@ class MarketChartViewModel {
                     endDate = startDate
                     index += 1
                     semaphore.signal()
+                } errorHandle: { error in
+                    semaphore.signal()
+                    errorHandle(error)
                 }
             }
             semaphore.wait()
         } while (candlesResponse.count != 0)
-        
-        group.leave()
-        group.notify(queue: .main) {
-            extractedCandles.sort { $0.timestamp < $1.timestamp }
-            completion(extractedCandles)
-        }
+        extractedCandles.sort { $0.timestamp < $1.timestamp }
+        let compactCandles = Utils.compactArray(every: 14, from: extractedCandles)
+        completion(compactCandles)
     }
     
-    func getYearCandles(completion: @escaping ([Candle]) -> Void) {
+    func getYearCandles(group outerGroup: DispatchGroup, completion: @escaping ([Candle]) -> Void, errorHandle: @escaping (Error) -> Void) {
         let group = DispatchGroup()
         let calendar = Calendar.current
         let endDate = Date()
@@ -153,6 +151,7 @@ class MarketChartViewModel {
         let aYearAgoTime = "\(Int(aYearAgo.timeIntervalSince1970))"
         var extractedCandles = [Candle]()
         
+        outerGroup.enter()
         group.enter()
         CoinbaseService.shared.getProductCandles(productId: productId, granularity: granularity,
                                                  startTime: threeHundredDaysAgoTime, endTime: endTime) { candlesArr in
@@ -165,6 +164,9 @@ class MarketChartViewModel {
                 extractedCandles.insert(element, at: 0)
             }
             group.leave()
+        } errorHandle: { error in
+            group.leave()
+            errorHandle(error)
         }
         
         group.enter()
@@ -180,11 +182,19 @@ class MarketChartViewModel {
                 extractedCandles.insert(element, at: 0)
             }
             group.leave()
+
+        } errorHandle: { error in
+            group.leave()
+            errorHandle(error)
+
         }
         
         group.notify(queue: .main) {
             extractedCandles.sort { $0.timestamp < $1.timestamp }
-            completion(extractedCandles)
+            let compactCandles = Utils.compactArray(every: 7, from: extractedCandles)
+            completion(compactCandles)
+            outerGroup.leave()
+
         }
     }
 }

@@ -44,7 +44,7 @@ extension HomeViewModel {
             
             group.notify(queue: .main) {
                 self.accountTotalBalance.value = totalBalance
-                print("Total Balance: \(totalBalance)")
+                // print("Total Balance: \(totalBalance)")
                 completion()
             }
         }
