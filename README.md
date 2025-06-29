@@ -13,6 +13,16 @@
 
 CryptoApp is a comprehensive iOS cryptocurrency trading application that provides real-time market data, interactive charts, and seamless trading capabilities. Built with native iOS technologies and integrated with Coinbase Pro API, it offers a professional-grade trading experience with focus on user experience and real-time data synchronization.
 
+## 📱 Screenshots
+
+| Home Screen                   | Coin Details                           | Trading                            | Transaction Complete                     |
+| ----------------------------- | -------------------------------------- | ---------------------------------- | ---------------------------------------- |
+| ![Home](Screenshots/首頁.png) | ![Details](Screenshots/幣價詳情頁.png) | ![Trading](Screenshots/買賣幣.png) | ![Transaction](Screenshots/交易完成.png) |
+
+| Wallet                          | History                              | Profile                              |
+| ------------------------------- | ------------------------------------ | ------------------------------------ |
+| ![Wallet](Screenshots/錢包.png) | ![History](Screenshots/資產紀錄.png) | ![Profile](Screenshots/會員中心.png) |
+
 ## ✨ Key Features
 
 ### 🏠 Market Dashboard
@@ -166,20 +176,20 @@ CryptoApp/
 
 1. **Clone the repository**
 
-   ```
-   git clone https://github.com/yourusername/cryptomaster-ios.git
-   cd cryptomaster-ios
+   ```bash
+   git clone https://github.com/yoonzy-tech/maicoin-clone-app.git
+   cd  maicoin-clone-app
    ```
 
 2. **Install dependencies**
 
-   ```
+   ```bash
    pod install
    ```
 
 3. **Open workspace**
 
-   ```
+   ```bash
    open CryptoApp.xcworkspace
    ```
 
@@ -210,13 +220,6 @@ private let passPhrase = "YOUR_PASSPHRASE"
 - **Background Processing**: GCD for network operations
 - **Data Caching**: Strategic caching of market data
 
-## 🧪 Testing Strategy
-
-- **Unit Testing**: Core business logic testing
-- **Integration Testing**: API integration verification
-- **UI Testing**: User interface automation tests
-- **Manual Testing**: Comprehensive user journey testing
-
 ## 🔄 Real-time Features
 
 ### WebSocket Implementation
@@ -225,12 +228,6 @@ private let passPhrase = "YOUR_PASSPHRASE"
 - **Connection Management**: Automatic reconnection and error handling
 - **Subscription Management**: Dynamic channel subscription/unsubscription
 - **Data Processing**: Real-time JSON parsing and UI updates
-
-### Performance Considerations
-
-- **Connection Pooling**: Efficient WebSocket connection management
-- **Rate Limiting**: Respectful API usage patterns
-- **Error Recovery**: Robust error handling and retry mechanisms
 
 ## 📈 Future Enhancements
 
@@ -246,15 +243,14 @@ private let passPhrase = "YOUR_PASSPHRASE"
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Credits
+## 👨‍💻 Author
 
-© 2025 Ruby Chu - [@yoon_tech](https://twitter.com/yoon_tech) - dev.rubyc@gmail.com
+**Ruby Chu**
 
-This project was designed and developed by Ruby Chu as a portfolio piece.
+- GitHub: [@yoonzy-tech](https://github.com/yoonzy-tech)
+- LinkedIn: [Ruby Chu](https://linkedin.com/in/rubychu-yunsyuan)
+- Email: dev.rubyc@gmail.com
 
 ---
 
-<div align="center">
-  <p><strong>Built with ❤️ using Swift and iOS Technologies</strong></p>
-  <p><em>Showcasing modern iOS development practices and real-time financial data integration</em></p>
-</div>
+_This project was developed as part of the AppWorks School iOS development program, demonstrating proficiency in modern iOS development practices and commercial app development skills._
